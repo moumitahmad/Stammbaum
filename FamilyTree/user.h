@@ -9,6 +9,7 @@ public:
 
     int getId() const;
     const QString getName() const;
+    const QString getPassword() const;
 
 private:
     int m_id;

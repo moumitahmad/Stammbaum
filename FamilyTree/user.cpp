@@ -7,3 +7,7 @@ int User::getId() const {
 const QString User::getName() const {
     return m_name;
 }
+
+const QString User::getPassword() const {
+    return m_password;
+}
