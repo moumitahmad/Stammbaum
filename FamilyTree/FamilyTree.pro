@@ -19,11 +19,13 @@ SOURCES += \
     databaseservice.cpp \
     main.cpp \
     mainwindow.cpp \
+    member.cpp \
     user.cpp
 
 HEADERS += \
     databaseservice.h \
     mainwindow.h \
+    member.h \
     user.h
 
 FORMS += \
