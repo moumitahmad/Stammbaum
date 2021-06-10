@@ -12,21 +12,21 @@ enum gender {
 
 class Member {
 public:
-    Member(int id, QString& name ="Unknown", QString& birth = "Unknown", QString& death = nullptr,
-           gender g = UNKNOWN, QString& biografie = nullptr, Member* partner = nullptr,
-           Member* parent1 = nullptr, Member* parent2 = nullptr, QVector<Member> children = nullptr):
+    Member(int id, QString name ="Unknown", QString birth = "Unknown", QString death = nullptr,
+           gender g = UNKNOWN, QString biografie = nullptr, Member* partner = nullptr,
+           Member* parent1 = nullptr, Member* parent2 = nullptr):
         m_id(id), m_name(name), m_birth(birth), m_death(death), m_gender(g), m_biografie(biografie),
-        m_partner(partner), m_parent1(parent1), m_parent2(parent2), m_children(children) {}
+        m_partner(partner), m_parent1(parent1), m_parent2(parent2) {}
     ~Member();
 
-    void updateMember(const QString& name = m_name, QString& birth = m_birth, QString& death = m_death,
-                 gender g = m_gender, QString& biografie = m_biografie);
+    void updateMember(const QString& name, const QString& birth, const QString& death, const gender g, const QString& biografie);
+
     // Connections
-    void updatePartner(const Member* partner);
-    void updateParents(const Member* parent1 = m_parent1, const Member* parent2 = m_parent2);
-    void addChild(const Member* child);
+    void updatePartner(Member* &partner);
+    void updateParents(Member* &parent1, Member* &parent2);
+    void addChild(Member* &child);
 private:
-    int id;
+    int m_id;
     QString m_name;
     QString m_birth;
     QString m_death;
@@ -34,7 +34,7 @@ private:
     QString m_biografie;
     Member* m_partner;
     Member* m_parent1;
-    Member* m_parent1;
+    Member* m_parent2;
     QVector<Member*> m_children;
 };
 

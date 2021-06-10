@@ -55,10 +55,12 @@ OBJECTS_DIR   = ./
 SOURCES       = ../FamilyTree/databaseservice.cpp \
 		../FamilyTree/main.cpp \
 		../FamilyTree/mainwindow.cpp \
+		../FamilyTree/member.cpp \
 		../FamilyTree/user.cpp moc_mainwindow.cpp
 OBJECTS       = databaseservice.o \
 		main.o \
 		mainwindow.o \
+		member.o \
 		user.o \
 		moc_mainwindow.o
 DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
@@ -117,6 +119,7 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/qt_config.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++/qmake.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_post.prf \
+		../FamilyTree/.qmake.stash \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/exclusive_builds.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/toolchain.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/default_pre.prf \
@@ -138,9 +141,11 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/lex.prf \
 		../FamilyTree/FamilyTree.pro ../FamilyTree/databaseservice.h \
 		../FamilyTree/mainwindow.h \
+		../FamilyTree/member.h \
 		../FamilyTree/user.h ../FamilyTree/databaseservice.cpp \
 		../FamilyTree/main.cpp \
 		../FamilyTree/mainwindow.cpp \
+		../FamilyTree/member.cpp \
 		../FamilyTree/user.cpp
 QMAKE_TARGET  = FamilyTree
 DESTDIR       = 
@@ -209,6 +214,7 @@ Makefile: ../FamilyTree/FamilyTree.pro /usr/lib/x86_64-linux-gnu/qt5/mkspecs/lin
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/qt_config.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++/qmake.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/exclusive_builds.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/toolchain.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/default_pre.prf \
@@ -286,6 +292,7 @@ Makefile: ../FamilyTree/FamilyTree.pro /usr/lib/x86_64-linux-gnu/qt5/mkspecs/lin
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/qt_config.prf:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++/qmake.conf:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_post.prf:
+.qmake.stash:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/exclusive_builds.prf:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/toolchain.prf:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/default_pre.prf:
@@ -321,8 +328,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../FamilyTree/databaseservice.h ../FamilyTree/mainwindow.h ../FamilyTree/user.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../FamilyTree/databaseservice.cpp ../FamilyTree/main.cpp ../FamilyTree/mainwindow.cpp ../FamilyTree/user.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../FamilyTree/databaseservice.h ../FamilyTree/mainwindow.h ../FamilyTree/member.h ../FamilyTree/user.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../FamilyTree/databaseservice.cpp ../FamilyTree/main.cpp ../FamilyTree/mainwindow.cpp ../FamilyTree/member.cpp ../FamilyTree/user.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../FamilyTree/mainwindow.ui $(DISTDIR)/
 
 
@@ -396,6 +403,9 @@ mainwindow.o: ../FamilyTree/mainwindow.cpp ../FamilyTree/mainwindow.h \
 		ui_mainwindow.h \
 		../FamilyTree/databaseservice.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../FamilyTree/mainwindow.cpp
+
+member.o: ../FamilyTree/member.cpp ../FamilyTree/member.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o member.o ../FamilyTree/member.cpp
 
 user.o: ../FamilyTree/user.cpp ../FamilyTree/user.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o user.o ../FamilyTree/user.cpp
