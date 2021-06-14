@@ -7,6 +7,7 @@
 enum gender {
     FEMALE,
     MALE,
+    DIVERSE,
     UNKNOWN
 };
 
