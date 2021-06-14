@@ -1,6 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "databaseservice.h"
+#include "./persistence/databaseservice.h"
 
 #include <QDialog>
 #include <QLineEdit>

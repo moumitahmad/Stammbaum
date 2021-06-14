@@ -25,7 +25,7 @@ public:
     // Connections
     void updatePartner(Member* partner);
     void updateParents(Member* parent1, Member* parent2);
-    void addChild(Member* &child);
+    void addChild(Member* child);
 private:
     int m_id;
     QString m_name;

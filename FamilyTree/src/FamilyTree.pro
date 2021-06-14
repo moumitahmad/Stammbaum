@@ -16,31 +16,24 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    database/example.cpp \
-    databaseservice.cpp \
+    gui/editfamilywindow.cpp \
+    gui/mainwindow.cpp \
     main.cpp \
-    mainwindow.cpp \
-    member.cpp \
     persistence/databaseservice.cpp \
-    ui/gui/mainwindow.cpp \
-    user.cpp \
     value-objects/member.cpp \
     value-objects/user.cpp
 
 HEADERS += \
-    database/example.h \
-    databaseservice.h \
-    mainwindow.h \
-    member.h \
+    domain/ILogic.h \
+    gui/editfamilywindow.h \
+    gui/mainwindow.h \
     persistence/databaseservice.h \
-    ui/gui/mainwindow.h \
-    user.h \
     value-objects/member.h \
     value-objects/user.h
 
 FORMS += \
-    mainwindow.ui \
-    ui/gui/mainwindow.ui
+    gui/editfamilywindow.ui \
+    gui/mainwindow.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

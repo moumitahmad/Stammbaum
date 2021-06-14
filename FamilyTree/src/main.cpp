@@ -3,12 +3,10 @@
 * Contact: gkour@stud.hs-bremen.de, aschumann@stud.hs-bremen.de, mahmad@stud.hs-bremen.de
 */
 
-#include "mainwindow.h"
+#include "gui/mainwindow.h"
 #include <QApplication>
 
-#include "databaseservice.h"
-
-#include "database/example.h"
+#include "persistence/databaseservice.h"
 
 int main(int argc, char *argv[]) {
     database::connectToDatabase();

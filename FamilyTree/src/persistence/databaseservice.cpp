@@ -1,5 +1,5 @@
-#include "databaseservice.h"
-#include "user.h"
+#include "./persistence/databaseservice.h"
+#include "./value-objects/user.h"
 
 #include "QDebug"
 
