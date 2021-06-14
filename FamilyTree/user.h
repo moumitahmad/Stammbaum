@@ -5,7 +5,7 @@
 
 class User {
 public:
-    User(int id, QString name, QString password): m_id(id), m_name(name), m_password(password) {}
+    User(int id, QString& name, QString& password): m_id(id), m_name(name), m_password(password) {}
 
     int getId() const;
     const QString getName() const;
