@@ -2,6 +2,13 @@
 #define DATABASESERVICE_H
 
 #include "QString"
+/*
+GUI <- Ifc -> Logic <- Ifc -> Datenbank
+
+class IBusinessLogic
+        public:
+        std::vector<Person> get.....();
+*/
 
 namespace database {
     void connectToDatabase();

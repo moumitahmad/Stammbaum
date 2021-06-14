@@ -52,12 +52,14 @@ OBJECTS_DIR   = ./
 
 ####### Files
 
-SOURCES       = ../FamilyTree/databaseservice.cpp \
+SOURCES       = ../FamilyTree/database/example.cpp \
+		../FamilyTree/databaseservice.cpp \
 		../FamilyTree/main.cpp \
 		../FamilyTree/mainwindow.cpp \
 		../FamilyTree/member.cpp \
 		../FamilyTree/user.cpp moc_mainwindow.cpp
-OBJECTS       = databaseservice.o \
+OBJECTS       = example.o \
+		databaseservice.o \
 		main.o \
 		mainwindow.o \
 		member.o \
@@ -139,10 +141,12 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/exceptions.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/yacc.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/lex.prf \
-		../FamilyTree/FamilyTree.pro ../FamilyTree/databaseservice.h \
+		../FamilyTree/FamilyTree.pro ../FamilyTree/database/example.h \
+		../FamilyTree/databaseservice.h \
 		../FamilyTree/mainwindow.h \
 		../FamilyTree/member.h \
-		../FamilyTree/user.h ../FamilyTree/databaseservice.cpp \
+		../FamilyTree/user.h ../FamilyTree/database/example.cpp \
+		../FamilyTree/databaseservice.cpp \
 		../FamilyTree/main.cpp \
 		../FamilyTree/mainwindow.cpp \
 		../FamilyTree/member.cpp \
@@ -328,8 +332,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../FamilyTree/databaseservice.h ../FamilyTree/mainwindow.h ../FamilyTree/member.h ../FamilyTree/user.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../FamilyTree/databaseservice.cpp ../FamilyTree/main.cpp ../FamilyTree/mainwindow.cpp ../FamilyTree/member.cpp ../FamilyTree/user.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../FamilyTree/database/example.h ../FamilyTree/databaseservice.h ../FamilyTree/mainwindow.h ../FamilyTree/member.h ../FamilyTree/user.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../FamilyTree/database/example.cpp ../FamilyTree/databaseservice.cpp ../FamilyTree/main.cpp ../FamilyTree/mainwindow.cpp ../FamilyTree/member.cpp ../FamilyTree/user.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../FamilyTree/mainwindow.ui $(DISTDIR)/
 
 
@@ -391,12 +395,16 @@ compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean compiler_ui
 
 ####### Compile
 
+example.o: ../FamilyTree/database/example.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o example.o ../FamilyTree/database/example.cpp
+
 databaseservice.o: ../FamilyTree/databaseservice.cpp ../FamilyTree/databaseservice.h \
 		../FamilyTree/user.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o databaseservice.o ../FamilyTree/databaseservice.cpp
 
 main.o: ../FamilyTree/main.cpp ../FamilyTree/mainwindow.h \
-		../FamilyTree/databaseservice.h
+		../FamilyTree/databaseservice.h \
+		../FamilyTree/database/example.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../FamilyTree/main.cpp
 
 mainwindow.o: ../FamilyTree/mainwindow.cpp ../FamilyTree/mainwindow.h \

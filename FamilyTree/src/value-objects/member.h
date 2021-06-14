@@ -23,8 +23,8 @@ public:
     void updateMember(const QString& name, const QString& birth, const QString& death, const gender g, const QString& biografie);
 
     // Connections
-    void updatePartner(Member* &partner);
-    void updateParents(Member* &parent1, Member* &parent2);
+    void updatePartner(Member* partner);
+    void updateParents(Member* parent1, Member* parent2);
     void addChild(Member* &child);
 private:
     int m_id;

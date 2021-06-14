@@ -8,6 +8,8 @@
 
 #include "databaseservice.h"
 
+#include "database/example.h"
+
 int main(int argc, char *argv[]) {
     database::connectToDatabase();
     QApplication a(argc, argv);
