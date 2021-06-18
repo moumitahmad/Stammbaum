@@ -5,16 +5,16 @@
 #include <QVector>
 
 enum gender {
-    FEMALE,
-    MALE,
-    DIVERSE,
-    UNKNOWN
+    female,
+    male,
+    diverse,
+    unknown
 };
 
 class Member {
 public:
     Member(int id, QString name ="Unknown", QString birth = "Unknown", QString death = nullptr,
-           gender g = UNKNOWN, QString biografie = nullptr, Member* partner = nullptr,
+           gender g = unknown, QString biografie = nullptr, Member* partner = nullptr,
            Member* parent1 = nullptr, Member* parent2 = nullptr):
         m_id(id), m_name(name), m_birth(birth), m_death(death), m_gender(g), m_biografie(biografie),
         m_partner(partner), m_parent1(parent1), m_parent2(parent2) {}
@@ -22,7 +22,7 @@ public:
 
     void updateMember(const QString& name, const QString& birth, const QString& death, const gender g, const QString& biografie);
 
-    // Connections
+    // Family Connections
     void updatePartner(Member* partner);
     void updateParents(Member* parent1, Member* parent2);
     void addChild(Member* child);

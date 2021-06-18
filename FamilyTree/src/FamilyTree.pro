@@ -20,6 +20,7 @@ SOURCES += \
     gui/mainwindow.cpp \
     main.cpp \
     persistence/databaseservice.cpp \
+    value-objects/familytree.cpp \
     value-objects/member.cpp \
     value-objects/user.cpp
 
@@ -28,6 +29,7 @@ HEADERS += \
     gui/editfamilywindow.h \
     gui/mainwindow.h \
     persistence/databaseservice.h \
+    value-objects/familytree.h \
     value-objects/member.h \
     value-objects/user.h
 
