@@ -9,23 +9,28 @@
 #include "./value-objects/user.h"
 
 namespace domain {
-    class IUserLogic {
-        User* createUser(QString& name, QString& password);
-        User* loginUser(QString& name, QString password);
+    // database gernal
+    void connectToDatabase();
+    void printDatabase();
 
-        QVector<User*> getEditorsByFamilyID(int familyID); // Admin + Editors
-        QVector<User*> getViewersByFamilyID(int familyID);
-    };
 
-    class IFamilyLogic {
-        QVector<FamilyTree*> getFamilyTreesByUserID(int userID);
-        FamilyTree* getFamilyTreesByID(int familyID);
-    };
+    // user
+    User* createUser(QString& name, QString& password);
+    User* loginUser(QString& name, QString password);
 
-    class IMemberLogic {
-        QVector<Member*> getMembersByFamily(int familyID);
-        void updateMemberFromFamily(int familyID);
-    };
+
+    // family tree
+    FamilyTree* createFamily(QString& name, User* admin); //, QVector<User*> editors = new QVector<User*>, QVector<User*> viewers = new QVector<User*>
+    FamilyTree* addEditor(FamilyTree* family, User* user);
+    FamilyTree* addViewer(FamilyTree* family, User* user);
+
+    QVector<FamilyTree*> getFamilyTreesByUserID(int userID);
+    FamilyTree* getFamilyTreesByID(int familyID);
+
+
+    // member
+    QVector<Member*> getMembersByFamily(int familyID);
+    void updateMemberFromFamily(int familyID);
 }
 
 #endif // ILOGIC_H

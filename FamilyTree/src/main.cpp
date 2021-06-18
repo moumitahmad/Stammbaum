@@ -7,17 +7,23 @@
 #include "value-objects/user.h"
 #include <QApplication>
 
-#include "persistence/databaseservice.h"
+#include "domain/ILogic.h"
 
 void testDatabase() {
-    QVector<int> editors;
-    QVector<int> viewers;
-    QString name = "Erben";
-    database::saveFamily(name, 1, editors, viewers);
+    QString adminName = "TestAdmin";
+    QString editorName = "TestEditor";
+    QString password = "password";
+    QString familyName = "TestFamily";
+
+    User* admin = domain::createUser(adminName, password);
+    User* editor = domain::createUser(editorName, password);
+    FamilyTree* family = domain::createFamily(familyName, admin);
+    family = domain::addEditor(family, editor);
+    domain::printDatabase();
 }
 
 int main(int argc, char *argv[]) {
-    database::connectToDatabase();
+    domain::connectToDatabase();
     testDatabase();
     QApplication a(argc, argv);
     MainWindow w;

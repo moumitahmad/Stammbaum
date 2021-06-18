@@ -1,6 +1,8 @@
 #ifndef DATABASESERVICE_H
 #define DATABASESERVICE_H
 
+#include "./value-objects/user.h"
+#include "./value-objects/familytree.h"
 #include "./value-objects/member.h"
 /*
 GUI <- Ifc -> Logic <- Ifc -> Datenbank
@@ -13,13 +15,18 @@ class IBusinessLogic
 namespace database {
     // general
     void connectToDatabase();
+    // print
+    void printTableUser();
+    void printFamilyTable();
+    void printHasRightsTable();
 
     // user
-    void saveUser(QString name, QString password);
+    User* saveUser(QString name, QString password);
 
     // family tree
-    void saveFamily(QString name, int adminID, QVector<int> editorIDs, QVector<int> viewerIDs);
-    void updateFamily(QString name, int adminID, QVector<int> editorIDs, QVector<int> viewerIDs);
+    FamilyTree* saveFamily(QString name, User* admin);
+    void saveEditor(int familyID, User* editor);
+    void saveViewer(int familyID, User* viewer);
 
     void saveEditorFromFamily(int userId, int familyID);
     void deleteEditorFromFamily(int userId, int familyID);
@@ -27,7 +34,7 @@ namespace database {
     void deleteViewerFromFamily(int userId, int familyID);
 
     // member
-    void saveMember(QString& name, QString& birth, QString& death, gender g, QString& biografie, int familyID);
+    Member* saveMember(QString& name, QString& birth, QString& death, gender g, QString& biografie, int familyID);
     void updateMember(QString& name, QString& birth, QString& death, gender g, QString& biografie, int familyID);
 
     // relationships
