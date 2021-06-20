@@ -131,7 +131,6 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/qt_config.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++/qmake.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_post.prf \
-		../src/.qmake.stash \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/exclusive_builds.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/toolchain.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/default_pre.prf \
@@ -234,7 +233,6 @@ Makefile: ../src/FamilyTree.pro /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++/
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/qt_config.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++/qmake.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_post.prf \
-		.qmake.stash \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/exclusive_builds.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/toolchain.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/default_pre.prf \
@@ -312,7 +310,6 @@ Makefile: ../src/FamilyTree.pro /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++/
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/qt_config.prf:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++/qmake.conf:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_post.prf:
-.qmake.stash:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/exclusive_builds.prf:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/toolchain.prf:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/default_pre.prf:
@@ -391,6 +388,7 @@ moc_editfamilywindow.cpp: ../src/gui/editfamilywindow.h \
 	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/alisa/testgit/Stammbaum/FamilyTree/build-FamilyTree-Desktop-Debug/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/alisa/testgit/Stammbaum/FamilyTree/src -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtSql -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../src/gui/editfamilywindow.h -o moc_editfamilywindow.cpp
 
 moc_mainwindow.cpp: ../src/gui/mainwindow.h \
+		../src/gui/userwindow.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
 	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/alisa/testgit/Stammbaum/FamilyTree/build-FamilyTree-Desktop-Debug/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/alisa/testgit/Stammbaum/FamilyTree/src -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtSql -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../src/gui/mainwindow.h -o moc_mainwindow.cpp
@@ -441,6 +439,7 @@ editfamilywindow.o: ../src/gui/editfamilywindow.cpp ../src/gui/editfamilywindow.
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o editfamilywindow.o ../src/gui/editfamilywindow.cpp
 
 mainwindow.o: ../src/gui/mainwindow.cpp ../src/gui/mainwindow.h \
+		../src/gui/userwindow.h \
 		ui_mainwindow.h \
 		../src/persistence/databaseservice.h \
 		../src/value-objects/user.h \
@@ -449,10 +448,16 @@ mainwindow.o: ../src/gui/mainwindow.cpp ../src/gui/mainwindow.h \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../src/gui/mainwindow.cpp
 
 userwindow.o: ../src/gui/userwindow.cpp ../src/gui/userwindow.h \
-		ui_userwindow.h
+		ui_userwindow.h \
+		../src/domain/ILogic.h \
+		../src/value-objects/familytree.h \
+		../src/value-objects/user.h \
+		../src/value-objects/member.h \
+		../src/persistence/databaseservice.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o userwindow.o ../src/gui/userwindow.cpp
 
 main.o: ../src/main.cpp ../src/gui/mainwindow.h \
+		../src/gui/userwindow.h \
 		../src/value-objects/user.h \
 		../src/domain/ILogic.h \
 		../src/value-objects/familytree.h \
