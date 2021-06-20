@@ -22,6 +22,7 @@ namespace database {
 
     // user
     User* saveUser(QString name, QString password);
+    User* checklogin(QString userName, QString password);
 
     // family tree
     FamilyTree* saveFamily(QString name, User* admin);

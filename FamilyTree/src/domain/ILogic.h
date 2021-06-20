@@ -16,7 +16,7 @@ namespace domain {
 
     // user
     User* createUser(QString& name, QString& password);
-    User* loginUser(QString& name, QString password);
+    User* loginUser(QString& name, QString& password);
 
 
     // family tree

@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "userwindow.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -18,7 +19,10 @@ public:
 private slots:
     void createNewUser();
 
+    void on_loginButton_clicked();
+
 private:
     Ui::MainWindow *ui;
+    UserWindow *userwindow;
 };
 #endif // MAINWINDOW_H
