@@ -31,10 +31,11 @@ public:
     QAction *actionQuit;
     QWidget *centralwidget;
     QGridLayout *gridLayout_2;
-    QGridLayout *gridLayout;
-    QTableWidget *tableWidget;
     QHBoxLayout *horizontalLayout;
     QPushButton *newUserButton;
+    QGridLayout *gridLayout;
+    QTableWidget *tableWidget;
+    QPushButton *loginButton;
     QMenuBar *menubar;
     QMenu *menuFile;
     QStatusBar *statusbar;
@@ -50,16 +51,6 @@ public:
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
         gridLayout_2 = new QGridLayout(centralwidget);
         gridLayout_2->setObjectName(QString::fromUtf8("gridLayout_2"));
-        gridLayout = new QGridLayout();
-        gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
-        tableWidget = new QTableWidget(centralwidget);
-        tableWidget->setObjectName(QString::fromUtf8("tableWidget"));
-
-        gridLayout->addWidget(tableWidget, 0, 0, 1, 1);
-
-
-        gridLayout_2->addLayout(gridLayout, 1, 0, 1, 1);
-
         horizontalLayout = new QHBoxLayout();
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
         newUserButton = new QPushButton(centralwidget);
@@ -69,6 +60,21 @@ public:
 
 
         gridLayout_2->addLayout(horizontalLayout, 0, 0, 1, 1);
+
+        gridLayout = new QGridLayout();
+        gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
+        tableWidget = new QTableWidget(centralwidget);
+        tableWidget->setObjectName(QString::fromUtf8("tableWidget"));
+
+        gridLayout->addWidget(tableWidget, 0, 0, 1, 1);
+
+
+        gridLayout_2->addLayout(gridLayout, 2, 0, 1, 1);
+
+        loginButton = new QPushButton(centralwidget);
+        loginButton->setObjectName(QString::fromUtf8("loginButton"));
+
+        gridLayout_2->addWidget(loginButton, 1, 0, 1, 1);
 
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
@@ -94,6 +100,7 @@ public:
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", nullptr));
         actionQuit->setText(QApplication::translate("MainWindow", "Quit", nullptr));
         newUserButton->setText(QApplication::translate("MainWindow", "Create New User", nullptr));
+        loginButton->setText(QApplication::translate("MainWindow", "Login", nullptr));
         menuFile->setTitle(QApplication::translate("MainWindow", "File", nullptr));
     } // retranslateUi
 

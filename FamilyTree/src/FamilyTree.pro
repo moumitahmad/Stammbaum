@@ -16,10 +16,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    domain/ILogic.cpp \
     gui/editfamilywindow.cpp \
     gui/mainwindow.cpp \
+    gui/userwindow.cpp \
     main.cpp \
     persistence/databaseservice.cpp \
+    value-objects/familytree.cpp \
     value-objects/member.cpp \
     value-objects/user.cpp
 
@@ -27,13 +30,16 @@ HEADERS += \
     domain/ILogic.h \
     gui/editfamilywindow.h \
     gui/mainwindow.h \
+    gui/userwindow.h \
     persistence/databaseservice.h \
+    value-objects/familytree.h \
     value-objects/member.h \
     value-objects/user.h
 
 FORMS += \
     gui/editfamilywindow.ui \
-    gui/mainwindow.ui
+    gui/mainwindow.ui \
+    gui/userwindow.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

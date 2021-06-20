@@ -2,19 +2,35 @@
 #define ILOGIC_H
 
 #include <QString>
+#include <QVector>
+
+#include "./value-objects/familytree.h"
+#include "./value-objects/member.h"
+#include "./value-objects/user.h"
 
 namespace domain {
-    class IUserLogic {
-        void createUser(int id, QString& name, QString& password);
-    };
+    // database general
+    void connectToDatabase();
+    void printDatabase();
 
-    class IFamilyLogic {
 
-    };
+    // user
+    User* createUser(QString& name, QString& password);
+    User* loginUser(QString& name, QString& password);
 
-    class IMemberLogic {
-        void updateMember();
-    };
+
+    // family tree
+    FamilyTree* createFamily(QString& name, User* admin); //, QVector<User*> editors = new QVector<User*>, QVector<User*> viewers = new QVector<User*>
+    FamilyTree* addEditor(FamilyTree* family, User* user);
+    FamilyTree* addViewer(FamilyTree* family, User* user);
+
+    QVector<FamilyTree*> getFamilyTreesByUserID(int userID);
+    FamilyTree* getFamilyTreesByID(int familyID);
+
+
+    // member
+    QVector<Member*> getMembersByFamily(int familyID);
+    void updateMemberFromFamily(int familyID);
 }
 
 #endif // ILOGIC_H

@@ -45,3 +45,9 @@ void MainWindow::createNewUser() {
     }
 }
 
+
+void MainWindow::on_loginButton_clicked()
+{
+    userwindow = new UserWindow();
+    userwindow -> show();
+}
