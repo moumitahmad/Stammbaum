@@ -1,5 +1,6 @@
 #include "ILogic.h"
 #include "./persistence/databaseservice.h"
+#include <QDebug>
 
 // databse
 void domain::connectToDatabase() {
@@ -18,7 +19,19 @@ User* domain::createUser(QString& name, QString& password) {
 }
 
 User* domain::loginUser(QString& name, QString& password) {
-    return database::checklogin(name, password);
+    try {
+        User* user = database::getUserByName(name);
+        if(user->getPassword() == password) {
+            return user;
+        } else {
+            qDebug() << "wrong password";
+            return nullptr;
+        }
+    } catch(const char* exp) {
+        qDebug() << "wrong username";
+        qDebug() << "EXCEPTION:" << exp;
+        return nullptr;
+    }
 }
 
 // family tree

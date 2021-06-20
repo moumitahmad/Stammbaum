@@ -7,6 +7,7 @@
 #include "QSqlDatabase"
 #include "QSqlQuery"
 #include "QSqlError"
+#include <exception>
 
 // --------------- local methodes ---------------
 // user
@@ -23,21 +24,22 @@ User* selectUserByID(QString userID) {
     return user;
 }
 
-User* database::checklogin(QString userName, QString password) {
+User* database::getUserByName(QString userName) {
     // print table user
     QSqlQuery q;
-    q.exec("SELECT * FROM user WHERE name='"+userName+"' And password='halo';");   // "+password+"
+    q.exec("SELECT * FROM user WHERE name='"+userName+"';");
     if (q.first()) {
         int id = q.value(0).toInt();
         QString name = q.value(1).toString();
         QString userPassword = q.value(2).toString();
         qDebug() << name << userPassword;
         User* user = new User(id, name, userPassword);
-    } else { qDebug() << "hi";
-
+        return user;
+    } else {
+        qDebug() << q.lastError();
+        qDebug() << "database: user name wrong";
+        throw "username is wrong.";
     }
-
-    return nullptr;
 }
 
 void database::printTableUser() {
@@ -292,3 +294,4 @@ void database::saveViewer(int familyID, User* viewer) {
         return;
     }
 }
+

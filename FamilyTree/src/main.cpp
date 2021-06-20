@@ -24,7 +24,7 @@ void testDatabase() {
 
 int main(int argc, char *argv[]) {
     domain::connectToDatabase();
-    testDatabase();
+    //testDatabase();
     QApplication a(argc, argv);
     MainWindow w;
     w.show();

@@ -23,9 +23,13 @@ void UserWindow::on_pushButton_clicked()
 {
     QString username = ui->lineEdit_username->text();
     QString password = ui->lineEdit_password->text();
-    ui->errorLabel->show();
 
-    domain::loginUser(username, password);
+    if(domain::loginUser(username, password)) {
+        ui->errorLabel->hide();
+        qDebug() << "entry right";
+    } else {
+        ui->errorLabel->show();
+    }
 
 }
 
