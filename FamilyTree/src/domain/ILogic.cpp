@@ -17,6 +17,10 @@ User* domain::createUser(QString& name, QString& password) {
     return database::saveUser(name, password);
 }
 
+User* domain::loginUser(QString& name, QString& password) {
+    return database::checklogin(name, password);
+}
+
 // family tree
 FamilyTree* domain::createFamily(QString& name, User* admin) { // , QVector<User*> editors, QVector<User*> viewers
     FamilyTree* family = database::saveFamily(name, admin);

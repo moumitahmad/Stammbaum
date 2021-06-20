@@ -23,6 +23,19 @@ User* selectUserByID(QString userID) {
     return user;
 }
 
+User* database::checklogin(QString userName, QString password) {
+    // print table user
+    QSqlQuery q;
+    q.exec("SELECT * FROM user WHERE name='"+userName+"' And password='"+password+"';");   //name=" + userName + ";"); //" AND password=" + password + ";");
+    q.first();
+    int id = q.value(0).toInt();
+    QString name = q.value(1).toString();
+    QString userPassword = q.value(2).toString();
+    qDebug() << name << userPassword;
+    User* user = new User(id, name, userPassword);
+    return user;
+}
+
 void database::printTableUser() {
     // print table user
     QSqlQuery q;
