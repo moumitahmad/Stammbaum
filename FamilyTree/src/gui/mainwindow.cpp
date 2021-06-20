@@ -6,6 +6,7 @@
 #include <QLineEdit>
 #include <QDialogButtonBox>
 #include <QDebug>
+#include "./domain/ILogic.h"
 
 MainWindow::MainWindow(QWidget *parent): QMainWindow(parent), ui(new Ui::MainWindow) {
     ui->setupUi(this);
@@ -41,7 +42,7 @@ void MainWindow::createNewUser() {
         QString name = nameLineEdit->text();
         QString password = passwordLineEdit->text();
         qDebug() << "New User" << "name: " << name << ", password: " << password;
-        database::saveUser(name, password);
+        domain::createUser(name, password);
     }
 }
 
