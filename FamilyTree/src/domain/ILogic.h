@@ -9,7 +9,7 @@
 #include "./value-objects/user.h"
 
 namespace domain {
-    // database gernal
+    // database general
     void connectToDatabase();
     void printDatabase();
 

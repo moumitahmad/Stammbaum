@@ -13,7 +13,8 @@
 User* selectUserByID(QString userID) {
     // print table user
     QSqlQuery q;
-    q.exec("SELECT * FROM user WHERE id=" + userID + ";");
+    q.exec("SELECT * FROM user WHERE id="+userID+";");
+    q.first();
     int id = q.value(0).toInt();
     QString name = q.value(1).toString();
     QString password = q.value(2).toString();
@@ -59,7 +60,6 @@ void database::printFamilyTable() {
     qDebug() << ">> FamilyTree table:";
     QSqlQuery q;
     if(q.exec("SELECT * FROM familytree;")) {
-        qDebug() << "got family";
         while(q.next()) {
             int id = q.value(0).toInt();
             QString name = q.value(1).toString();
@@ -67,7 +67,8 @@ void database::printFamilyTable() {
             qDebug() << name << ", " << adminID;
 
             QSqlQuery q1;
-            if(q1.exec("SELECT * FROM user WHERE id=" + adminID + ";")) {
+            if(q1.exec("SELECT * FROM user WHERE id="+adminID+";")) {
+                q1.first();
                 int userID = q1.value(0).toInt();
                 QString userName = q1.value(1).toString();
                 QString password = q1.value(2).toString();
@@ -78,28 +79,45 @@ void database::printFamilyTable() {
                 qDebug() << family->getId() << ": " << family->getFamilyName() << ", " << family->getAdmin()->getName();
             } else {
                 qDebug() << q1.lastError();
+                return;
             }
         }
     } else {
         qDebug() << q.lastError();
+        return;
     }
 }
 
 FamilyTree* selectFamilyByID(QString familyID) {
     QSqlQuery q;
-    q.exec("SELECT * FROM familytree WHERE id=" + familyID + ";");
-    int id = q.value(0).toInt();
-    QString name = q.value(1).toString();
-    QString adminID = q.value(2).toString();
+    qDebug() << "In select Family";
+    if(q.exec("SELECT * FROM familytree WHERE id="+familyID+";")) {
+        q.first();
+        int id = q.value(0).toInt();
+        QString name = q.value(1).toString();
+        QString adminID = q.value(2).toString();
+        qDebug() << name << ", " << adminID;
 
-    QSqlQuery q1;
-    q1.exec("SELECT * FROM user WHERE id=" + adminID + ";");
-    QString adminName = q1.value(1).toString();
-    QString adminPassword = q1.value(2).toString();
-    User* admin = new User(q1.value(0).toInt(), adminName, adminPassword);
+        QSqlQuery q1;
+        if(q1.exec("SELECT * FROM user WHERE id="+adminID+";")) {
+            q1.first();
+            int userID = q1.value(0).toInt();
+            QString userName = q1.value(1).toString();
+            QString password = q1.value(2).toString();
+            qDebug() << userID << ", " << userName << ", " << password;
+            User* admin = new User(userID, userName, password);
 
-    FamilyTree* family = new FamilyTree(id, name, admin);
-    return family;
+            FamilyTree* family = new FamilyTree(id, name, admin);
+            qDebug() << family->getId() << ": " << family->getFamilyName() << ", " << family->getAdmin()->getName();
+            return family;
+        } else {
+            qDebug() << q1.lastError();
+            return nullptr;
+        }
+    } else {
+        qDebug() << q.lastError();
+        return nullptr;
+    }
 }
 
 void database::printHasRightsTable() {
@@ -110,12 +128,13 @@ void database::printHasRightsTable() {
         QString familyID = q.value(0).toString();
         QString userID = q.value(1).toString();
         QString authorization = q.value(2).toString();
+        qDebug() << familyID << " " << userID << " " << authorization;
 
-        FamilyTree *family = selectFamilyByID(familyID);
+        FamilyTree* family = selectFamilyByID(familyID);
         User* user = selectUserByID(userID);
-        if(authorization == 'editor') {
+        if(authorization == "editor") {
             family->addEditor(user);
-        } else {
+        } else { // authorization == viewer
             family->addViewer(user);
         }
         qDebug() << "In family " << family->getFamilyName() << " " << user->getName() << " = " << authorization;
@@ -249,7 +268,7 @@ void database::saveEditor(int familyID, User* editor) {
     q.prepare("INSERT INTO hasRights(familyID, userID, authorization) VALUES(:familyID, :userID, :authorization);");
     q.bindValue(":familyID", familyID);
     q.bindValue(":userID", editor->getId());
-    q.bindValue(":authorization", 'editor');
+    q.bindValue(":authorization", "editor");
 
     if(q.exec()) {
         qDebug() << "New editor entered!";
@@ -264,7 +283,7 @@ void database::saveViewer(int familyID, User* viewer) {
     q.prepare("INSERT INTO hasRights(familyID, userID, authorization) VALUES(:familyID, :userID, :authorization);");
     q.bindValue(":familyID", familyID);
     q.bindValue(":userID", viewer->getId());
-    q.bindValue(":authorization", 'viewer');
+    q.bindValue(":authorization", "viewer");
 
     if(q.exec()) {
         qDebug() << "New viewer entered!";
