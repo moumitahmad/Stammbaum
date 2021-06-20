@@ -9,14 +9,14 @@
 #include "./value-objects/user.h"
 
 namespace domain {
-    // database gernal
+    // database general
     void connectToDatabase();
     void printDatabase();
 
 
     // user
     User* createUser(QString& name, QString& password);
-    User* loginUser(QString& name, QString password);
+    User* loginUser(QString& name, QString& password);
 
 
     // family tree
