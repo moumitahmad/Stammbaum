@@ -2,41 +2,42 @@
 #include "./persistence/databaseservice.h"
 #include <QDebug>
 
+
 // databse
-void domain::connectToDatabase() {
-    database::connectToDatabase();
+void domain::ILogic::connectToDatabase() {
+    m_pDB->connectToDatabase();
 }
 
-void domain::printDatabase() {
-    database::printTableUser();
-    database::printFamilyTable();
-    database::printHasRightsTable();
+void domain::ILogic::printDatabase() {
+    m_pDB->printTableUser();
+    m_pDB->printFamilyTable();
+    m_pDB->printHasRightsTable();
 }
 
 // user
-User* domain::createUser(QString& name, QString& password) {
-    return database::saveUser(name, password);
+User* domain::ILogic::createUser(QString& name, QString& password) {
+    return m_pDB->saveUser(name, password);
 }
 
-User* domain::loginUser(QString& name, QString& password) {
+User* domain::ILogic::loginUser(QString& name, QString& password) {
     try {
-        User* user = database::getUserByName(name);
+        User* user = m_pDB->getUserByName(name);
         if(user->getPassword() == password) {
             return user;
         } else {
             qDebug() << "wrong password";
             return nullptr;
         }
-    } catch(const char* exp) {
+    } catch(const std::logic_error exp) {
         qDebug() << "wrong username";
-        qDebug() << "EXCEPTION:" << exp;
+        qDebug() << "EXCEPTION:" << exp.what();
         return nullptr;
     }
 }
 
 // family tree
-FamilyTree* domain::createFamily(QString& name, User* admin) { // , QVector<User*> editors, QVector<User*> viewers
-    FamilyTree* family = database::saveFamily(name, admin);
+FamilyTree* domain::ILogic::createFamily(QString& name, User* admin) { // , QVector<User*> editors, QVector<User*> viewers
+    FamilyTree* family = m_pDB->saveFamily(name, admin);
     /*for(int i=0; i<editors.length(); i++) {
         database::saveEditor(family->getId(), editors.at(i));
         family->addEditor(editors.at(i));
@@ -48,14 +49,14 @@ FamilyTree* domain::createFamily(QString& name, User* admin) { // , QVector<User
     return family;
 }
 
-FamilyTree* domain::addEditor(FamilyTree* family, User* user) {
-    database::saveEditor(family->getId(), user);
+FamilyTree* domain::ILogic::addEditor(FamilyTree* family, User* user) {
+    m_pDB->saveEditor(family->getId(), user);
     family->addEditor(user);
     return family;
 }
 
-FamilyTree* domain::addViewer(FamilyTree* family, User* user) {
-    database::saveViewer(family->getId(), user);
+FamilyTree* domain::ILogic::addViewer(FamilyTree* family, User* user) {
+    m_pDB->saveViewer(family->getId(), user);
     family->addViewer(user);
     return family;
 }

@@ -8,7 +8,11 @@
 #include <QDebug>
 #include "./domain/ILogic.h"
 
-MainWindow::MainWindow(QWidget *parent): QMainWindow(parent), ui(new Ui::MainWindow) {
+MainWindow::MainWindow(domain::ILogic* pLogic, QWidget *parent):
+    QMainWindow(parent),
+    m_pLogic(pLogic),
+    ui(new Ui::MainWindow)
+{
     ui->setupUi(this);
     QObject::connect(ui->newUserButton, &QPushButton::clicked, this, &MainWindow::createNewUser);
 }
@@ -27,7 +31,8 @@ void MainWindow::createNewUser() {
 
     QDialogButtonBox * buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
 
-    QObject::connect(buttonBox, SIGNAL(accepted()), d, SLOT(accept()));
+    QObject::connect(buttonBox, &QDialogButtonBox::accepted, d, &QDialog::accept);
+    //QObject::connect(buttonBox, SIGNAL(accepted()), d, SLOT(accept()));
     QObject::connect(buttonBox, SIGNAL(rejected()), d, SLOT(reject()));
 
     vbox->addWidget(nameLineEdit);
@@ -42,13 +47,13 @@ void MainWindow::createNewUser() {
         QString name = nameLineEdit->text();
         QString password = passwordLineEdit->text();
         qDebug() << "New User" << "name: " << name << ", password: " << password;
-        domain::createUser(name, password);
+        m_pLogic->createUser(name, password);
     }
 }
 
 
 void MainWindow::on_loginButton_clicked()
 {
-    userwindow = new UserWindow();
+    userwindow = new UserWindow(m_pLogic);
     userwindow -> show();
 }

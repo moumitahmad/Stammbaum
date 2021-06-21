@@ -7,7 +7,6 @@
 #include "QSqlDatabase"
 #include "QSqlQuery"
 #include "QSqlError"
-#include <exception>
 
 // --------------- local methodes ---------------
 // user
@@ -24,7 +23,7 @@ User* selectUserByID(QString userID) {
     return user;
 }
 
-User* database::getUserByName(QString userName) {
+User* database::IDatabase::getUserByName(QString& userName) {
     // print table user
     QSqlQuery q;
     q.exec("SELECT * FROM user WHERE name='"+userName+"';");
@@ -38,11 +37,11 @@ User* database::getUserByName(QString userName) {
     } else {
         qDebug() << q.lastError();
         qDebug() << "database: user name wrong";
-        throw "username is wrong.";
+        throw new std::logic_error("username is wrong.");
     }
 }
 
-void database::printTableUser() {
+void database::IDatabase::printTableUser() {
     // print table user
     QSqlQuery q;
     q.exec("SELECT * FROM user;");
@@ -57,7 +56,7 @@ void database::printTableUser() {
 }
 
 // FamilyTree
-void database::printFamilyTable() {
+void database::IDatabase::printFamilyTable() {
     // print table user
     qDebug() << ">> FamilyTree table:";
     QSqlQuery q;
@@ -90,7 +89,7 @@ void database::printFamilyTable() {
     }
 }
 
-FamilyTree* selectFamilyByID(QString familyID) {
+FamilyTree* selectFamilyByID(QString& familyID) {
     QSqlQuery q;
     qDebug() << "In select Family";
     if(q.exec("SELECT * FROM familytree WHERE id="+familyID+";")) {
@@ -122,7 +121,7 @@ FamilyTree* selectFamilyByID(QString familyID) {
     }
 }
 
-void database::printHasRightsTable() {
+void database::IDatabase::printHasRightsTable() {
     qDebug() << ">> hasRights table:";
     QSqlQuery q;
     q.exec("SELECT * FROM hasRights;");
@@ -218,7 +217,7 @@ void fillDatabase() {
 
 
 // --------------- database methodes ---------------
-void database::connectToDatabase() {
+void database::IDatabase::connectToDatabase() {
     // connect to database
     QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
     db.setHostName("127.0.0.1");
@@ -232,7 +231,7 @@ void database::connectToDatabase() {
 }
 
 // User
-User* database::saveUser(QString name, QString password) {
+User* database::IDatabase::saveUser(QString& name, QString& password) {
     // fill table user with new values
     QSqlQuery q;
     q.prepare("INSERT INTO user(name, password) VALUES(:name, :password);");
@@ -249,7 +248,7 @@ User* database::saveUser(QString name, QString password) {
 }
 
 // FamilyTree
-FamilyTree* database::saveFamily(QString name, User* admin) {
+FamilyTree* database::IDatabase::saveFamily(QString& name, User* admin) {
     // insert into familytree
     QSqlQuery q;
     q.prepare("INSERT INTO familytree(name, adminID) VALUES(:name, :adminID);");
@@ -265,7 +264,7 @@ FamilyTree* database::saveFamily(QString name, User* admin) {
     return family;
 }
 
-void database::saveEditor(int familyID, User* editor) {
+void database::IDatabase::saveEditor(int familyID, User* editor) {
     QSqlQuery q;
     q.prepare("INSERT INTO hasRights(familyID, userID, authorization) VALUES(:familyID, :userID, :authorization);");
     q.bindValue(":familyID", familyID);
@@ -280,7 +279,7 @@ void database::saveEditor(int familyID, User* editor) {
     }
 }
 
-void database::saveViewer(int familyID, User* viewer) {
+void database::IDatabase::saveViewer(int familyID, User* viewer) {
     QSqlQuery q;
     q.prepare("INSERT INTO hasRights(familyID, userID, authorization) VALUES(:familyID, :userID, :authorization);");
     q.bindValue(":familyID", familyID);

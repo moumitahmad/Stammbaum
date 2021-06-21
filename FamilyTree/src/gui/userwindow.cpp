@@ -2,12 +2,10 @@
 #include "ui_userwindow.h"
 #include "QDebug"
 
-#include "./domain/ILogic.h"
-#include "./persistence/databaseservice.h"
 
-
-UserWindow::UserWindow(QWidget *parent) :
+UserWindow::UserWindow( domain::ILogic* pLogic, QWidget *parent) :
     QWidget(parent),
+    m_pLogic(pLogic),
     ui(new Ui::UserWindow)
 {
     ui->setupUi(this);
@@ -24,7 +22,7 @@ void UserWindow::on_pushButton_clicked()
     QString username = ui->lineEdit_username->text();
     QString password = ui->lineEdit_password->text();
 
-    if(domain::loginUser(username, password)) {
+    if(m_pLogic->loginUser(username, password)) {
         ui->errorLabel->hide();
         qDebug() << "entry right";
     } else {

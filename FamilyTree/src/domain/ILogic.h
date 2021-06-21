@@ -8,29 +8,40 @@
 #include "./value-objects/member.h"
 #include "./value-objects/user.h"
 
+#include "../persistence/databaseservice.h"
+
+
 namespace domain {
-    // database general
-    void connectToDatabase();
-    void printDatabase();
+
+    class ILogic  {
+        database::IDatabase* m_pDB;
+    public:
+        ILogic(database::IDatabase* pDB): m_pDB(pDB){}
+
+        // database general
+        void connectToDatabase();
+        void printDatabase();
 
 
-    // user
-    User* createUser(QString& name, QString& password);
-    User* loginUser(QString& name, QString& password);
+        // user
+        User* createUser(QString& name, QString& password);
+        User* loginUser(QString& name, QString& password);
 
 
-    // family tree
-    FamilyTree* createFamily(QString& name, User* admin); //, QVector<User*> editors = new QVector<User*>, QVector<User*> viewers = new QVector<User*>
-    FamilyTree* addEditor(FamilyTree* family, User* user);
-    FamilyTree* addViewer(FamilyTree* family, User* user);
+        // family tree
+        FamilyTree* createFamily(QString& name, User* admin); //, QVector<User*> editors = new QVector<User*>, QVector<User*> viewers = new QVector<User*>
+        FamilyTree* addEditor(FamilyTree* family, User* user);
+        FamilyTree* addViewer(FamilyTree* family, User* user);
 
-    QVector<FamilyTree*> getFamilyTreesByUserID(int userID);
-    FamilyTree* getFamilyTreesByID(int familyID);
+        QVector<FamilyTree*> getFamilyTreesByUserID(int userID);
+        FamilyTree* getFamilyTreesByID(int familyID);
 
 
-    // member
-    QVector<Member*> getMembersByFamily(int familyID);
-    void updateMemberFromFamily(int familyID);
+        // member
+        QVector<Member*> getMembersByFamily(int familyID);
+        void updateMemberFromFamily(int familyID);
+    };
+
 }
 
 #endif // ILOGIC_H
