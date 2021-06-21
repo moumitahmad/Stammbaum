@@ -294,3 +294,43 @@ void database::IDatabase::saveViewer(int familyID, User* viewer) {
     }
 }
 
+
+// ---------------- MEMBER ------------------------
+Member* database::IDatabase::saveMember(QString &name, const QString &birth, const QString &death, const QString &gender, const QString &biografie, Member* partner, int familyID) {
+    QSqlQuery q;
+    q.prepare("INSERT INTO member(name, birth, death, gender, biografie, partnerID, familyID) VALUES(:name, :birth, :death, :gender, :biografie, :partnerID, :familyID);");
+    q.bindValue(":name", name);
+    q.bindValue(":birth", birth);
+    q.bindValue(":death", death);
+    q.bindValue(":gender", gender);
+    q.bindValue(":biografie", biografie);
+    q.bindValue(":partnerID", partner->getID());
+    q.bindValue(":familyID", familyID);
+
+    if(q.exec()) {
+        qDebug() << "New Member entered!";
+        Member* newMember = new Member(q.lastInsertId().toInt(), name, birth, death, gender, biografie, partner);
+        return newMember;
+    } else {
+        qDebug() << q.lastError();
+        return nullptr;
+    }
+}
+
+Member* database::IDatabase::saveChildFromMember(Member* child, Member* parent) {
+    QSqlQuery q;
+    q.prepare("INSERT INTO hasParent(childID, parentID) VALUES(:childID, :parentID);");
+    q.bindValue(":childID", child->getID());
+    q.bindValue(":parentID", parent->getID());
+
+    if(q.exec()) {
+        qDebug() << "New Parent entered!";
+        parent->addChild(child);
+        child->addParent(parent); // TODO: dont forget to delete old parent at some point
+        return parent;
+    } else {
+        qDebug() << q.lastError();
+        return nullptr;
+    }
+}
+
