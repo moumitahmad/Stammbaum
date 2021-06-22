@@ -24,13 +24,13 @@ void testDatabase(domain::ILogic* pLogic) {
     User* admin = pLogic->createUser(adminName, password);
     User* editor = pLogic->createUser(editorName, password);
     FamilyTree* family = pLogic->createFamily(familyName, admin);
-    family = pLogic->addEditor(family, editor); // TODO: here is the mistake
+    family = pLogic->addEditor(family, editor);
+    pLogic->printDatabase();
 
     Member* member1 = pLogic->createMember(family, memberName1);
-    /*QVector<Member*> children = new QVector<Member*>;
-    children.append(member1);
-    Member* member2 = pLogic->createMember(family, memberName2, birth, death, "Female", nullptr, nullptr, children);*/
-    pLogic->printDatabase();
+    QVector<Member*>* children = new QVector<Member*>;
+    children->push_back(member1);
+    Member* member2 = pLogic->createMember(family, memberName2, birth, death, "female", nullptr, new Member(), children);
 }
 
 

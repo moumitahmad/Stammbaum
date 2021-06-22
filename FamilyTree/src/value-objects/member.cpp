@@ -10,7 +10,7 @@ const QString& Member::getName() const {
 }
 
 void Member::addParent(Member* parent) {
-    m_parents.append(parent);
+    m_parents.push_back(parent);
 }
 
 void Member::deleteParent(Member* parent) {
@@ -36,7 +36,7 @@ void Member::updatePartner(Member *partner) {
 }
 
 void Member::addChild(Member* child) {
-    m_children.append(child);
+    m_children.push_back(child);
 }
 
 void Member::deleteChild(Member* child) {

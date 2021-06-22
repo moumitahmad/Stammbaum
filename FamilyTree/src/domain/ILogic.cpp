@@ -61,9 +61,10 @@ FamilyTree* domain::ILogic::addViewer(FamilyTree* family, User* user) {
     return family;
 }
 
-Member* domain::ILogic::createMember(FamilyTree* family, QString& name,
-        const QString& birth, const QString& death, const QString& gender,
-        const QString& biografie, Member *partner, QVector<Member*> *children) {
+Member *domain::ILogic::createMember(FamilyTree *family, QString &name, const QString &birth,
+        const QString &death, const QString &gender, const QString &biografie, Member *partner,
+        QVector<Member*>* children) {
+    qDebug() << name << birth << death << gender << biografie << partner->getName();
     Member* member = m_pDB->saveMember(name, birth, death, gender, biografie, partner, family->getId());
     if(!children->empty()) {
         qDebug() << "children exsist";
@@ -73,4 +74,3 @@ Member* domain::ILogic::createMember(FamilyTree* family, QString& name,
     }
     return member;
 }
-

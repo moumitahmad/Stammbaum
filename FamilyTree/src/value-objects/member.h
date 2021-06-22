@@ -13,6 +13,7 @@
 
 class Member {
 public:
+    Member() {}
     Member(int id, QString name, QString birth, QString death, QString gender,
         QString biografie, Member* partner):
         m_id(id), m_name(name), m_birth(birth), m_death(death), m_gender(gender),
