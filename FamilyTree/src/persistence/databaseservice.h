@@ -31,21 +31,16 @@ namespace database {
         void deleteViewerFromFamily(int userId, int familyID);
 
         // member
-        Member* saveMember(QString& name, QString& birth, QString& death, gender g, QString& biografie, int familyID);
-        void updateMember(QString& name, QString& birth, QString& death, gender g, QString& biografie, int familyID);
+        Member* saveMember(QString& name, const QString& birth, const QString& death, const QString& gender, const QString& biografie, Member* partner, int familyID);
+        Member* updateMember(QString& name, QString& birth, QString& death, QString& gender, QString& biografie, int familyID);
 
         // relationships
-        void updateParentFromMember(int parentID, int memberID);
-        void deleteParentFromMember(int parentID, int memberID);
-        void updatePartnerFromMember(int partnerID, int memberID); // overrides the saved parnter
-        void saveChildFromMember(int childID, int memberID);
-        void deleteChildFromMember(int childID, int memberID);
+        Member* savePartnerFromMember(Member* partner, Member* member);
+        Member* updatePartnerFromMember(Member* partner, Member* member); // overrides the saved parnter
+
+        Member* saveChildFromMember(Member* child, Member* parent);
+        Member* deleteChildFromMember(Member* child, Member* parent);
     };
 }
-
-
-
-
-
 
 #endif // DATABASESERVICE_H

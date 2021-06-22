@@ -1,6 +1,6 @@
 #include "familytree.h"
 
-int FamilyTree::getId() {
+int FamilyTree::getId() const {
     return m_id;
 }
 

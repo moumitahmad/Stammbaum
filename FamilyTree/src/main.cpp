@@ -4,9 +4,9 @@
 */
 
 #include <QApplication>
+
 #include "gui/mainwindow.h"
 #include "value-objects/user.h"
-
 #include "domain/ILogic.h"
 #include "persistence/databaseservice.h"
 
@@ -16,18 +16,27 @@ void testDatabase(domain::ILogic* pLogic) {
     QString password = "password";
     QString familyName = "TestFamily";
 
+    QString memberName1 = "TestMember";
+    QString memberName2 = "TestParent";
+    QString birth = "01.09.1968";
+    QString death = "02.04.2010";
+
     User* admin = pLogic->createUser(adminName, password);
     User* editor = pLogic->createUser(editorName, password);
     FamilyTree* family = pLogic->createFamily(familyName, admin);
     family = pLogic->addEditor(family, editor);
     pLogic->printDatabase();
+
+    Member* member1 = pLogic->createMember(family, memberName1);
+    QVector<Member*>* children = new QVector<Member*>;
+    children->push_back(member1);
+    Member* member2 = pLogic->createMember(family, memberName2, birth, death, "female", nullptr, new Member(), children);
 }
 
 
 int main(int argc, char *argv[]) {
     database::IDatabase* pDB = new database::IDatabase();
     domain::ILogic* pLogic = new domain::ILogic(pDB);
-    //gui::IView* pView = new gui::IView(pLogic);
 
     pLogic->connectToDatabase();
     testDatabase(pLogic);

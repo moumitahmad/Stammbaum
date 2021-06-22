@@ -10,7 +10,7 @@ public:
     ~FamilyTree();
 
     // methodes
-    int getId();
+    int getId() const;
     QString getFamilyName();
     User* getAdmin();
     QVector<User*> getEditors();

@@ -38,6 +38,10 @@ namespace domain {
 
 
         // member
+        Member* createMember(FamilyTree* family, QString& name, const QString& birth = "Unknown",
+                const QString& death = "Unknown", const QString& gender = "Unknown",
+                const QString& biografie = nullptr, Member* partner = new Member(),
+                QVector<Member*>* children = new QVector<Member*>);
         QVector<Member*> getMembersByFamily(int familyID);
         void updateMemberFromFamily(int familyID);
     };
