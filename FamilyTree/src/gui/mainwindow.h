@@ -2,7 +2,6 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "userwindow.h"
 #include "./domain/ILogic.h"
 
 QT_BEGIN_NAMESPACE
@@ -19,12 +18,12 @@ public:
     ~MainWindow();
 
 private slots:
+    void switchToCreateNewUser();
     void createNewUser();
-
     void logInUser();
+    void quit();
 
 private:
     Ui::MainWindow *ui;
-    UserWindow *userwindow;
 };
 #endif // MAINWINDOW_H

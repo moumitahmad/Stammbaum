@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>634</width>
-    <height>486</height>
+    <width>680</width>
+    <height>445</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,15 +18,15 @@
     <item row="0" column="0">
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
-       <number>2</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="loginPage">
-       <widget class="QWidget" name="">
+       <widget class="QWidget" name="layoutWidget">
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>20</y>
-          <width>616</width>
+          <y>0</y>
+          <width>661</width>
           <height>378</height>
          </rect>
         </property>
@@ -90,7 +90,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="errorLabel">
+          <widget class="QLabel" name="errorLabelLogin">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
              <horstretch>0</horstretch>
@@ -107,6 +107,27 @@
            </property>
            <property name="text">
             <string>No user found with this data. Please try again.</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="accountCreatedLabel">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="font">
+            <font>
+             <family>Sawasdee</family>
+             <pointsize>15</pointsize>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>Account successfully created! Please log in.</string>
            </property>
           </widget>
          </item>
@@ -290,7 +311,7 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>616</width>
+          <width>661</width>
           <height>378</height>
          </rect>
         </property>
@@ -298,7 +319,7 @@ p, li { white-space: pre-wrap; }
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout_9">
            <item>
-            <widget class="QLabel" name="welcomeLabel_3">
+            <widget class="QLabel" name="welcomeLabel_1">
              <property name="maximumSize">
               <size>
                <width>16777215</width>
@@ -321,7 +342,7 @@ p, li { white-space: pre-wrap; }
           </layout>
          </item>
          <item>
-          <widget class="QLabel" name="loginLabel_3">
+          <widget class="QLabel" name="signUpLabel">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
              <horstretch>0</horstretch>
@@ -354,7 +375,7 @@ p, li { white-space: pre-wrap; }
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="errorLabel_3">
+          <widget class="QLabel" name="errorLabelCreateUser">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
              <horstretch>0</horstretch>
@@ -370,7 +391,28 @@ p, li { white-space: pre-wrap; }
             </font>
            </property>
            <property name="text">
-            <string/>
+            <string>Username already taken. Please choose a different one.</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="placeholder">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="font">
+            <font>
+             <family>Sawasdee</family>
+             <pointsize>15</pointsize>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>Placeholder for symmetry.</string>
            </property>
           </widget>
          </item>
@@ -551,7 +593,7 @@ p, li { white-space: pre-wrap; }
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>634</width>
+     <width>680</width>
      <height>22</height>
     </rect>
    </property>

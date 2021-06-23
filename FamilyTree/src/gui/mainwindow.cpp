@@ -15,51 +15,55 @@ MainWindow::MainWindow(domain::ILogic* pLogic, QWidget *parent):
 {
     ui->setupUi(this);
     ui->stackedWidget->setCurrentIndex(0);
-    ui->errorLabel->hide();
-    QObject::connect(ui->newUserButton, &QPushButton::clicked, this, &MainWindow::createNewUser);
+    ui->errorLabelLogin->hide();
+    ui->accountCreatedLabel->hide();
+    ui->placeholder->hide();
+
+    QObject::connect(ui->newUserButton, &QPushButton::clicked, this, &MainWindow::switchToCreateNewUser);
     QObject::connect(ui->loginButton, &QPushButton::clicked, this, &MainWindow::logInUser);
+    QObject::connect(ui->newUserButton_3, &QPushButton::clicked, this, &MainWindow::createNewUser);
+    QObject::connect(ui->actionQuit, &QAction::triggered, this, &MainWindow::quit);
 }
 
 MainWindow::~MainWindow() {
     delete ui;
 }
 
-void MainWindow::createNewUser() {
+void MainWindow::switchToCreateNewUser() {
     ui->stackedWidget->setCurrentIndex(1);
-    //ANPASSEN
-    /*
-    QDialog* d = new QDialog();
-    QVBoxLayout* vbox = new QVBoxLayout();
-    QLineEdit* nameLineEdit = new QLineEdit();
-    nameLineEdit->setPlaceholderText("Enter username");
-    QLineEdit* passwordLineEdit = new QLineEdit();
-    passwordLineEdit->setPlaceholderText("Enter password");
+    ui->errorLabelCreateUser->hide();
+}
 
-    QDialogButtonBox * buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+void MainWindow::createNewUser(){
+    QString username = ui->in_new_username->toPlainText();
+    QString password = ui->in_new_password->toPlainText();
 
-    QObject::connect(buttonBox, &QDialogButtonBox::accepted, d, &QDialog::accept);
-    //QObject::connect(buttonBox, SIGNAL(accepted()), d, SLOT(accept()));
-    QObject::connect(buttonBox, SIGNAL(rejected()), d, SLOT(reject()));
-
-    vbox->addWidget(nameLineEdit);
-    vbox->addWidget(passwordLineEdit);
-    vbox->addWidget(buttonBox);
-
-    d->setLayout(vbox);
-
-    int result = d->exec();
-    if(result == QDialog::Accepted) {
-        // create new user
-        QString name = nameLineEdit->text();
-        QString password = passwordLineEdit->text();
-        qDebug() << "New User" << "name: " << name << ", password: " << password;
-        m_pLogic->createUser(name, password);
-    }*/
+    if(m_pLogic->createUser(username,password) == nullptr){
+        ui->errorLabelCreateUser->show();
+        qDebug() << "User already exists!";
+    } else {
+        ui->stackedWidget->setCurrentIndex(0);
+        qDebug() << "User created!";
+    }
+    ui->stackedWidget->setCurrentIndex(0);
+    ui->accountCreatedLabel->show();
 }
 
 
-void MainWindow::logInUser()
-{
-    userwindow = new UserWindow(m_pLogic);
-    userwindow -> show();
+void MainWindow::logInUser(){
+    QString username = ui->in_username->toPlainText();
+    QString password = ui->in_password->toPlainText();
+
+    if(m_pLogic->loginUser(username, password)) {
+        ui->errorLabelLogin->hide();
+        qDebug() << "Succesfully logged in!";
+    } else {
+        ui->errorLabelLogin->show();
+    }
+
+}
+
+void MainWindow::quit(){
+    this->close();
+    exit(EXIT_SUCCESS);
 }
