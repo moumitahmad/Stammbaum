@@ -21,7 +21,7 @@ public:
 private slots:
     void createNewUser();
 
-    void on_loginButton_clicked();
+    void logInUser();
 
 private:
     Ui::MainWindow *ui;

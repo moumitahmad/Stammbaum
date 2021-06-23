@@ -14,7 +14,10 @@ MainWindow::MainWindow(domain::ILogic* pLogic, QWidget *parent):
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    ui->stackedWidget->setCurrentIndex(0);
+    ui->errorLabel->hide();
     QObject::connect(ui->newUserButton, &QPushButton::clicked, this, &MainWindow::createNewUser);
+    QObject::connect(ui->loginButton, &QPushButton::clicked, this, &MainWindow::logInUser);
 }
 
 MainWindow::~MainWindow() {
@@ -22,6 +25,9 @@ MainWindow::~MainWindow() {
 }
 
 void MainWindow::createNewUser() {
+    ui->stackedWidget->setCurrentIndex(1);
+    //ANPASSEN
+    /*
     QDialog* d = new QDialog();
     QVBoxLayout* vbox = new QVBoxLayout();
     QLineEdit* nameLineEdit = new QLineEdit();
@@ -48,11 +54,11 @@ void MainWindow::createNewUser() {
         QString password = passwordLineEdit->text();
         qDebug() << "New User" << "name: " << name << ", password: " << password;
         m_pLogic->createUser(name, password);
-    }
+    }*/
 }
 
 
-void MainWindow::on_loginButton_clicked()
+void MainWindow::logInUser()
 {
     userwindow = new UserWindow(m_pLogic);
     userwindow -> show();
