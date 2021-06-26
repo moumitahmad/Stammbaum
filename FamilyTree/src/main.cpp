@@ -21,6 +21,7 @@ void testDatabase(domain::ILogic* pLogic) {
     QString birth = "01.09.1968";
     QString death = "02.04.2010";
 
+    // CREATE
     User* admin = pLogic->createUser(adminName, password);
     User* editor = pLogic->createUser(editorName, password);
     FamilyTree* family = pLogic->createFamily(familyName, admin);
@@ -31,6 +32,11 @@ void testDatabase(domain::ILogic* pLogic) {
     QVector<Member*>* children = new QVector<Member*>;
     children->push_back(member1);
     Member* member2 = pLogic->createMember(family, memberName2, birth, death, "female", nullptr, new Member(), children);
+
+    // UPDATE
+    Member* newChild = pLogic->createMember(family, "New Child");
+    pLogic->updateMemberData(member1->getID(), "Name Change", "name");
+    pLogic->updateChildFromMember(member2->getID(), newChild);
 }
 
 
@@ -39,7 +45,7 @@ int main(int argc, char *argv[]) {
     domain::ILogic* pLogic = new domain::ILogic(pDB);
 
     pLogic->connectToDatabase();
-    //testDatabase(pLogic);
+    testDatabase(pLogic);
     QApplication a(argc, argv);
     MainWindow w(pLogic);
     w.show();

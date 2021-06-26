@@ -295,8 +295,38 @@ void database::IDatabase::saveViewer(int familyID, User* viewer) {
 }
 
 
+
 // ---------------- MEMBER ------------------------
-Member* database::IDatabase::saveMember(QString &name, const QString &birth, const QString &death, const QString &gender, const QString &biografie, Member* partner, int familyID) {
+Member* database::IDatabase::getMemberByID(const int id) {
+    QSqlQuery q;
+    QString query = "SELECT * from member WHERE id=" + QString::number(id) + ";";
+    if(q.exec(query)) {
+        q.first();
+        Member member = new Member(q.lastInsertId().toInt(), name, birth, death, gender, biografie, partner);
+        return member;
+    } else {
+        qDebug() << q.lastError();
+        throw new std::logic_error("Member with the ID=" + QString::number(id) + " does not exsist.");
+    }
+}
+
+QVector<Member*> database::IDatabase::getChildrenFromMemberID(const int id) {
+    QSqlQuery q;
+    QString query = "SELECT * from hasParent WHERE parentID=" + QString::number(id) + ";";
+    if(q.exec(query)) {
+        QVector<Member*> children;
+        while(q.next()) {
+            Member* member = getMemberByID(q.value(0).toInt());
+            children.push_back(member);
+        }
+        return children;
+    } else {
+        qDebug() << q.lastError();
+        throw new std::logic_error("Member does not has any children");
+    }
+}
+
+Member* database::IDatabase::saveMember(const QString &name, const QString &birth, const QString &death, const QString &gender, const QString &biografie, Member* partner, int familyID) {
     QSqlQuery q;
     q.prepare("INSERT INTO member(name, birth, death, gender, biografie, partnerID, familyID) VALUES(:name, :birth, :death, :gender, :biografie, :partnerID, :familyID);");
     q.bindValue(":name", name);
@@ -314,6 +344,24 @@ Member* database::IDatabase::saveMember(QString &name, const QString &birth, con
     } else {
         qDebug() << q.lastError();
         return nullptr;
+    }
+}
+
+Member* database::IDatabase::updateMember(const int id, const QString& change, const QString& position) {
+    QSqlQuery q;
+    qDebug() << "ID: " << id;
+    QString query = "UPDATE member SET " + position + "='" + change + "' WHERE id=" + QString::number(id) + ";";
+    qDebug() << query;
+    if(q.exec(query)) {
+        qDebug() << "Member updated";
+        Member* member = getMemberByID(q.lastInsertId());
+        QVector<Member*> children = getChildrenFromMemberID(q.lastInsertId());
+        for(Member* child : children) {
+            member.addChild(child);
+        }
+        return member;
+    } else {
+        qDebug() << q.lastError();
     }
 }
 

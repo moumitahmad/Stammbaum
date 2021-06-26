@@ -55,26 +55,22 @@ OBJECTS_DIR   = ./
 SOURCES       = ../FamilyTree/src/domain/ILogic.cpp \
 		../FamilyTree/src/gui/editfamilywindow.cpp \
 		../FamilyTree/src/gui/mainwindow.cpp \
-		../FamilyTree/src/gui/userwindow.cpp \
 		../FamilyTree/src/main.cpp \
 		../FamilyTree/src/persistence/databaseservice.cpp \
 		../FamilyTree/src/value-objects/familytree.cpp \
 		../FamilyTree/src/value-objects/member.cpp \
 		../FamilyTree/src/value-objects/user.cpp moc_editfamilywindow.cpp \
-		moc_mainwindow.cpp \
-		moc_userwindow.cpp
+		moc_mainwindow.cpp
 OBJECTS       = ILogic.o \
 		editfamilywindow.o \
 		mainwindow.o \
-		userwindow.o \
 		main.o \
 		databaseservice.o \
 		familytree.o \
 		member.o \
 		user.o \
 		moc_editfamilywindow.o \
-		moc_mainwindow.o \
-		moc_userwindow.o
+		moc_mainwindow.o
 DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/unix.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/linux.conf \
@@ -155,14 +151,12 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		../FamilyTree/FamilyTree/src/FamilyTree.pro ../FamilyTree/src/domain/ILogic.h \
 		../FamilyTree/src/gui/editfamilywindow.h \
 		../FamilyTree/src/gui/mainwindow.h \
-		../FamilyTree/src/gui/userwindow.h \
 		../FamilyTree/src/persistence/databaseservice.h \
 		../FamilyTree/src/value-objects/familytree.h \
 		../FamilyTree/src/value-objects/member.h \
 		../FamilyTree/src/value-objects/user.h ../FamilyTree/src/domain/ILogic.cpp \
 		../FamilyTree/src/gui/editfamilywindow.cpp \
 		../FamilyTree/src/gui/mainwindow.cpp \
-		../FamilyTree/src/gui/userwindow.cpp \
 		../FamilyTree/src/main.cpp \
 		../FamilyTree/src/persistence/databaseservice.cpp \
 		../FamilyTree/src/value-objects/familytree.cpp \
@@ -176,7 +170,7 @@ TARGET        = FamilyTree
 first: all
 ####### Build rules
 
-FamilyTree: ui_editfamilywindow.h ui_mainwindow.h ui_userwindow.h $(OBJECTS)  
+FamilyTree: ui_editfamilywindow.h ui_mainwindow.h $(OBJECTS)  
 	$(LINK) $(LFLAGS) -o $(TARGET) $(OBJECTS) $(OBJCOMP) $(LIBS)
 	objcopy --only-keep-debug FamilyTree FamilyTree.debug && objcopy --strip-debug FamilyTree && objcopy --add-gnu-debuglink=FamilyTree.debug FamilyTree && chmod -x FamilyTree.debug
 
@@ -352,9 +346,9 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../FamilyTree/src/domain/ILogic.h ../FamilyTree/src/gui/editfamilywindow.h ../FamilyTree/src/gui/mainwindow.h ../FamilyTree/src/gui/userwindow.h ../FamilyTree/src/persistence/databaseservice.h ../FamilyTree/src/value-objects/familytree.h ../FamilyTree/src/value-objects/member.h ../FamilyTree/src/value-objects/user.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../FamilyTree/src/domain/ILogic.cpp ../FamilyTree/src/gui/editfamilywindow.cpp ../FamilyTree/src/gui/mainwindow.cpp ../FamilyTree/src/gui/userwindow.cpp ../FamilyTree/src/main.cpp ../FamilyTree/src/persistence/databaseservice.cpp ../FamilyTree/src/value-objects/familytree.cpp ../FamilyTree/src/value-objects/member.cpp ../FamilyTree/src/value-objects/user.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../FamilyTree/src/gui/editfamilywindow.ui ../FamilyTree/src/gui/mainwindow.ui ../FamilyTree/src/gui/userwindow.ui $(DISTDIR)/
+	$(COPY_FILE) --parents ../FamilyTree/src/domain/ILogic.h ../FamilyTree/src/gui/editfamilywindow.h ../FamilyTree/src/gui/mainwindow.h ../FamilyTree/src/persistence/databaseservice.h ../FamilyTree/src/value-objects/familytree.h ../FamilyTree/src/value-objects/member.h ../FamilyTree/src/value-objects/user.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../FamilyTree/src/domain/ILogic.cpp ../FamilyTree/src/gui/editfamilywindow.cpp ../FamilyTree/src/gui/mainwindow.cpp ../FamilyTree/src/main.cpp ../FamilyTree/src/persistence/databaseservice.cpp ../FamilyTree/src/value-objects/familytree.cpp ../FamilyTree/src/value-objects/member.cpp ../FamilyTree/src/value-objects/user.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../FamilyTree/src/gui/editfamilywindow.ui ../FamilyTree/src/gui/mainwindow.ui $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -386,16 +380,15 @@ compiler_moc_predefs_clean:
 moc_predefs.h: /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
 	g++ -pipe -O2 -g -std=gnu++11 -Wall -W -dM -E -o moc_predefs.h /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_editfamilywindow.cpp moc_mainwindow.cpp moc_userwindow.cpp
+compiler_moc_header_make_all: moc_editfamilywindow.cpp moc_mainwindow.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_editfamilywindow.cpp moc_mainwindow.cpp moc_userwindow.cpp
+	-$(DEL_FILE) moc_editfamilywindow.cpp moc_mainwindow.cpp
 moc_editfamilywindow.cpp: ../FamilyTree/src/gui/editfamilywindow.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
 	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/moumita/C++/AA_Project/Stammbaum/build-FamilyTree-Desktop-Profile/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/moumita/C++/AA_Project/Stammbaum/FamilyTree/src -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtSql -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../FamilyTree/src/gui/editfamilywindow.h -o moc_editfamilywindow.cpp
 
 moc_mainwindow.cpp: ../FamilyTree/src/gui/mainwindow.h \
-		../FamilyTree/src/gui/userwindow.h \
 		../FamilyTree/src/domain/ILogic.h \
 		../FamilyTree/src/value-objects/familytree.h \
 		../FamilyTree/src/value-objects/user.h \
@@ -405,23 +398,13 @@ moc_mainwindow.cpp: ../FamilyTree/src/gui/mainwindow.h \
 		/usr/lib/qt5/bin/moc
 	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/moumita/C++/AA_Project/Stammbaum/build-FamilyTree-Desktop-Profile/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/moumita/C++/AA_Project/Stammbaum/FamilyTree/src -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtSql -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../FamilyTree/src/gui/mainwindow.h -o moc_mainwindow.cpp
 
-moc_userwindow.cpp: ../FamilyTree/src/gui/userwindow.h \
-		../FamilyTree/src/domain/ILogic.h \
-		../FamilyTree/src/value-objects/familytree.h \
-		../FamilyTree/src/value-objects/user.h \
-		../FamilyTree/src/value-objects/member.h \
-		../FamilyTree/src/persistence/databaseservice.h \
-		moc_predefs.h \
-		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/moumita/C++/AA_Project/Stammbaum/build-FamilyTree-Desktop-Profile/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/moumita/C++/AA_Project/Stammbaum/FamilyTree/src -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtSql -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../FamilyTree/src/gui/userwindow.h -o moc_userwindow.cpp
-
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
-compiler_uic_make_all: ui_editfamilywindow.h ui_mainwindow.h ui_userwindow.h
+compiler_uic_make_all: ui_editfamilywindow.h ui_mainwindow.h
 compiler_uic_clean:
-	-$(DEL_FILE) ui_editfamilywindow.h ui_mainwindow.h ui_userwindow.h
+	-$(DEL_FILE) ui_editfamilywindow.h ui_mainwindow.h
 ui_editfamilywindow.h: ../FamilyTree/src/gui/editfamilywindow.ui \
 		/usr/lib/qt5/bin/uic
 	/usr/lib/qt5/bin/uic ../FamilyTree/src/gui/editfamilywindow.ui -o ui_editfamilywindow.h
@@ -429,10 +412,6 @@ ui_editfamilywindow.h: ../FamilyTree/src/gui/editfamilywindow.ui \
 ui_mainwindow.h: ../FamilyTree/src/gui/mainwindow.ui \
 		/usr/lib/qt5/bin/uic
 	/usr/lib/qt5/bin/uic ../FamilyTree/src/gui/mainwindow.ui -o ui_mainwindow.h
-
-ui_userwindow.h: ../FamilyTree/src/gui/userwindow.ui \
-		/usr/lib/qt5/bin/uic
-	/usr/lib/qt5/bin/uic ../FamilyTree/src/gui/userwindow.ui -o ui_userwindow.h
 
 compiler_yacc_decl_make_all:
 compiler_yacc_decl_clean:
@@ -456,7 +435,6 @@ editfamilywindow.o: ../FamilyTree/src/gui/editfamilywindow.cpp ../FamilyTree/src
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o editfamilywindow.o ../FamilyTree/src/gui/editfamilywindow.cpp
 
 mainwindow.o: ../FamilyTree/src/gui/mainwindow.cpp ../FamilyTree/src/gui/mainwindow.h \
-		../FamilyTree/src/gui/userwindow.h \
 		../FamilyTree/src/domain/ILogic.h \
 		../FamilyTree/src/value-objects/familytree.h \
 		../FamilyTree/src/value-objects/user.h \
@@ -465,17 +443,7 @@ mainwindow.o: ../FamilyTree/src/gui/mainwindow.cpp ../FamilyTree/src/gui/mainwin
 		ui_mainwindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../FamilyTree/src/gui/mainwindow.cpp
 
-userwindow.o: ../FamilyTree/src/gui/userwindow.cpp ../FamilyTree/src/gui/userwindow.h \
-		../FamilyTree/src/domain/ILogic.h \
-		../FamilyTree/src/value-objects/familytree.h \
-		../FamilyTree/src/value-objects/user.h \
-		../FamilyTree/src/value-objects/member.h \
-		../FamilyTree/src/persistence/databaseservice.h \
-		ui_userwindow.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o userwindow.o ../FamilyTree/src/gui/userwindow.cpp
-
 main.o: ../FamilyTree/src/main.cpp ../FamilyTree/src/gui/mainwindow.h \
-		../FamilyTree/src/gui/userwindow.h \
 		../FamilyTree/src/domain/ILogic.h \
 		../FamilyTree/src/value-objects/familytree.h \
 		../FamilyTree/src/value-objects/user.h \
@@ -504,9 +472,6 @@ moc_editfamilywindow.o: moc_editfamilywindow.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp
-
-moc_userwindow.o: moc_userwindow.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_userwindow.o moc_userwindow.cpp
 
 ####### Install
 

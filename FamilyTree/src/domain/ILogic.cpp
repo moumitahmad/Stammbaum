@@ -61,7 +61,7 @@ FamilyTree* domain::ILogic::addViewer(FamilyTree* family, User* user) {
     return family;
 }
 
-Member *domain::ILogic::createMember(FamilyTree *family, QString &name, const QString &birth,
+Member* domain::ILogic::createMember(FamilyTree *family, const QString &name, const QString &birth,
         const QString &death, const QString &gender, const QString &biografie, Member *partner,
         QVector<Member*>* children) {
     qDebug() << name << birth << death << gender << biografie << partner->getName();
@@ -73,4 +73,21 @@ Member *domain::ILogic::createMember(FamilyTree *family, QString &name, const QS
         }
     }
     return member;
+}
+
+Member *domain::ILogic::updateMemberData(const int id, const QString& change, const QString& position) {
+    return m_pDB->updateMember(id, change, position);
+}
+
+Member *domain::ILogic::updatePartnerFromMember(Member *member, Member *partner) {
+    return nullptr;
+}
+
+Member *domain::ILogic::updateParentFromMember(Member* child, Member *parent) {
+    return nullptr;
+}
+
+Member *domain::ILogic::updateChildFromMember(Member* parent, Member *child) {
+    m_pDB->updateChildFromMember(parent, child);
+    return nullptr;
 }
