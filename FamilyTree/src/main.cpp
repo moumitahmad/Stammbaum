@@ -35,8 +35,8 @@ void testDatabase(domain::ILogic* pLogic) {
 
     // UPDATE
     Member* newChild = pLogic->createMember(family, "New Child");
-    pLogic->updateMemberData(member1->getID(), "Name Change", "name");
-    pLogic->updateChildFromMember(member2->getID(), newChild);
+    pLogic->updateMemberData(member1->getID(), "New Name", "name");
+    pLogic->updateChildFromMember(member2, newChild);
 }
 
 

@@ -49,9 +49,10 @@ namespace domain {
 
         // update
         Member* updateMemberData(const int id, const QString& change, const QString& position);
+        // possible positions are: name, bith, death, gender, biografie
         Member* updatePartnerFromMember(Member* member, Member* partner);
         Member* updateParentFromMember(Member* member, Member* parent);
-        Member* updateChildFromMember(Member* member, Member* child);
+        Member* updateChildFromMember(Member* memberID, Member* child);
     };
 
 }

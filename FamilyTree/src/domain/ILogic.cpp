@@ -88,6 +88,10 @@ Member *domain::ILogic::updateParentFromMember(Member* child, Member *parent) {
 }
 
 Member *domain::ILogic::updateChildFromMember(Member* parent, Member *child) {
-    m_pDB->updateChildFromMember(parent, child);
-    return nullptr;
+    QVector<Member*> savedChildren = m_pDB->getChildrenFromMemberID(parent->getID());
+    if(!savedChildren.contains(child)) { // if child-parent-connection is not saved in the database
+        return m_pDB->saveChildFromMember(parent, child);
+    } else {
+        return m_pDB->deleteChildFromMember(parent, child);
+    }
 }

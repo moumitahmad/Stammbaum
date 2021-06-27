@@ -32,7 +32,6 @@ namespace database {
 
         // member
         Member* getMemberByID(const int id);
-        QVector<Member*> getChildrenFromMemberID(const int id);
         Member* saveMember(const QString& name, const QString& birth, const QString& death, const QString& gender, const QString& biografie, Member* partner, int familyID);
         Member* updateMember(const int id, const QString& change, const QString& position);
 
@@ -41,7 +40,8 @@ namespace database {
         Member* updatePartnerFromMember(Member* partner, Member* member); // overrides the saved parnter
 
         Member* saveChildFromMember(Member* child, Member* parent);
-        Member* deleteChildFromMember(Member* child, Member* parent);
+        QVector<Member*> getChildrenFromMemberID(const int id);
+        Member* deleteChildFromMember(Member* parent, Member* child);
     };
 }
 
