@@ -37,13 +37,22 @@ namespace domain {
         FamilyTree* getFamilyTreesByID(int familyID);
 
 
-        // member
-        Member* createMember(FamilyTree* family, QString& name, const QString& birth = "Unknown",
+        // ---------- MEMBER
+        // create
+        Member* createMember(FamilyTree* family, const QString& name, const QString& birth = "Unknown",
                 const QString& death = "Unknown", const QString& gender = "Unknown",
                 const QString& biografie = nullptr, Member* partner = new Member(),
                 QVector<Member*>* children = new QVector<Member*>);
+
+        // select
         QVector<Member*> getMembersByFamily(int familyID);
-        void updateMemberFromFamily(int familyID);
+
+        // update
+        Member* updateMemberData(const int id, const QString& change, const QString& position);
+        // possible positions are: name, bith, death, gender, biografie
+        Member* updatePartnerFromMember(Member* member, Member* partner);
+        Member* updateParentFromMember(Member* member, Member* parent);
+        Member* updateChildFromMember(Member* memberID, Member* child);
     };
 
 }
