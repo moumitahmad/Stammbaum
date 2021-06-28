@@ -45,7 +45,7 @@ int main(int argc, char *argv[]) {
     domain::ILogic* pLogic = new domain::ILogic(pDB);
 
     pLogic->connectToDatabase();
-    testDatabase(pLogic);
+    //testDatabase(pLogic);
     QApplication a(argc, argv);
     MainWindow w(pLogic);
     w.show();
