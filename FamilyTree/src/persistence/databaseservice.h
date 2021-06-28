@@ -33,7 +33,7 @@ namespace database {
         // member
         Member* getMemberByID(const int id);
         Member* saveMember(const QString& name, const QString& birth, const QString& death, const QString& gender, const QString& biografie, Member* partner, int familyID);
-        Member* updateMember(const int id, const QString& change, const QString& position);
+        void updateMember(Member* member, const QString& change, const QString& position);
 
         // relationships
         Member* savePartnerFromMember(Member* partner, Member* member);

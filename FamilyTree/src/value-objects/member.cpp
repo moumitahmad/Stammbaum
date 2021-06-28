@@ -9,6 +9,26 @@ const QString& Member::getName() const {
     return m_name;
 }
 
+void Member::setName(const QString &name) {
+    m_name = name;
+}
+
+void Member::setBirth(const QString &birth) {
+    m_birth = birth;
+}
+
+void Member::setDeath(const QString &death) {
+    m_death = death;
+}
+
+void Member::setGender(const QString &gender) {
+    m_gender = gender;
+}
+
+void Member::setBiografie(const QString &biografie) {
+    m_biografie = biografie;
+}
+
 void Member::addParent(Member* parent) {
     m_parents.push_back(parent);
 }
@@ -21,14 +41,6 @@ void Member::deleteParent(Member* parent) {
     } else {
         m_parents.remove(i);
     }
-}
-
-void Member::updateMember(const QString &name, const QString &birth, const QString &death, const QString& gender, const QString &biografie) {
-    m_name = name;
-    m_birth = birth;
-    m_death = death;
-    m_gender = gender;
-    m_biografie = biografie;
 }
 
 void Member::updatePartner(Member *partner) {

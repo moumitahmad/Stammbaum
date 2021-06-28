@@ -75,8 +75,35 @@ Member* domain::ILogic::createMember(FamilyTree *family, const QString &name, co
     return member;
 }
 
-Member *domain::ILogic::updateMemberData(const int id, const QString& change, const QString& position) {
-    return m_pDB->updateMember(id, change, position);
+Member *domain::ILogic::updateMemberData(Member* member, const QString& change, const DB_COL_NAME position) {
+    // update Member object
+    switch(position) {
+    case NAME:
+        member->setName(change);
+        m_pDB->updateMember(member, change, "name");
+        break;
+    case BIRTH:
+        member->setBirth(change);
+        m_pDB->updateMember(member, change, "birth");
+        break;
+    case DEATH:
+        member->setDeath(change);
+        m_pDB->updateMember(member, change, "death");
+        break;
+    case GENDER:
+        member->setGender(change);
+        m_pDB->updateMember(member, change, "gender");
+        break;
+    case BIOGRAFIE:
+        member->setBiografie(change);
+        m_pDB->updateMember(member, change, "biografie");
+        break;
+    default:
+        qDebug() << ">> ERROR: The position does not exsist";
+    }
+
+    // update DB
+    return member;
 }
 
 Member *domain::ILogic::updatePartnerFromMember(Member *member, Member *partner) {

@@ -48,7 +48,7 @@ namespace domain {
         QVector<Member*> getMembersByFamily(int familyID);
 
         // update
-        Member* updateMemberData(const int id, const QString& change, const QString& position);
+        Member* updateMemberData(Member* member, const QString& change, const DB_COL_NAME position);
         // possible positions are: name, bith, death, gender, biografie
         Member* updatePartnerFromMember(Member* member, Member* partner);
         Member* updateParentFromMember(Member* member, Member* parent);

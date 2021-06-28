@@ -331,19 +331,18 @@ Member* database::IDatabase::saveMember(const QString &name, const QString &birt
     }
 }
 
-Member* database::IDatabase::updateMember(const int id, const QString& change, const QString& position) {
+void database::IDatabase::updateMember(Member* member, const QString& change, const QString& position) {
     QSqlQuery q;
-    qDebug() << "ID: " << id;
-    QString query = "UPDATE member SET " + position + "='" + change + "' WHERE id=" + QString::number(id) + ";";
+    QString query = "UPDATE member SET " + position + "='" + change + "' WHERE id=" + QString::number(member->getID()) + ";";
     qDebug() << query;
     if(q.exec(query)) {
         qDebug() << "Member updated";
-        Member* member = getMemberByID(q.lastInsertId().toInt());
+        /*Member* member = getMemberByID(q.lastInsertId().toInt());
         QVector<Member*> children = getChildrenFromMemberID(q.lastInsertId().toInt());
         for(Member* child : children) {
             member->addChild(child);
         }
-        return member;
+        return member;*/
     } else {
         qDebug() << q.lastError();
     }

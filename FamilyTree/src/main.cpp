@@ -4,6 +4,7 @@
 */
 
 #include <QApplication>
+#include <QDebug>
 
 #include "gui/mainwindow.h"
 #include "value-objects/user.h"
@@ -35,7 +36,8 @@ void testDatabase(domain::ILogic* pLogic) {
 
     // UPDATE
     Member* newChild = pLogic->createMember(family, "New Child");
-    pLogic->updateMemberData(member1->getID(), "New Name", "name");
+    pLogic->updateMemberData(member1, "NEW NAME", NAME);
+    qDebug() << member1->getName();
     pLogic->updateChildFromMember(member2, newChild);
 }
 
@@ -45,7 +47,7 @@ int main(int argc, char *argv[]) {
     domain::ILogic* pLogic = new domain::ILogic(pDB);
 
     pLogic->connectToDatabase();
-    //testDatabase(pLogic);
+    testDatabase(pLogic);
     QApplication a(argc, argv);
     MainWindow w(pLogic);
     w.show();
