@@ -16,7 +16,9 @@ void domain::ILogic::printDatabase() {
 
 // user
 User* domain::ILogic::createUser(QString& name, QString& password) {
-    return m_pDB->saveUser(name, password);
+    int id = m_pDB->saveUser(name, password);
+    User* user = new User(id, name, password);
+    return user;
 }
 
 User* domain::ILogic::loginUser(QString& name, QString& password) {
@@ -36,16 +38,9 @@ User* domain::ILogic::loginUser(QString& name, QString& password) {
 }
 
 // family tree
-FamilyTree* domain::ILogic::createFamily(QString& name, User* admin) { // , QVector<User*> editors, QVector<User*> viewers
-    FamilyTree* family = m_pDB->saveFamily(name, admin);
-    /*for(int i=0; i<editors.length(); i++) {
-        database::saveEditor(family->getId(), editors.at(i));
-        family->addEditor(editors.at(i));
-    }
-    for(int i=0; i<viewers.length(); i++) {
-        database::saveEditor(family->getId(), viewers.at(i));
-        family->addViewer(viewers.at(i));
-    }*/
+FamilyTree* domain::ILogic::createFamily(QString& name, User* admin) {
+    int id = m_pDB->saveFamily(name, admin);
+    FamilyTree* family = new FamilyTree(id, name, admin);
     return family;
 }
 
@@ -64,8 +59,8 @@ FamilyTree* domain::ILogic::addViewer(FamilyTree* family, User* user) {
 Member* domain::ILogic::createMember(FamilyTree *family, const QString &name, const QString &birth,
         const QString &death, const QString &gender, const QString &biografie, Member *partner,
         QVector<Member*>* children) {
-    qDebug() << name << birth << death << gender << biografie << partner->getName();
-    Member* member = m_pDB->saveMember(name, birth, death, gender, biografie, partner, family->getId());
+    int id = m_pDB->saveMember(name, birth, death, gender, biografie, partner, family->getId());
+    Member* member = new Member(id, name, birth, death, gender, biografie, partner);
     if(!children->empty()) {
         qDebug() << "children exsist";
         for(Member* child : *children) {
@@ -106,16 +101,19 @@ Member *domain::ILogic::updateMemberData(Member* member, const QString& change, 
         m_pDB->updateMember(member, change, "biografie");
         break;
     default:
-        qDebug() << ">> ERROR: The position does not exsist";
+        qDebug() << ">> ERROR: The column position does not exsist";
     }
     return member;
 }
 
 Member *domain::ILogic::updatePartnerFromMember(Member *member, Member *partner) {
-    if(!member->getPartner()->getID() == partner->getID()) {
+    qDebug() << member->getName() << " + " << partner->getName() << " = LOVE";
+    if(member->getPartner()->getID() != partner->getID()) {
+        qDebug() << "UPDATE";
         member->setPartner(partner);
         m_pDB->updatePartnerFromMember(partner, member);
     } else {
+        qDebug() << "DELETE";
         member->setPartner(nullptr);
         m_pDB->deletePartnerFromMember(member);
     }

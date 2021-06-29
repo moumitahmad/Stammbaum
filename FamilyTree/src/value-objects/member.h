@@ -12,6 +12,13 @@ enum DB_COL_NAME {
     BIOGRAFIE
 };
 
+enum VALID_GENDER {
+    MALE,
+    FEMALE,
+    DIVERSE,
+    UNKNOWN
+};
+
 class Member {
 public:
     Member() {}
@@ -24,7 +31,7 @@ public:
     // getter
     int getID() const;
     const QString& getName() const;
-    const Member* getPartner() const;
+    Member* getPartner() const;
 
     //setter
     void setName(const QString& name);
@@ -39,6 +46,9 @@ public:
     void deleteChild(Member* child);
     void addParent(Member* parent);
     void deleteParent(Member* parent);
+
+    // methodes
+    bool isAlive() const;
 
 private:
     int m_id;

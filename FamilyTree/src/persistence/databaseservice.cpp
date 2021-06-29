@@ -231,7 +231,7 @@ void database::IDatabase::connectToDatabase() {
 }
 
 // User
-User* database::IDatabase::saveUser(QString& name, QString& password) {
+int database::IDatabase::saveUser(QString& name, QString& password) {
     // fill table user with new values
     QSqlQuery q;
     q.prepare("INSERT INTO user(name, password) VALUES(:name, :password);");
@@ -240,15 +240,15 @@ User* database::IDatabase::saveUser(QString& name, QString& password) {
 
     if(q.exec()) {
         qDebug() << "New user entered!";
+        return q.lastInsertId().toInt();
     } else {
         qDebug() << q.lastError();
+        return -1;
     }
-    User* user = new User(q.lastInsertId().toInt(), name, password);
-    return user;
 }
 
 // FamilyTree
-FamilyTree* database::IDatabase::saveFamily(QString& name, User* admin) {
+int database::IDatabase::saveFamily(QString& name, User* admin) {
     // insert into familytree
     QSqlQuery q;
     q.prepare("INSERT INTO familytree(name, adminID) VALUES(:name, :adminID);");
@@ -257,11 +257,11 @@ FamilyTree* database::IDatabase::saveFamily(QString& name, User* admin) {
 
     if(q.exec()) {
         qDebug() << "New family entered!";
+        return q.lastInsertId().toInt();
     } else {
         qDebug() << q.lastError();
+        return -1;
     }
-    FamilyTree* family = new FamilyTree(q.lastInsertId().toInt(), name, admin);
-    return family;
 }
 
 void database::IDatabase::saveEditor(int familyID, User* editor) {
@@ -310,7 +310,7 @@ Member* database::IDatabase::getMemberByID(const int id) {
     }
 }
 
-Member* database::IDatabase::saveMember(const QString &name, const QString &birth, const QString &death, const QString &gender, const QString &biografie, Member* partner, int familyID) {
+int database::IDatabase::saveMember(const QString &name, const QString &birth, const QString &death, const QString &gender, const QString &biografie, Member* partner, int familyID) {
     QSqlQuery q;
     q.prepare("INSERT INTO member(name, birth, death, gender, biografie, partnerID, familyID) VALUES(:name, :birth, :death, :gender, :biografie, :partnerID, :familyID);");
     q.bindValue(":name", name);
@@ -323,11 +323,10 @@ Member* database::IDatabase::saveMember(const QString &name, const QString &birt
 
     if(q.exec()) {
         qDebug() << "New Member entered!";
-        Member* newMember = new Member(q.lastInsertId().toInt(), name, birth, death, gender, biografie, partner);
-        return newMember;
+        return q.lastInsertId().toInt();
     } else {
         qDebug() << q.lastError();
-        return nullptr;
+        return -1;
     }
 }
 
@@ -344,7 +343,7 @@ void database::IDatabase::updateMember(Member* member, const QString& change, co
 
 void database::IDatabase::updatePartnerFromMember(Member *partner, Member *member) {
     QSqlQuery q;
-    QString query = "UPDATE member SET partnerID = " + QString::number(partner->getID()) + " WHERE id = " + member->getID() +  ";";
+    QString query = "UPDATE member SET partnerID = " + QString::number(partner->getID()) + " WHERE id = " + QString::number(member->getID()) +  ";";
 
     if(q.exec(query)) {
         qDebug() << "Partner from Member updated";
@@ -396,9 +395,9 @@ void database::IDatabase::saveParentChildRelationship(Member* child, Member* par
 
 void database::IDatabase::deleteParentChildRelationship(Member* parent, Member *child) {
     QSqlQuery q;
-    q.prepare("DELETE FROM hasParent WHERE parentID=:id;");
-    q.bindValue(":id", parent->getID());
-    if(q.exec()) {
+    QString query = "DELETE FROM hasParent WHERE parentID=" + QString::number(parent->getID()) + " AND childID=" + QString::number(child->getID()) + ";";
+    qDebug() << query;
+    if(q.exec(query)) {
         qDebug() << "Child Parent Connection deleted!";
     } else {
         qDebug() << q.lastError();

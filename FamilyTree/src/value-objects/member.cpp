@@ -9,7 +9,7 @@ const QString& Member::getName() const {
     return m_name;
 }
 
-const Member *Member::getPartner() const {
+Member *Member::getPartner() const {
     return m_partner;
 }
 
@@ -54,6 +54,12 @@ void Member::deleteParent(Member* parent) {
     }
 }
 
+bool Member::isAlive() const {
+    if(m_death == nullptr)
+        return false;
+    return true;
+}
+
 void Member::addChild(Member* child) {
     m_children.push_back(child);
 }
@@ -67,3 +73,12 @@ void Member::deleteChild(Member* child) {
         m_children.remove(i);
     }
 }
+
+// OPERATORS
+/*bool Member::operator ==(Member *other) {
+    return m_id == other->getID();
+}
+
+bool Member::operator !=(Member *other) {
+    return !(this == other);
+}*/
