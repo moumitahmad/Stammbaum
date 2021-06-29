@@ -36,12 +36,12 @@ namespace database {
         void updateMember(Member* member, const QString& change, const QString& position);
 
         // relationships
-        Member* savePartnerFromMember(Member* partner, Member* member);
-        Member* updatePartnerFromMember(Member* partner, Member* member); // overrides the saved parnter
+        void updatePartnerFromMember(Member* partner, Member* member);
+        void deletePartnerFromMember(Member* member);
 
-        Member* saveChildFromMember(Member* child, Member* parent);
+        void saveParentChildRelationship(Member* child, Member* parent);
         QVector<Member*> getChildrenFromMemberID(const int id);
-        Member* deleteChildFromMember(Member* parent, Member* child);
+        void deleteParentChildRelationship(Member* parent, Member* child);
     };
 }
 

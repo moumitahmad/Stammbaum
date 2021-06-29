@@ -24,6 +24,7 @@ public:
     // getter
     int getID() const;
     const QString& getName() const;
+    const Member* getPartner() const;
 
     //setter
     void setName(const QString& name);
@@ -31,9 +32,9 @@ public:
     void setDeath(const QString& death);
     void setGender(const QString& gender);
     void setBiografie(const QString& biografie);
+    void setPartner(Member* partner);
 
     // Family Connections
-    void updatePartner(Member* partner);
     void addChild(Member* child);
     void deleteChild(Member* child);
     void addParent(Member* parent);

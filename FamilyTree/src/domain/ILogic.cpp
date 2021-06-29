@@ -69,7 +69,14 @@ Member* domain::ILogic::createMember(FamilyTree *family, const QString &name, co
     if(!children->empty()) {
         qDebug() << "children exsist";
         for(Member* child : *children) {
-            member = m_pDB->saveChildFromMember(child, member);
+            try {
+                child->addParent(member);
+                member->addChild(child);
+                m_pDB->saveParentChildRelationship(child, member);
+            } catch(const std::logic_error ex) {
+                qDebug() << ex.what();
+                return nullptr;
+            }
         }
     }
     return member;
@@ -101,24 +108,35 @@ Member *domain::ILogic::updateMemberData(Member* member, const QString& change, 
     default:
         qDebug() << ">> ERROR: The position does not exsist";
     }
-
-    // update DB
     return member;
 }
 
 Member *domain::ILogic::updatePartnerFromMember(Member *member, Member *partner) {
-    return nullptr;
+    if(!member->getPartner()->getID() == partner->getID()) {
+        member->setPartner(partner);
+        m_pDB->updatePartnerFromMember(partner, member);
+    } else {
+        member->setPartner(nullptr);
+        m_pDB->deletePartnerFromMember(member);
+    }
+    return member;
 }
 
-Member *domain::ILogic::updateParentFromMember(Member* child, Member *parent) {
-    return nullptr;
-}
-
-Member *domain::ILogic::updateChildFromMember(Member* parent, Member *child) {
+Member *domain::ILogic::updateParentChildRelationship(Member* parent, Member *child) {
     QVector<Member*> savedChildren = m_pDB->getChildrenFromMemberID(parent->getID());
     if(!savedChildren.contains(child)) { // if child-parent-connection is not saved in the database
-        return m_pDB->saveChildFromMember(parent, child);
+        try {
+            child->addParent(parent);
+            parent->addChild(child);
+            m_pDB->saveParentChildRelationship(parent, child);
+        } catch(const std::logic_error ex) {
+            qDebug() << ex.what();
+            return nullptr;
+        }
     } else {
-        return m_pDB->deleteChildFromMember(parent, child);
+        parent->deleteChild(child);
+        child->deleteParent(parent);
+        m_pDB->deleteParentChildRelationship(parent, child);
     }
+    return parent;
 }

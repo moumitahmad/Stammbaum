@@ -9,6 +9,10 @@ const QString& Member::getName() const {
     return m_name;
 }
 
+const Member *Member::getPartner() const {
+    return m_partner;
+}
+
 void Member::setName(const QString &name) {
     m_name = name;
 }
@@ -29,7 +33,14 @@ void Member::setBiografie(const QString &biografie) {
     m_biografie = biografie;
 }
 
+void Member::setPartner(Member *partner) {
+    m_partner = partner;
+}
+
 void Member::addParent(Member* parent) {
+    if(m_parents.length()==2) {
+        throw new std::logic_error("The child already has two parents, please remove one first");
+    }
     m_parents.push_back(parent);
 }
 
@@ -41,10 +52,6 @@ void Member::deleteParent(Member* parent) {
     } else {
         m_parents.remove(i);
     }
-}
-
-void Member::updatePartner(Member *partner) {
-    m_partner = partner;
 }
 
 void Member::addChild(Member* child) {

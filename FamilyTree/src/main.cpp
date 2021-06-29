@@ -38,7 +38,9 @@ void testDatabase(domain::ILogic* pLogic) {
     Member* newChild = pLogic->createMember(family, "New Child");
     pLogic->updateMemberData(member1, "NEW NAME", NAME);
     qDebug() << member1->getName();
-    pLogic->updateChildFromMember(member2, newChild);
+    pLogic->updateParentChildRelationship(member2, newChild);
+    Member* newPartner = pLogic->createMember(family, "New Partner");
+    pLogic->updatePartnerFromMember(member1, newPartner);
 }
 
 
