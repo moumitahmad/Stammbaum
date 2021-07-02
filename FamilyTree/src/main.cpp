@@ -42,12 +42,7 @@ void testDatabase(domain::ILogic* pLogic) {
     pLogic->deleteParentChildRelationship(member2, newChild);
     Member* newPartner = pLogic->createMember(family, "New Partner");
     pLogic->savePartnerFromMember(member1, newPartner);
-    try {
-        pLogic->deletePartnerFromMember(member1, newPartner);
-        // pLogic->deletePartnerFromMember(member1, newPartner);
-    } catch(std::logic_error exception) {
-        qDebug() << exception.what();
-    }
+    pLogic->deletePartnerFromMember(member1, newPartner);
 }
 
 
@@ -56,7 +51,7 @@ int main(int argc, char *argv[]) {
     domain::ILogic* pLogic = new domain::ILogic(pDB);
 
     pLogic->connectToDatabase();
-    testDatabase(pLogic);
+    //testDatabase(pLogic);
     QApplication a(argc, argv);
     MainWindow w(pLogic);
     w.show();
