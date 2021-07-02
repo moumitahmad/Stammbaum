@@ -50,8 +50,10 @@ namespace domain {
         // update
         Member* updateMemberData(Member* member, const QString& change, const DB_COL_NAME position);
         // possible positions are: name, bith, death, gender, biografie
-        Member* updatePartnerFromMember(Member* member, Member* partner);
-        Member* updateParentChildRelationship(Member* parent, Member* child);
+        Member* savePartnerFromMember(Member* member, Member* partner);
+        Member* deletePartnerFromMember(Member* member, Member* partner);
+        Member* saveParentChildRelationship(Member* parent, Member* child);
+        Member* deleteParentChildRelationship(Member* parent, Member* child);
     };
 
 }

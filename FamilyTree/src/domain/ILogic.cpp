@@ -106,35 +106,49 @@ Member *domain::ILogic::updateMemberData(Member* member, const QString& change, 
     return member;
 }
 
-Member *domain::ILogic::updatePartnerFromMember(Member *member, Member *partner) {
-    qDebug() << member->getName() << " + " << partner->getName() << " = LOVE";
-    if(member->getPartner()->getID() != partner->getID()) {
-        qDebug() << "UPDATE";
-        member->setPartner(partner);
-        m_pDB->updatePartnerFromMember(partner, member);
-    } else {
+Member *domain::ILogic::savePartnerFromMember(Member *member, Member *partner) {
+    member->setPartner(partner);
+    m_pDB->updatePartnerFromMember(partner, member);
+    return member;
+}
+
+Member *domain::ILogic::deletePartnerFromMember(Member *member, Member *partner) {
+    if(member->getPartner()->getID() == partner->getID()) {
         qDebug() << "DELETE";
         member->setPartner(nullptr);
         m_pDB->deletePartnerFromMember(member);
+    } else {
+        throw new std::logic_error("The Member was never a Partner and can not be deleted.");
     }
     return member;
 }
 
-Member *domain::ILogic::updateParentChildRelationship(Member* parent, Member *child) {
-    QVector<Member*> savedChildren = m_pDB->getChildrenFromMemberID(parent->getID());
-    if(!savedChildren.contains(child)) { // if child-parent-connection is not saved in the database
+Member *domain::ILogic::saveParentChildRelationship(Member* parent, Member *child) {
+    // verify action
+    QVector<Member*> savedChildren = parent->getChildren();
+    if(!savedChildren.contains(child)) { // if child-parent-connection is not saved
         try {
             child->addParent(parent);
             parent->addChild(child);
             m_pDB->saveParentChildRelationship(parent, child);
         } catch(const std::logic_error ex) {
             qDebug() << ex.what();
-            return nullptr;
         }
     } else {
+        throw new std::logic_error("The relationship between the Child and Parent already exsists.");
+    }
+    return parent;
+}
+
+Member *domain::ILogic::deleteParentChildRelationship(Member* parent, Member *child) {
+    // verify action
+    QVector<Member*> savedChildren = parent->getChildren();
+    if(savedChildren.contains(child)) { // if child-parent-connection is saved
         parent->deleteChild(child);
         child->deleteParent(parent);
         m_pDB->deleteParentChildRelationship(parent, child);
+    } else {
+        throw new std::logic_error("The relationship between the Child and Parent does not exsist and can not be deleted.");
     }
     return parent;
 }

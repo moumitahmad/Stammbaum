@@ -396,7 +396,7 @@ void database::IDatabase::saveParentChildRelationship(Member* child, Member* par
 void database::IDatabase::deleteParentChildRelationship(Member* parent, Member *child) {
     QSqlQuery q;
     QString query = "DELETE FROM hasParent WHERE parentID=" + QString::number(parent->getID()) + " AND childID=" + QString::number(child->getID()) + ";";
-    qDebug() << query;
+
     if(q.exec(query)) {
         qDebug() << "Child Parent Connection deleted!";
     } else {

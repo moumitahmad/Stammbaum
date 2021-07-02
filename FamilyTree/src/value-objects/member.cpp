@@ -13,6 +13,10 @@ Member *Member::getPartner() const {
     return m_partner;
 }
 
+QVector<Member *> Member::getChildren() const {
+    return m_children;
+}
+
 void Member::setName(const QString &name) {
     m_name = name;
 }
