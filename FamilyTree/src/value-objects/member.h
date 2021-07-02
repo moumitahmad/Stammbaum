@@ -4,12 +4,20 @@
 #include <QString>
 #include <QVector>
 
-/*enum gender {
-    female,
-    male,
-    diverse,
-    unknown
-};*/
+enum DB_COL_NAME {
+    NAME,
+    BIRTH,
+    DEATH,
+    GENDER,
+    BIOGRAFIE
+};
+
+enum VALID_GENDER {
+    MALE,
+    FEMALE,
+    DIVERSE,
+    UNKNOWN
+};
 
 class Member {
 public:
@@ -20,18 +28,28 @@ public:
         m_biografie(biografie), m_partner(partner) {}
     ~Member();
 
-    void updateMember(const QString& name, const QString& birth, const QString& death, const QString& gender, const QString& biografie);
-
     // getter
     int getID() const;
     const QString& getName() const;
+    Member* getPartner() const;
+    QVector<Member*> getChildren() const;
+
+    //setter
+    void setName(const QString& name);
+    void setBirth(const QString& birth);
+    void setDeath(const QString& death);
+    void setGender(const QString& gender);
+    void setBiografie(const QString& biografie);
+    void setPartner(Member* partner);
 
     // Family Connections
-    void updatePartner(Member* partner);
     void addChild(Member* child);
     void deleteChild(Member* child);
     void addParent(Member* parent);
     void deleteParent(Member* parent);
+
+    // methodes
+    bool isAlive() const;
 
 private:
     int m_id;

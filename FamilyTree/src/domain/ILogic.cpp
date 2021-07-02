@@ -16,7 +16,9 @@ void domain::ILogic::printDatabase() {
 
 // user
 User* domain::ILogic::createUser(QString& name, QString& password) {
-    return m_pDB->saveUser(name, password);
+    int id = m_pDB->saveUser(name, password);
+    User* user = new User(id, name, password);
+    return user;
 }
 
 User* domain::ILogic::loginUser(QString& name, QString& password) {
@@ -36,16 +38,9 @@ User* domain::ILogic::loginUser(QString& name, QString& password) {
 }
 
 // family tree
-FamilyTree* domain::ILogic::createFamily(QString& name, User* admin) { // , QVector<User*> editors, QVector<User*> viewers
-    FamilyTree* family = m_pDB->saveFamily(name, admin);
-    /*for(int i=0; i<editors.length(); i++) {
-        database::saveEditor(family->getId(), editors.at(i));
-        family->addEditor(editors.at(i));
-    }
-    for(int i=0; i<viewers.length(); i++) {
-        database::saveEditor(family->getId(), viewers.at(i));
-        family->addViewer(viewers.at(i));
-    }*/
+FamilyTree* domain::ILogic::createFamily(QString& name, User* admin) {
+    int id = m_pDB->saveFamily(name, admin);
+    FamilyTree* family = new FamilyTree(id, name, admin);
     return family;
 }
 
@@ -64,34 +59,96 @@ FamilyTree* domain::ILogic::addViewer(FamilyTree* family, User* user) {
 Member* domain::ILogic::createMember(FamilyTree *family, const QString &name, const QString &birth,
         const QString &death, const QString &gender, const QString &biografie, Member *partner,
         QVector<Member*>* children) {
-    qDebug() << name << birth << death << gender << biografie << partner->getName();
-    Member* member = m_pDB->saveMember(name, birth, death, gender, biografie, partner, family->getId());
+    int id = m_pDB->saveMember(name, birth, death, gender, biografie, partner, family->getId());
+    Member* member = new Member(id, name, birth, death, gender, biografie, partner);
     if(!children->empty()) {
         qDebug() << "children exsist";
         for(Member* child : *children) {
-            member = m_pDB->saveChildFromMember(child, member);
+            try {
+                child->addParent(member);
+                member->addChild(child);
+                m_pDB->saveParentChildRelationship(child, member);
+            } catch(const std::logic_error ex) {
+                qDebug() << ex.what();
+                return nullptr;
+            }
         }
     }
     return member;
 }
 
-Member *domain::ILogic::updateMemberData(const int id, const QString& change, const QString& position) {
-    return m_pDB->updateMember(id, change, position);
-}
-
-Member *domain::ILogic::updatePartnerFromMember(Member *member, Member *partner) {
-    return nullptr;
-}
-
-Member *domain::ILogic::updateParentFromMember(Member* child, Member *parent) {
-    return nullptr;
-}
-
-Member *domain::ILogic::updateChildFromMember(Member* parent, Member *child) {
-    QVector<Member*> savedChildren = m_pDB->getChildrenFromMemberID(parent->getID());
-    if(!savedChildren.contains(child)) { // if child-parent-connection is not saved in the database
-        return m_pDB->saveChildFromMember(parent, child);
-    } else {
-        return m_pDB->deleteChildFromMember(parent, child);
+Member *domain::ILogic::updateMemberData(Member* member, const QString& change, const DB_COL_NAME position) {
+    // update Member object
+    switch(position) {
+    case NAME:
+        member->setName(change);
+        m_pDB->updateMember(member, change, "name");
+        break;
+    case BIRTH:
+        member->setBirth(change);
+        m_pDB->updateMember(member, change, "birth");
+        break;
+    case DEATH:
+        member->setDeath(change);
+        m_pDB->updateMember(member, change, "death");
+        break;
+    case GENDER:
+        member->setGender(change);
+        m_pDB->updateMember(member, change, "gender");
+        break;
+    case BIOGRAFIE:
+        member->setBiografie(change);
+        m_pDB->updateMember(member, change, "biografie");
+        break;
+    default:
+        qDebug() << ">> ERROR: The column position does not exsist";
     }
+    return member;
+}
+
+Member *domain::ILogic::savePartnerFromMember(Member *member, Member *partner) {
+    member->setPartner(partner);
+    m_pDB->updatePartnerFromMember(partner, member);
+    return member;
+}
+
+Member *domain::ILogic::deletePartnerFromMember(Member *member, Member *partner) {
+    if(member->getPartner()->getID() == partner->getID()) {
+        qDebug() << "DELETE";
+        member->setPartner(nullptr);
+        m_pDB->deletePartnerFromMember(member);
+    } else {
+        throw new std::logic_error("The Member was never a Partner and can not be deleted.");
+    }
+    return member;
+}
+
+Member *domain::ILogic::saveParentChildRelationship(Member* parent, Member *child) {
+    // verify action
+    QVector<Member*> savedChildren = parent->getChildren();
+    if(!savedChildren.contains(child)) { // if child-parent-connection is not saved
+        try {
+            child->addParent(parent);
+            parent->addChild(child);
+            m_pDB->saveParentChildRelationship(parent, child);
+        } catch(const std::logic_error ex) {
+            qDebug() << ex.what();
+        }
+    } else {
+        throw new std::logic_error("The relationship between the Child and Parent already exsists.");
+    }
+    return parent;
+}
+
+Member *domain::ILogic::deleteParentChildRelationship(Member* parent, Member *child) {
+    // verify action
+    QVector<Member*> savedChildren = parent->getChildren();
+    if(savedChildren.contains(child)) { // if child-parent-connection is saved
+        parent->deleteChild(child);
+        child->deleteParent(parent);
+        m_pDB->deleteParentChildRelationship(parent, child);
+    } else {
+        throw new std::logic_error("The relationship between the Child and Parent does not exsist and can not be deleted.");
+    }
+    return parent;
 }

@@ -9,7 +9,42 @@ const QString& Member::getName() const {
     return m_name;
 }
 
+Member *Member::getPartner() const {
+    return m_partner;
+}
+
+QVector<Member *> Member::getChildren() const {
+    return m_children;
+}
+
+void Member::setName(const QString &name) {
+    m_name = name;
+}
+
+void Member::setBirth(const QString &birth) {
+    m_birth = birth;
+}
+
+void Member::setDeath(const QString &death) {
+    m_death = death;
+}
+
+void Member::setGender(const QString &gender) {
+    m_gender = gender;
+}
+
+void Member::setBiografie(const QString &biografie) {
+    m_biografie = biografie;
+}
+
+void Member::setPartner(Member *partner) {
+    m_partner = partner;
+}
+
 void Member::addParent(Member* parent) {
+    if(m_parents.length()==2) {
+        throw new std::logic_error("The child already has two parents, please remove one first");
+    }
     m_parents.push_back(parent);
 }
 
@@ -23,16 +58,10 @@ void Member::deleteParent(Member* parent) {
     }
 }
 
-void Member::updateMember(const QString &name, const QString &birth, const QString &death, const QString& gender, const QString &biografie) {
-    m_name = name;
-    m_birth = birth;
-    m_death = death;
-    m_gender = gender;
-    m_biografie = biografie;
-}
-
-void Member::updatePartner(Member *partner) {
-    m_partner = partner;
+bool Member::isAlive() const {
+    if(m_death == nullptr)
+        return false;
+    return true;
 }
 
 void Member::addChild(Member* child) {
@@ -48,3 +77,12 @@ void Member::deleteChild(Member* child) {
         m_children.remove(i);
     }
 }
+
+// OPERATORS
+/*bool Member::operator ==(Member *other) {
+    return m_id == other->getID();
+}
+
+bool Member::operator !=(Member *other) {
+    return !(this == other);
+}*/

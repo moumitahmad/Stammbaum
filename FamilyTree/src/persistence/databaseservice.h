@@ -17,11 +17,11 @@ namespace database {
         void printHasRightsTable();
 
         // user
-        User* saveUser(QString& name, QString& password);
+        int saveUser(QString& name, QString& password);
         User* getUserByName(QString& userName);
 
         // family tree
-        FamilyTree* saveFamily(QString& name, User* admin);
+        int saveFamily(QString& name, User* admin);
         void saveEditor(int familyID, User* editor);
         void saveViewer(int familyID, User* viewer);
 
@@ -32,16 +32,16 @@ namespace database {
 
         // member
         Member* getMemberByID(const int id);
-        Member* saveMember(const QString& name, const QString& birth, const QString& death, const QString& gender, const QString& biografie, Member* partner, int familyID);
-        Member* updateMember(const int id, const QString& change, const QString& position);
+        int saveMember(const QString& name, const QString& birth, const QString& death, const QString& gender, const QString& biografie, Member* partner, int familyID);
+        void updateMember(Member* member, const QString& change, const QString& position);
 
         // relationships
-        Member* savePartnerFromMember(Member* partner, Member* member);
-        Member* updatePartnerFromMember(Member* partner, Member* member); // overrides the saved parnter
+        void updatePartnerFromMember(Member* partner, Member* member);
+        void deletePartnerFromMember(Member* member);
 
-        Member* saveChildFromMember(Member* child, Member* parent);
+        void saveParentChildRelationship(Member* child, Member* parent);
         QVector<Member*> getChildrenFromMemberID(const int id);
-        Member* deleteChildFromMember(Member* parent, Member* child);
+        void deleteParentChildRelationship(Member* parent, Member* child);
     };
 }
 
