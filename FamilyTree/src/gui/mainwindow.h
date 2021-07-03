@@ -19,6 +19,7 @@ public:
 
 private slots:
     void switchToCreateNewUser();
+    void switchToLogIn();
     void createNewUser();
     void logInUser();
     void quit();
