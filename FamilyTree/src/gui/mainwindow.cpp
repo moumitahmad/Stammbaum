@@ -24,6 +24,10 @@ MainWindow::MainWindow(domain::ILogic* pLogic, ApplicationWindow* pApp, QWidget 
     ui->accountCreatedLabel->hide();
     ui->placeholder->hide();
 
+    //additional settings
+    ui->in_password->setEchoMode(QLineEdit::Password);
+    ui->in_new_password->setEchoMode(QLineEdit::Password);
+
     QObject::connect(ui->newUserButton, &QPushButton::clicked, this, &MainWindow::switchToCreateNewUser);
     QObject::connect(ui->backButton, &QPushButton::clicked, this, &MainWindow::switchToLogIn);
     QObject::connect(ui->loginButton, &QPushButton::clicked, this, &MainWindow::logInUser);
@@ -58,20 +62,20 @@ void MainWindow::createNewUser(){
     QString password;
 
     // check if username is at least 5 characters long
-    if(ui->in_new_username->toPlainText().size() < 5) {
+    if(ui->in_new_username->text().size() < 5) {
         ui->errorLabelNameNotValid->show();
         ui->in_new_username->clear();
         ui->in_new_password->clear();
     } else {
-        username = ui->in_new_username->toPlainText();
+        username = ui->in_new_username->text();
     }
 
     //check if password is at least 7 characters long
-    if(ui->in_new_password->toPlainText().size() < 7) {
+    if(ui->in_new_password->text().size() < 7) {
         ui->errorLabelPasswordNotValid->show();
         ui->in_new_password->clear();
     } else {
-        password = ui->in_new_password->toPlainText();
+        password = ui->in_new_password->text();
     }
 
     // try to create user
@@ -92,8 +96,8 @@ void MainWindow::createNewUser(){
 
 
 void MainWindow::logInUser(){
-    QString username = ui->in_username->toPlainText();
-    QString password = ui->in_password->toPlainText();
+    QString username = ui->in_username->text();
+    QString password = ui->in_password->text();
 
     if(m_pLogic->loginUser(username, password)) {
         ui->errorLabelLogin->hide();
