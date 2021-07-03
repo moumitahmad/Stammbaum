@@ -12,6 +12,7 @@
 #include <QtCore/QVariant>
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QFormLayout>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenu>
@@ -30,6 +31,7 @@ public:
     QGridLayout *gridLayout;
     QStackedWidget *stackedWidget;
     QWidget *HomePage;
+    QFormLayout *formLayout;
     QWidget *ViewFamily;
     QWidget *EditFamily;
     QMenuBar *menubar;
@@ -52,6 +54,8 @@ public:
         stackedWidget->setObjectName(QString::fromUtf8("stackedWidget"));
         HomePage = new QWidget();
         HomePage->setObjectName(QString::fromUtf8("HomePage"));
+        formLayout = new QFormLayout(HomePage);
+        formLayout->setObjectName(QString::fromUtf8("formLayout"));
         stackedWidget->addWidget(HomePage);
         ViewFamily = new QWidget();
         ViewFamily->setObjectName(QString::fromUtf8("ViewFamily"));
@@ -82,6 +86,9 @@ public:
         menubar->addAction(menuQuit->menuAction());
 
         retranslateUi(ApplicationWindow);
+
+        stackedWidget->setCurrentIndex(0);
+
 
         QMetaObject::connectSlotsByName(ApplicationWindow);
     } // setupUi

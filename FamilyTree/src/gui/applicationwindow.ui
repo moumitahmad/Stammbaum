@@ -19,7 +19,12 @@
      <layout class="QGridLayout" name="gridLayout">
       <item row="0" column="0">
        <widget class="QStackedWidget" name="stackedWidget">
-        <widget class="QWidget" name="HomePage"/>
+        <property name="currentIndex">
+         <number>0</number>
+        </property>
+        <widget class="QWidget" name="HomePage">
+         <layout class="QFormLayout" name="formLayout"/>
+        </widget>
         <widget class="QWidget" name="ViewFamily"/>
         <widget class="QWidget" name="EditFamily"/>
        </widget>
