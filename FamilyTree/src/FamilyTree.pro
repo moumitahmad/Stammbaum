@@ -17,7 +17,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     domain/ILogic.cpp \
-    gui/editfamilywindow.cpp \
+    gui/applicationwindow.cpp \
     gui/mainwindow.cpp \
     main.cpp \
     persistence/databaseservice.cpp \
@@ -27,7 +27,7 @@ SOURCES += \
 
 HEADERS += \
     domain/ILogic.h \
-    gui/editfamilywindow.h \
+    gui/applicationwindow.h \
     gui/mainwindow.h \
     persistence/databaseservice.h \
     value-objects/familytree.h \
@@ -35,7 +35,7 @@ HEADERS += \
     value-objects/user.h
 
 FORMS += \
-    gui/editfamilywindow.ui \
+    gui/applicationwindow.ui \
     gui/mainwindow.ui
 
 # Default rules for deployment.
