@@ -30,9 +30,9 @@ User* domain::ILogic::loginUser(QString& name, QString& password) {
             qDebug() << "wrong password";
             return nullptr;
         }
-    } catch(const std::logic_error exp) {
+    } catch(const std::logic_error* exp) {
         qDebug() << "wrong username";
-        qDebug() << "EXCEPTION:" << exp.what();
+        qDebug() << "EXCEPTION:" << exp->what();
         return nullptr;
     }
 }

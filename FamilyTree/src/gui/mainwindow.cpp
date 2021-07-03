@@ -37,26 +37,52 @@ MainWindow::~MainWindow() {
 
 void MainWindow::switchToCreateNewUser() {
     ui->stackedWidget->setCurrentIndex(1);
+
+    // hide error and additional messages
     ui->errorLabelNameNotValid->hide();
     ui->errorLabelPasswordNotValid->hide();
+    ui->errorLabelNameTaken->hide();
 }
 
 void MainWindow::switchToLogIn() {
     ui->stackedWidget->setCurrentIndex(0);
     ui->accountCreatedLabel->show();
+
+    // hide error and additional messages
+    ui->errorLabelLogin->hide();
+    ui->placeholder->hide();
 }
 
 void MainWindow::createNewUser(){
-    QString username = ui->in_new_username->toPlainText();
-    QString password = ui->in_new_password->toPlainText();
+    QString username;
+    QString password;
 
+    // check if username is at least 5 characters long
+    if(ui->in_new_username->toPlainText().size() < 5) {
+        ui->errorLabelNameNotValid->show();
+        ui->in_new_username->clear();
+    } else {
+        username = ui->in_new_username->toPlainText();
+    }
+
+    //check if password is at least 7 characters long
+    if(ui->in_new_password->toPlainText() < 7) {
+        ui->errorLabelPasswordNotValid->show();
+        ui->in_new_password->clear();
+    } else {
+        password = ui->in_new_password->toPlainText();
+    }
+
+    // try to create user
     if(m_pLogic->createUser(username,password) == nullptr){
-        //ui->errorLabelCreateUser->show();
+        ui->errorLabelNameTaken->show();
         qDebug() << "User already exists!";
     } else {
         ui->stackedWidget->setCurrentIndex(0);
         qDebug() << "User created!";
     }
+
+    // return to login window
     ui->stackedWidget->setCurrentIndex(0);
     ui->accountCreatedLabel->show();
 }
@@ -68,11 +94,12 @@ void MainWindow::logInUser(){
 
     if(m_pLogic->loginUser(username, password)) {
         ui->errorLabelLogin->hide();
-        qDebug() << "Succesfully logged in!";
+        qDebug() << "Successfully logged in!";
     } else {
         ui->errorLabelLogin->show();
+        ui->in_password->clear();
+        ui->in_username->clear();
     }
-
 }
 
 void MainWindow::quit(){
