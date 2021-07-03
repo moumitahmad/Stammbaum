@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "./domain/ILogic.h"
+#include "applicationwindow.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -13,8 +14,9 @@ class MainWindow : public QMainWindow {
 
 public:
     domain::ILogic* m_pLogic;
+    ApplicationWindow* m_pApp;
 
-    MainWindow(domain::ILogic* pLogic, QWidget *parent = nullptr);
+    MainWindow(domain::ILogic* pLogic, ApplicationWindow* pApp, QWidget *parent = nullptr);
     ~MainWindow();
 
 private slots:

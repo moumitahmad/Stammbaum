@@ -7,6 +7,7 @@
 #include <QDebug>
 
 #include "gui/mainwindow.h"
+#include "gui/applicationwindow.h"
 #include "value-objects/user.h"
 #include "domain/ILogic.h"
 #include "persistence/databaseservice.h"
@@ -53,7 +54,8 @@ int main(int argc, char *argv[]) {
     pLogic->connectToDatabase();
     //testDatabase(pLogic);
     QApplication a(argc, argv);
-    MainWindow w(pLogic);
+    ApplicationWindow* app;
+    MainWindow w(pLogic, app);
     w.show();
     return a.exec();
 }

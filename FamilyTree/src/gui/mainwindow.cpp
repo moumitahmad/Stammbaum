@@ -97,8 +97,10 @@ void MainWindow::logInUser(){
 
     if(m_pLogic->loginUser(username, password)) {
         ui->errorLabelLogin->hide();
-        qDebug() << "Successfully logged in!";
-        //m_pApp = new ApplicationWindow(m_pLogic);
+        qDebug() << "Successfully logged-in!";
+        m_pApp = new ApplicationWindow(m_pLogic);
+        m_pApp->show();
+        this->close();
 
     } else {
         ui->errorLabelLogin->show();
