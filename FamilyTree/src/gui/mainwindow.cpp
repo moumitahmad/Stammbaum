@@ -8,7 +8,7 @@
 #include <QDebug>
 #include "./domain/ILogic.h"
 
-MainWindow::MainWindow(domain::ILogic* pLogic, QWidget *parent):
+MainWindow::MainWindow(domain::ILogic* pLogic, ApplicationWindow* pApp, QWidget *parent):
     QMainWindow(parent),
     m_pLogic(pLogic),
     ui(new Ui::MainWindow)

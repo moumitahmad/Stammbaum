@@ -377,6 +377,11 @@ compiler_moc_header_make_all: moc_applicationwindow.cpp moc_mainwindow.cpp
 compiler_moc_header_clean:
 	-$(DEL_FILE) moc_applicationwindow.cpp moc_mainwindow.cpp
 moc_applicationwindow.cpp: ../src/gui/applicationwindow.h \
+		../src/domain/ILogic.h \
+		../src/value-objects/familytree.h \
+		../src/value-objects/user.h \
+		../src/value-objects/member.h \
+		../src/persistence/databaseservice.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
 	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/gurleen/Documents/GitHub/Stammbaum/FamilyTree/build-FamilyTree-Desktop-Debug/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/gurleen/Documents/GitHub/Stammbaum/FamilyTree/src -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtSql -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../src/gui/applicationwindow.h -o moc_applicationwindow.cpp
@@ -387,6 +392,7 @@ moc_mainwindow.cpp: ../src/gui/mainwindow.h \
 		../src/value-objects/user.h \
 		../src/value-objects/member.h \
 		../src/persistence/databaseservice.h \
+		../src/gui/applicationwindow.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
 	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/gurleen/Documents/GitHub/Stammbaum/FamilyTree/build-FamilyTree-Desktop-Debug/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/gurleen/Documents/GitHub/Stammbaum/FamilyTree/src -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtSql -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../src/gui/mainwindow.h -o moc_mainwindow.cpp
@@ -424,6 +430,11 @@ ILogic.o: ../src/domain/ILogic.cpp ../src/domain/ILogic.h \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ILogic.o ../src/domain/ILogic.cpp
 
 applicationwindow.o: ../src/gui/applicationwindow.cpp ../src/gui/applicationwindow.h \
+		../src/domain/ILogic.h \
+		../src/value-objects/familytree.h \
+		../src/value-objects/user.h \
+		../src/value-objects/member.h \
+		../src/persistence/databaseservice.h \
 		ui_applicationwindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o applicationwindow.o ../src/gui/applicationwindow.cpp
 
@@ -433,6 +444,7 @@ mainwindow.o: ../src/gui/mainwindow.cpp ../src/gui/mainwindow.h \
 		../src/value-objects/user.h \
 		../src/value-objects/member.h \
 		../src/persistence/databaseservice.h \
+		../src/gui/applicationwindow.h \
 		ui_mainwindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../src/gui/mainwindow.cpp
 
@@ -441,7 +453,8 @@ main.o: ../src/main.cpp ../src/gui/mainwindow.h \
 		../src/value-objects/familytree.h \
 		../src/value-objects/user.h \
 		../src/value-objects/member.h \
-		../src/persistence/databaseservice.h
+		../src/persistence/databaseservice.h \
+		../src/gui/applicationwindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../src/main.cpp
 
 databaseservice.o: ../src/persistence/databaseservice.cpp ../src/persistence/databaseservice.h \
