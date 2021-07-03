@@ -99,9 +99,11 @@ void MainWindow::logInUser(){
     QString username = ui->in_username->text();
     QString password = ui->in_password->text();
 
-    if(m_pLogic->loginUser(username, password)) {
+    User* user = m_pLogic->loginUser(username, password);
+    if(user) {
         ui->errorLabelLogin->hide();
         qDebug() << "Successfully logged-in!";
+        m_pLogic->setCurrentUser(user);
         m_pApp = new ApplicationWindow(m_pLogic);
         m_pApp->show();
         this->close();

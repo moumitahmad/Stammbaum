@@ -15,8 +15,12 @@ namespace domain {
 
     class ILogic  {
         database::IDatabase* m_pDB;
+        User* m_currentUser;
     public:
         ILogic(database::IDatabase* pDB): m_pDB(pDB){}
+
+        User* getCurrentUser() const;
+        void setCurrentUser(User* user);
 
         // database general
         void connectToDatabase();

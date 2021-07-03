@@ -36,7 +36,6 @@ public:
     QWidget *EditFamily;
     QMenuBar *menubar;
     QMenu *menuLogout;
-    QMenu *menuQuit;
     QStatusBar *statusbar;
 
     void setupUi(QMainWindow *ApplicationWindow)
@@ -75,15 +74,12 @@ public:
         menubar->setGeometry(QRect(0, 0, 800, 22));
         menuLogout = new QMenu(menubar);
         menuLogout->setObjectName(QString::fromUtf8("menuLogout"));
-        menuQuit = new QMenu(menubar);
-        menuQuit->setObjectName(QString::fromUtf8("menuQuit"));
         ApplicationWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(ApplicationWindow);
         statusbar->setObjectName(QString::fromUtf8("statusbar"));
         ApplicationWindow->setStatusBar(statusbar);
 
         menubar->addAction(menuLogout->menuAction());
-        menubar->addAction(menuQuit->menuAction());
 
         retranslateUi(ApplicationWindow);
 
@@ -96,8 +92,7 @@ public:
     void retranslateUi(QMainWindow *ApplicationWindow)
     {
         ApplicationWindow->setWindowTitle(QApplication::translate("ApplicationWindow", "MainWindow", nullptr));
-        menuLogout->setTitle(QApplication::translate("ApplicationWindow", "Logout", nullptr));
-        menuQuit->setTitle(QApplication::translate("ApplicationWindow", "Quit", nullptr));
+        menuLogout->setTitle(QApplication::translate("ApplicationWindow", "logout", nullptr));
     } // retranslateUi
 
 };

@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include "domain/ILogic.h"
+#include "./value-objects/user.h"
 
 namespace Ui {
 class Homepage;
@@ -14,6 +15,7 @@ class Homepage : public QWidget
 
 public:
     domain::ILogic* m_pLogic;
+    User* m_currentUser;
 
     explicit Homepage(domain::ILogic* pLogic, QWidget *parent = nullptr);
     ~Homepage();

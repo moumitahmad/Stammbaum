@@ -15,6 +15,7 @@
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QLabel>
+#include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
@@ -22,7 +23,6 @@
 #include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QStackedWidget>
 #include <QtWidgets/QStatusBar>
-#include <QtWidgets/QTextEdit>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
@@ -48,13 +48,13 @@ public:
     QHBoxLayout *horizontalLayout_5;
     QSpacerItem *horizontalSpacer_4;
     QGridLayout *gridLayout;
+    QPushButton *newUserButton;
     QSpacerItem *verticalSpacer_4;
     QLabel *username;
-    QPushButton *newUserButton;
-    QTextEdit *in_username;
-    QPushButton *loginButton;
-    QTextEdit *in_password;
     QLabel *password;
+    QPushButton *loginButton;
+    QLineEdit *in_username;
+    QLineEdit *in_password;
     QSpacerItem *horizontalSpacer;
     QSpacerItem *verticalSpacer;
     QWidget *createNewUserPage;
@@ -73,10 +73,10 @@ public:
     QLabel *password_3;
     QSpacerItem *verticalSpacer_8;
     QPushButton *newUserButton_2;
-    QTextEdit *in_new_username;
     QLabel *username_3;
-    QTextEdit *in_new_password;
     QPushButton *backButton;
+    QLineEdit *in_new_username;
+    QLineEdit *in_new_password;
     QSpacerItem *horizontalSpacer_3;
     QSpacerItem *verticalSpacer_9;
     QWidget *page_3;
@@ -179,6 +179,11 @@ public:
 
         gridLayout = new QGridLayout();
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
+        newUserButton = new QPushButton(layoutWidget);
+        newUserButton->setObjectName(QString::fromUtf8("newUserButton"));
+
+        gridLayout->addWidget(newUserButton, 4, 1, 1, 1);
+
         verticalSpacer_4 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Fixed);
 
         gridLayout->addItem(verticalSpacer_4, 2, 1, 1, 1);
@@ -193,38 +198,25 @@ public:
 
         gridLayout->addWidget(username, 0, 0, 1, 1);
 
-        newUserButton = new QPushButton(layoutWidget);
-        newUserButton->setObjectName(QString::fromUtf8("newUserButton"));
+        password = new QLabel(layoutWidget);
+        password->setObjectName(QString::fromUtf8("password"));
 
-        gridLayout->addWidget(newUserButton, 4, 1, 1, 1);
-
-        in_username = new QTextEdit(layoutWidget);
-        in_username->setObjectName(QString::fromUtf8("in_username"));
-        sizePolicy.setHeightForWidth(in_username->sizePolicy().hasHeightForWidth());
-        in_username->setSizePolicy(sizePolicy);
-        in_username->setMinimumSize(QSize(256, 30));
-        in_username->setMaximumSize(QSize(256, 30));
-
-        gridLayout->addWidget(in_username, 0, 1, 1, 1);
+        gridLayout->addWidget(password, 1, 0, 1, 1);
 
         loginButton = new QPushButton(layoutWidget);
         loginButton->setObjectName(QString::fromUtf8("loginButton"));
 
         gridLayout->addWidget(loginButton, 3, 1, 1, 1);
 
-        in_password = new QTextEdit(layoutWidget);
+        in_username = new QLineEdit(layoutWidget);
+        in_username->setObjectName(QString::fromUtf8("in_username"));
+
+        gridLayout->addWidget(in_username, 0, 1, 1, 1);
+
+        in_password = new QLineEdit(layoutWidget);
         in_password->setObjectName(QString::fromUtf8("in_password"));
-        sizePolicy.setHeightForWidth(in_password->sizePolicy().hasHeightForWidth());
-        in_password->setSizePolicy(sizePolicy);
-        in_password->setMinimumSize(QSize(256, 0));
-        in_password->setMaximumSize(QSize(100, 30));
 
         gridLayout->addWidget(in_password, 1, 1, 1, 1);
-
-        password = new QLabel(layoutWidget);
-        password->setObjectName(QString::fromUtf8("password"));
-
-        gridLayout->addWidget(password, 1, 0, 1, 1);
 
 
         horizontalLayout_5->addLayout(gridLayout);
@@ -321,15 +313,6 @@ public:
 
         gridLayout_4->addWidget(newUserButton_2, 3, 1, 1, 1);
 
-        in_new_username = new QTextEdit(layoutWidget1);
-        in_new_username->setObjectName(QString::fromUtf8("in_new_username"));
-        sizePolicy.setHeightForWidth(in_new_username->sizePolicy().hasHeightForWidth());
-        in_new_username->setSizePolicy(sizePolicy);
-        in_new_username->setMinimumSize(QSize(256, 30));
-        in_new_username->setMaximumSize(QSize(256, 30));
-
-        gridLayout_4->addWidget(in_new_username, 0, 1, 1, 1);
-
         username_3 = new QLabel(layoutWidget1);
         username_3->setObjectName(QString::fromUtf8("username_3"));
         sizePolicy2.setHeightForWidth(username_3->sizePolicy().hasHeightForWidth());
@@ -337,19 +320,20 @@ public:
 
         gridLayout_4->addWidget(username_3, 0, 0, 1, 1);
 
-        in_new_password = new QTextEdit(layoutWidget1);
-        in_new_password->setObjectName(QString::fromUtf8("in_new_password"));
-        sizePolicy.setHeightForWidth(in_new_password->sizePolicy().hasHeightForWidth());
-        in_new_password->setSizePolicy(sizePolicy);
-        in_new_password->setMinimumSize(QSize(256, 0));
-        in_new_password->setMaximumSize(QSize(100, 30));
-
-        gridLayout_4->addWidget(in_new_password, 1, 1, 1, 1);
-
         backButton = new QPushButton(layoutWidget1);
         backButton->setObjectName(QString::fromUtf8("backButton"));
 
         gridLayout_4->addWidget(backButton, 4, 1, 1, 1);
+
+        in_new_username = new QLineEdit(layoutWidget1);
+        in_new_username->setObjectName(QString::fromUtf8("in_new_username"));
+
+        gridLayout_4->addWidget(in_new_username, 0, 1, 1, 1);
+
+        in_new_password = new QLineEdit(layoutWidget1);
+        in_new_password->setObjectName(QString::fromUtf8("in_new_password"));
+
+        gridLayout_4->addWidget(in_new_password, 1, 1, 1, 1);
 
 
         horizontalLayout_10->addLayout(gridLayout_4);
@@ -388,7 +372,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        stackedWidget->setCurrentIndex(0);
+        stackedWidget->setCurrentIndex(1);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -403,38 +387,18 @@ public:
         errorLabelLogin->setText(QApplication::translate("MainWindow", "No user found with this data. Please try again.", nullptr));
         accountCreatedLabel->setText(QApplication::translate("MainWindow", "Account successfully created! Please log in.", nullptr));
         placeholder->setText(QApplication::translate("MainWindow", "Placeholder for symmetry", nullptr));
-        username->setText(QApplication::translate("MainWindow", "Username", nullptr));
         newUserButton->setText(QApplication::translate("MainWindow", "Sign Up", nullptr));
-        in_username->setHtml(QApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:'Ubuntu'; font-size:11pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", nullptr));
-        loginButton->setText(QApplication::translate("MainWindow", "Login", nullptr));
-        in_password->setHtml(QApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:'Ubuntu'; font-size:11pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", nullptr));
+        username->setText(QApplication::translate("MainWindow", "Username", nullptr));
         password->setText(QApplication::translate("MainWindow", "Password", nullptr));
+        loginButton->setText(QApplication::translate("MainWindow", "Login", nullptr));
         welcomeLabel_1->setText(QApplication::translate("MainWindow", "Welcome to the Family Tree Project!", nullptr));
         signUpLabel->setText(QApplication::translate("MainWindow", "Here you can sign up.", nullptr));
         errorLabelNameTaken->setText(QApplication::translate("MainWindow", "Username already taken. Please choose a different one.", nullptr));
-        errorLabelNameNotValid->setText(QApplication::translate("MainWindow", "Username must be at least 5 letters long.", nullptr));
-        errorLabelPasswordNotValid->setText(QApplication::translate("MainWindow", "Password must be at least 7 letters long.", nullptr));
+        errorLabelNameNotValid->setText(QApplication::translate("MainWindow", "Username must be at least 5 characters long.", nullptr));
+        errorLabelPasswordNotValid->setText(QApplication::translate("MainWindow", "Password must be at least 7 characters long.", nullptr));
         password_3->setText(QApplication::translate("MainWindow", "Password", nullptr));
         newUserButton_2->setText(QApplication::translate("MainWindow", "Sign Up", nullptr));
-        in_new_username->setHtml(QApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:'Ubuntu'; font-size:11pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", nullptr));
         username_3->setText(QApplication::translate("MainWindow", "Username", nullptr));
-        in_new_password->setHtml(QApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:'Ubuntu'; font-size:11pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", nullptr));
         backButton->setText(QApplication::translate("MainWindow", "Back", nullptr));
         menuFile->setTitle(QApplication::translate("MainWindow", "File", nullptr));
     } // retranslateUi

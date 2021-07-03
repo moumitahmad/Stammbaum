@@ -4,7 +4,16 @@
 #include <QSqlError>
 
 
+User *domain::ILogic::getCurrentUser() const {
+    return m_currentUser;
+}
+
+void domain::ILogic::setCurrentUser(User *user) {
+    m_currentUser = user;
+}
+
 // databse
+
 void domain::ILogic::connectToDatabase() {
     m_pDB->connectToDatabase();
 }

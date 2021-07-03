@@ -23,7 +23,7 @@ class Ui_Homepage
 public:
     QFormLayout *formLayout;
     QVBoxLayout *verticalLayout;
-    QLabel *label;
+    QLabel *welcomeText;
 
     void setupUi(QWidget *Homepage)
     {
@@ -37,10 +37,10 @@ public:
 
         formLayout->setLayout(0, QFormLayout::LabelRole, verticalLayout);
 
-        label = new QLabel(Homepage);
-        label->setObjectName(QString::fromUtf8("label"));
+        welcomeText = new QLabel(Homepage);
+        welcomeText->setObjectName(QString::fromUtf8("welcomeText"));
 
-        formLayout->setWidget(0, QFormLayout::FieldRole, label);
+        formLayout->setWidget(0, QFormLayout::FieldRole, welcomeText);
 
 
         retranslateUi(Homepage);
@@ -51,7 +51,7 @@ public:
     void retranslateUi(QWidget *Homepage)
     {
         Homepage->setWindowTitle(QApplication::translate("Homepage", "Form", nullptr));
-        label->setText(QApplication::translate("Homepage", "HOMEPAGE", nullptr));
+        welcomeText->setText(QApplication::translate("Homepage", "Welcome user!", nullptr));
     } // retranslateUi
 
 };
