@@ -18,6 +18,12 @@ void domain::ILogic::printDatabase() {
 // user //GURLEEN BEARBEITEN
 User* domain::ILogic::createUser(QString& name, QString& password) {
 
+    // check if valid username and passwords were entered
+    if( name.size() < 5 || password.size() < 7){
+        qDebug() << "name or password not valid";
+        return nullptr;
+    }
+
     int id = m_pDB->saveUser(name, password);
 
     // check if user was saved
@@ -25,7 +31,7 @@ User* domain::ILogic::createUser(QString& name, QString& password) {
         qDebug() << "User cannot be created";
         return nullptr;
     } else {
-        qDebug() << "User created ilogic";
+        qDebug() << "User created";
         User* user = new User(id, name, password);
         return user;
     }

@@ -75,11 +75,11 @@ void MainWindow::createNewUser(){
     }
 
     // try to create user
-    if(username == "" || password == "" || m_pLogic->createUser(username,password) == nullptr){
-        ui->errorLabelNameTaken->show();
-        qDebug() << "User already exists!";
-        qDebug() << username;
-        qDebug() << password;
+    if(m_pLogic->createUser(username, password) == nullptr){
+        if(username.size() > 5 && password > 7){
+            ui->errorLabelNameTaken->show();
+            qDebug() << "User already exists!";
+        }
     } else {
         ui->stackedWidget->setCurrentIndex(0);
         qDebug() << "User created!";
