@@ -57,6 +57,9 @@ void MainWindow::logInUser(){
     if(m_pLogic->loginUser(username, password)) {
         ui->errorLabelLogin->hide();
         qDebug() << "Succesfully logged in!";
+        edWin = new editFamilyWindow(m_pLogic);
+        this->close();
+        edWin->show();
     } else {
         ui->errorLabelLogin->show();
     }

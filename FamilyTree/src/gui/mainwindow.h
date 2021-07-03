@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "./domain/ILogic.h"
+#include "editfamilywindow.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -25,5 +26,7 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+    editFamilyWindow *edWin;
+
 };
 #endif // MAINWINDOW_H
