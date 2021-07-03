@@ -61,12 +61,13 @@ void MainWindow::createNewUser(){
     if(ui->in_new_username->toPlainText().size() < 5) {
         ui->errorLabelNameNotValid->show();
         ui->in_new_username->clear();
+        ui->in_new_password->clear();
     } else {
         username = ui->in_new_username->toPlainText();
     }
 
     //check if password is at least 7 characters long
-    if(ui->in_new_password->toPlainText() < 7) {
+    if(ui->in_new_password->toPlainText().size() < 7) {
         ui->errorLabelPasswordNotValid->show();
         ui->in_new_password->clear();
     } else {
@@ -74,17 +75,19 @@ void MainWindow::createNewUser(){
     }
 
     // try to create user
-    if(m_pLogic->createUser(username,password) == nullptr){
+    if(username == "" || password == "" || m_pLogic->createUser(username,password) == nullptr){
         ui->errorLabelNameTaken->show();
         qDebug() << "User already exists!";
+        qDebug() << username;
+        qDebug() << password;
     } else {
         ui->stackedWidget->setCurrentIndex(0);
         qDebug() << "User created!";
-    }
 
-    // return to login window
-    ui->stackedWidget->setCurrentIndex(0);
-    ui->accountCreatedLabel->show();
+        // return to login window
+        ui->stackedWidget->setCurrentIndex(0);
+        ui->accountCreatedLabel->show();
+    }
 }
 
 
@@ -95,6 +98,8 @@ void MainWindow::logInUser(){
     if(m_pLogic->loginUser(username, password)) {
         ui->errorLabelLogin->hide();
         qDebug() << "Successfully logged in!";
+        //m_pApp = new ApplicationWindow(m_pLogic);
+
     } else {
         ui->errorLabelLogin->show();
         ui->in_password->clear();

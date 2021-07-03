@@ -1,6 +1,7 @@
 #include "ILogic.h"
 #include "./persistence/databaseservice.h"
 #include <QDebug>
+#include <QSqlError>
 
 
 // databse
@@ -14,11 +15,20 @@ void domain::ILogic::printDatabase() {
     m_pDB->printHasRightsTable();
 }
 
-// user
+// user //GURLEEN BEARBEITEN
 User* domain::ILogic::createUser(QString& name, QString& password) {
+
     int id = m_pDB->saveUser(name, password);
-    User* user = new User(id, name, password);
-    return user;
+
+    // check if user was saved
+    if(id == -1){
+        qDebug() << "User cannot be created";
+        return nullptr;
+    } else {
+        qDebug() << "User created ilogic";
+        User* user = new User(id, name, password);
+        return user;
+    }
 }
 
 User* domain::ILogic::loginUser(QString& name, QString& password) {
@@ -31,7 +41,7 @@ User* domain::ILogic::loginUser(QString& name, QString& password) {
             return nullptr;
         }
     } catch(const std::logic_error* exp) {
-        qDebug() << "wrong username";
+        qDebug() << "wrong user data";
         qDebug() << "EXCEPTION:" << exp->what();
         return nullptr;
     }
