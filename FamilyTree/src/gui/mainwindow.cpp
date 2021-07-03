@@ -8,9 +8,10 @@
 #include <QDebug>
 #include "./domain/ILogic.h"
 
-MainWindow::MainWindow(domain::ILogic* pLogic, QWidget *parent):
+MainWindow::MainWindow(domain::ILogic *pLogic, ApplicationWindow *pApp, QWidget *parent):
     QMainWindow(parent),
     m_pLogic(pLogic),
+    m_pApp(pApp),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
@@ -29,6 +30,7 @@ MainWindow::MainWindow(domain::ILogic* pLogic, QWidget *parent):
     QObject::connect(ui->loginButton, &QPushButton::clicked, this, &MainWindow::logInUser);
     QObject::connect(ui->newUserButton_2, &QPushButton::clicked, this, &MainWindow::createNewUser);
     QObject::connect(ui->actionQuit, &QAction::triggered, this, &MainWindow::quit);
+
 }
 
 MainWindow::~MainWindow() {
@@ -68,7 +70,10 @@ void MainWindow::logInUser(){
 
     if(m_pLogic->loginUser(username, password)) {
         ui->errorLabelLogin->hide();
-        qDebug() << "Succesfully logged in!";
+        qDebug() << "Successfully logged in!";
+        m_pApp = new ApplicationWindow(m_pLogic);
+        m_pApp->show();
+        this->close();
     } else {
         ui->errorLabelLogin->show();
     }

@@ -2,6 +2,7 @@
 #define APPLICATIONWINDOW_H
 
 #include <QMainWindow>
+#include "./domain/ILogic.h"
 
 namespace Ui {
 class ApplicationWindow;
@@ -12,7 +13,8 @@ class ApplicationWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit ApplicationWindow(QWidget *parent = nullptr);
+    domain::ILogic* m_pLogic;
+    explicit ApplicationWindow(domain::ILogic* pLogic, QWidget *parent = nullptr);
     ~ApplicationWindow();
 
 private:
