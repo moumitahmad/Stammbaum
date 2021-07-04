@@ -372,6 +372,38 @@ Member* database::IDatabase::getMemberByID(const int id) {
     }
 }
 
+QVector<Member*>* database::IDatabase::getMemberByFamID(const int id) {
+    QSqlQuery q;
+    QString query = "SELECT * from member WHERE familyID=" + QString::number(id) + ";";
+    if(q.exec(query)) {
+        QVector<Member*>* familyMember = new QVector<Member*>;
+        while(q.next()) {
+
+            qDebug() << q.value(0).toInt();
+            qDebug() <<  q.value(1).toString();
+            qDebug() <<   q.value(2).toString();
+            qDebug() <<   q.value(3).toString();
+            qDebug() <<   q.value(4).toString();
+            qDebug() <<   q.value(5).toString();
+            Member* partner = getMemberByID(q.value(5).toInt());
+            Member* member = new Member(q.value(0).toInt(), q.value(1).toString(), q.value(2).toString(), q.value(3).toString(), q.value(4).toString(), q.value(5).toString(), partner);
+  //          partner->setPartner();
+ //           familyMember->push_back(member);
+//            qDebug() << member->getName();
+//            qDebug() << "member->getName()";
+        }
+        qDebug() << "member->getName()3";
+        if(familyMember->empty())
+            return nullptr;
+        return familyMember;
+    } else {
+        qDebug() << q.lastError();
+        throw new std::logic_error("Member with this familyID does not exsist.");
+    }
+}
+
+
+
 int database::IDatabase::saveMember(const QString &name, const QString &birth, const QString &death, const QString &gender, const QString &biografie, int partnerID, int familyID) {
     QSqlQuery q;
     q.prepare("INSERT INTO member(name, birth, death, gender, biografie, partnerID, familyID) VALUES(:name, :birth, :death, :gender, :biografie, :partnerID, :familyID);");

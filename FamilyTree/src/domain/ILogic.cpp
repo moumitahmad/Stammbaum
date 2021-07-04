@@ -90,6 +90,10 @@ QVector<FamilyTree*>* domain::ILogic::getFamilyTreesByUserID(int adminID) {
     return m_pDB->getFamilyTreesByUserID(adminID);
 }
 
+QVector<Member*>* domain::ILogic::getMembersByFamily(int familyID) {
+    return m_pDB->getMemberByFamID(familyID);
+}
+
 Member* domain::ILogic::createMember(FamilyTree *family, const QString &name, const QString &birth,
         const QString &death, const QString &gender, const QString &biografie, Member *partner,
         QVector<Member*>* children) {
