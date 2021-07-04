@@ -17,7 +17,7 @@
    <item row="0" column="0">
     <layout class="QGridLayout" name="gridLayout">
      <item row="2" column="0">
-      <widget class="QPushButton" name="pushButton">
+      <widget class="QPushButton" name="goToEditButton">
        <property name="text">
         <string>EDIT</string>
        </property>

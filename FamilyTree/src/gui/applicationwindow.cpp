@@ -15,9 +15,8 @@ ApplicationWindow::ApplicationWindow(domain::ILogic* pLogic, QWidget *parent) :
 {
     ui->setupUi(this);
     Homepage* hp = new Homepage(m_pLogic, this, this);
-    ViewPage* vp = new ViewPage(m_pLogic, this);
+    ViewPage* vp = new ViewPage(m_pLogic, this, this);
     EditPage* ep = new EditPage(m_pLogic, this);
-    //DisplayFam* df = new DisplayFam(m_pLogic, this);
 
     ui->HomePage->layout()->addWidget(hp);
     ui->ViewFamily->layout()->addWidget(vp);

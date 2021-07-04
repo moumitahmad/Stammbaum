@@ -4,15 +4,17 @@
 #include "displayfam.h"
 #include <QDebug>
 
-ViewPage::ViewPage(domain::ILogic* pLogic, QWidget *parent) :
+
+ViewPage::ViewPage(domain::ILogic *pLogic, ApplicationWindow *appWindow, QWidget *parent) {
     QWidget(parent),
+    m_appWindow(appWindow),
     m_pLogic(pLogic),
     ui(new Ui::ViewPage)
 {
     ui->setupUi(this);
     DisplayFam* df = new DisplayFam(m_pLogic, this);
     ui->gridLayout->addWidget(df);
-    //QObject::connect(ui->editButton, &QPushButton::clicked, this, &ViewPage::openEditPage);
+    QObject::connect(ui->goToEditButton, &QPushButton::clicked, this, &ViewPage::openEditPage);
 }
 
 ViewPage::~ViewPage() {
@@ -21,6 +23,6 @@ ViewPage::~ViewPage() {
 
 void ViewPage::openEditPage() {
     qDebug() << "Switch to Edit Mode";
-    //openEditPage(m_displayedFamily->getId());
+    m_appWindow->openEditPage();
 }
 

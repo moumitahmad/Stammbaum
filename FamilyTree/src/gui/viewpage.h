@@ -4,6 +4,7 @@
 #include <QWidget>
 #include "domain/ILogic.h"
 #include "./value-objects/familytree.h"
+#include "applicationwindow.h"
 
 namespace Ui {
 class ViewPage;
@@ -14,10 +15,11 @@ class ViewPage : public QWidget
     Q_OBJECT
 
 public:
+    ApplicationWindow* m_appWindow;
     domain::ILogic* m_pLogic;
     FamilyTree* m_displayedFamily;
 
-    explicit ViewPage(domain::ILogic* pLogic, QWidget *parent = nullptr);
+    explicit ViewPage(domain::ILogic* pLogic, ApplicationWindow* appWindow, QWidget *parent = nullptr);
     ~ViewPage();
 
 private slots:
