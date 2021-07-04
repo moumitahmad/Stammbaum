@@ -21,5 +21,6 @@ ViewPage::~ViewPage() {
 
 void ViewPage::openEditPage() {
     qDebug() << "Switch to Edit Mode";
-    openEditPage();
+    //openEditPage(m_displayedFamily->getId());
 }
+

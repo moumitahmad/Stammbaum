@@ -14,3 +14,4 @@ EditPage::~EditPage()
 {
     delete ui;
 }
+

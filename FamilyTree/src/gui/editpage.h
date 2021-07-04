@@ -14,9 +14,12 @@ class EditPage : public QWidget
 
 public:
     domain::ILogic* m_pLogic;
+    FamilyTree* m_displayedFamily;
 
     explicit EditPage(domain::ILogic* pLogic, QWidget *parent = nullptr);
     ~EditPage();
+
+    void setFamily(int family) const;
 
 private:
     Ui::EditPage *ui;

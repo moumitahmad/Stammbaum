@@ -12,6 +12,14 @@ void domain::ILogic::setCurrentUser(User *user) {
     m_currentUser = user;
 }
 
+int domain::ILogic::getCurrentFamilyID() const {
+    return m_currentFamilyID;
+}
+
+void domain::ILogic::setCurrentFamilyID(const int familyID) {
+    m_currentFamilyID = familyID;
+}
+
 // databse
 
 void domain::ILogic::connectToDatabase() {

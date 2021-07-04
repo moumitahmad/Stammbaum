@@ -1,5 +1,6 @@
 #include "homepage.h"
 #include "ui_homepage.h"
+#include "applicationwindow.h"
 
 #include <QDebug>
 #include <QDialog>
@@ -8,8 +9,9 @@
 #include <QTextLine>
 
 
-Homepage::Homepage(domain::ILogic* pLogic, QWidget *parent) :
+Homepage::Homepage(domain::ILogic* pLogic, ApplicationWindow* appWindow, QWidget *parent) :
     QWidget(parent),
+    m_appWindow(appWindow),
     m_pLogic(pLogic),
     ui(new Ui::Homepage)
 {
@@ -44,10 +46,6 @@ void Homepage::displayFamilies() {
         qDebug() << "NO families available";
     }
     QObject::connect(ui->newFamilyButton, &QPushButton::clicked, this, &Homepage::addFamily);
-}
-
-void Homepage::showFamily(int familyID) {
-    qDebug() << "Open Family with ID = " << familyID;
 }
 
 void Homepage::addFamily() {
@@ -85,4 +83,10 @@ void Homepage::addFamily() {
     } else if(result == QDialog::Rejected) {
         d->close();
     }
+}
+
+void Homepage::showFamily(int familyID) {
+    qDebug() << "Open Family with ID = " << familyID;
+    m_pLogic->setCurrentFamilyID(familyID);
+    m_appWindow->openViewPage();
 }
