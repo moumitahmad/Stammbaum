@@ -9,8 +9,9 @@
 #include <QTextLine>
 
 
-Homepage::Homepage(domain::ILogic* pLogic, QWidget *parent) :
+Homepage::Homepage(domain::ILogic* pLogic, ApplicationWindow* appWindow, QWidget *parent) :
     QWidget(parent),
+    m_appWindow(appWindow),
     m_pLogic(pLogic),
     ui(new Ui::Homepage)
 {
@@ -86,5 +87,6 @@ void Homepage::addFamily() {
 
 void Homepage::showFamily(int familyID) {
     qDebug() << "Open Family with ID = " << familyID;
-    Ui::openViewPage(familyID);
+    m_pLogic->setCurrentFamilyID(familyID);
+    m_appWindow->openViewPage();
 }

@@ -15,6 +15,3 @@ EditPage::~EditPage()
     delete ui;
 }
 
-void EditPage::setFamily(int familyID) const {
-    m_displayedFamily = m_pLogic->getFamilyTreesByID(familyID);
-}

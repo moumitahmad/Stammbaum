@@ -16,11 +16,16 @@ namespace domain {
     class ILogic  {
         database::IDatabase* m_pDB;
         User* m_currentUser;
+        int m_currentFamilyID;
+
     public:
         ILogic(database::IDatabase* pDB): m_pDB(pDB){}
 
         User* getCurrentUser() const;
         void setCurrentUser(User* user);
+
+        int getCurrentFamilyID() const;
+        void setCurrentFamilyID(const int familyID);
 
         // database general
         void connectToDatabase();

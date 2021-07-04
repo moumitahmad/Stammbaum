@@ -21,9 +21,6 @@ ViewPage::~ViewPage() {
 
 void ViewPage::openEditPage() {
     qDebug() << "Switch to Edit Mode";
-    Ui::openEditPage(m_displayedFamily->getId());
+    //openEditPage(m_displayedFamily->getId());
 }
 
-void ViewPage::setFamily(int familyID) const {
-    m_displayedFamily = m_pLogic->getFamilyTreesByID(familyID);
-}

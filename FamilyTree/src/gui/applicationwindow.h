@@ -8,9 +8,6 @@
 
 namespace Ui {
     class ApplicationWindow;
-
-    void openViewPage(int familyID);
-    void openEditPage(int familyID);
 }
 
 class ApplicationWindow : public QMainWindow
@@ -19,11 +16,12 @@ class ApplicationWindow : public QMainWindow
 
 public:
     domain::ILogic* m_pLogic;
-    ViewPage* m_vp;
-    EditPage* m_ep;
 
     explicit ApplicationWindow(domain::ILogic* pLogic, QWidget *parent = nullptr);
     ~ApplicationWindow();
+
+    void openViewPage();
+    void openEditPage();
 
 private slots:
     void logout();
