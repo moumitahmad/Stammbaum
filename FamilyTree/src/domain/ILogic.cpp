@@ -81,6 +81,10 @@ FamilyTree* domain::ILogic::addViewer(FamilyTree* family, User* user) {
     return family;
 }
 
+QVector<FamilyTree*>* domain::ILogic::getFamilyTreesByAdminID(int adminID) {
+    return m_pDB->getFamilyTreesByAdminID(adminID);
+}
+
 Member* domain::ILogic::createMember(FamilyTree *family, const QString &name, const QString &birth,
         const QString &death, const QString &gender, const QString &biografie, Member *partner,
         QVector<Member*>* children) {

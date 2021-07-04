@@ -12,7 +12,9 @@
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QFormLayout>
+#include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QLabel>
+#include <QtWidgets/QPushButton>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
@@ -23,7 +25,9 @@ class Ui_Homepage
 public:
     QFormLayout *formLayout;
     QVBoxLayout *verticalLayout;
+    QHBoxLayout *ownFamiliesGrid;
     QLabel *welcomeText;
+    QPushButton *newFamilyButton;
 
     void setupUi(QWidget *Homepage)
     {
@@ -34,13 +38,23 @@ public:
         formLayout->setObjectName(QString::fromUtf8("formLayout"));
         verticalLayout = new QVBoxLayout();
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
+        ownFamiliesGrid = new QHBoxLayout();
+        ownFamiliesGrid->setObjectName(QString::fromUtf8("ownFamiliesGrid"));
 
-        formLayout->setLayout(0, QFormLayout::LabelRole, verticalLayout);
+        verticalLayout->addLayout(ownFamiliesGrid);
 
         welcomeText = new QLabel(Homepage);
         welcomeText->setObjectName(QString::fromUtf8("welcomeText"));
 
-        formLayout->setWidget(0, QFormLayout::FieldRole, welcomeText);
+        verticalLayout->addWidget(welcomeText);
+
+        newFamilyButton = new QPushButton(Homepage);
+        newFamilyButton->setObjectName(QString::fromUtf8("newFamilyButton"));
+
+        verticalLayout->addWidget(newFamilyButton);
+
+
+        formLayout->setLayout(0, QFormLayout::LabelRole, verticalLayout);
 
 
         retranslateUi(Homepage);
@@ -52,6 +66,7 @@ public:
     {
         Homepage->setWindowTitle(QApplication::translate("Homepage", "Form", nullptr));
         welcomeText->setText(QApplication::translate("Homepage", "Welcome user!", nullptr));
+        newFamilyButton->setText(QApplication::translate("Homepage", "add Family", nullptr));
     } // retranslateUi
 
 };

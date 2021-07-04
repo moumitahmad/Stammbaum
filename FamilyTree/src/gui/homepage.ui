@@ -15,14 +15,25 @@
   </property>
   <layout class="QFormLayout" name="formLayout">
    <item row="0" column="0">
-    <layout class="QVBoxLayout" name="verticalLayout"/>
-   </item>
-   <item row="0" column="1">
-    <widget class="QLabel" name="welcomeText">
-     <property name="text">
-      <string>Welcome user!</string>
-     </property>
-    </widget>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <layout class="QHBoxLayout" name="ownFamiliesGrid"/>
+     </item>
+     <item>
+      <widget class="QLabel" name="welcomeText">
+       <property name="text">
+        <string>Welcome user!</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="newFamilyButton">
+       <property name="text">
+        <string>add Family</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </item>
   </layout>
  </widget>

@@ -20,6 +20,12 @@ public:
     explicit Homepage(domain::ILogic* pLogic, QWidget *parent = nullptr);
     ~Homepage();
 
+    void displayFamilies();
+
+private slots:
+    void showFamily(int id);
+    void addFamily();
+
 private:
     Ui::Homepage *ui;
 };

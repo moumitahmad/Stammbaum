@@ -24,7 +24,6 @@ User* selectUserByID(QString userID) {
 }
 
 User* database::IDatabase::getUserByName(QString& userName) {
-    // print table user
     QSqlQuery q;
     q.exec("SELECT * FROM user WHERE name='"+userName+"';");
     if (q.first()) {
@@ -38,6 +37,21 @@ User* database::IDatabase::getUserByName(QString& userName) {
         qDebug() << q.lastError();
         qDebug() << "database: user name wrong";
         throw new std::logic_error("username is wrong.");
+    }
+}
+
+User *database::IDatabase::getUserByID(int id) {
+    QSqlQuery q;
+    q.exec("SELECT * FROM user WHERE id=" + QString::number(id) + ";");
+    if (q.first()) {
+        int id = q.value(0).toInt();
+        QString name = q.value(1).toString();
+        QString userPassword = q.value(2).toString();
+        User* user = new User(id, name, userPassword);
+        return user;
+    } else {
+        qDebug() << q.lastError();
+        throw new std::logic_error("user id does not exsits.");
     }
 }
 
@@ -291,6 +305,26 @@ void database::IDatabase::saveViewer(int familyID, User* viewer) {
     } else {
         qDebug() << q.lastError();
         return;
+    }
+}
+
+QVector<FamilyTree*>* database::IDatabase::getFamilyTreesByAdminID(int adminID) {
+    QSqlQuery q;
+    if(q.exec("SELECT * from familytree WHERE adminID=" + QString::number(adminID) + ";")) {
+        QVector<FamilyTree*>* trees = new QVector<FamilyTree*>;
+        while(q.next()) {
+            int id = q.value(0).toInt();
+            QString name = q.value(1).toString();
+            User* admin = getUserByID(q.value(2).toInt());
+            FamilyTree* family = new FamilyTree(id, name, admin);
+            trees->push_back(family);
+            qDebug() << family->getFamilyName();
+        }
+        return trees;
+    } else {
+        qDebug() << q.lastInsertId();
+        qDebug() << "family->getFamilyName()";
+        return nullptr;
     }
 }
 

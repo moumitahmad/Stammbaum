@@ -19,6 +19,7 @@ namespace database {
         // user
         int saveUser(QString& name, QString& password);
         User* getUserByName(QString& userName);
+        User* getUserByID(int id);
 
         // family tree
         int saveFamily(QString& name, User* admin);
@@ -29,6 +30,8 @@ namespace database {
         void deleteEditorFromFamily(int userId, int familyID);
         void saveViewerFromFamily(int userId, int familyID);
         void deleteViewerFromFamily(int userId, int familyID);
+
+        QVector<FamilyTree*>* getFamilyTreesByAdminID(int adminID);
 
         // member
         Member* getMemberByID(const int id);

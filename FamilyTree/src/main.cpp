@@ -46,6 +46,15 @@ void testDatabase(domain::ILogic* pLogic) {
     pLogic->deletePartnerFromMember(member1, newPartner);
 }
 
+void fillDatabase(domain::ILogic* pLogic) {
+    QString username = "Test User";
+    QString password = "qwertzuiop";
+    QString famName1 = "Ahmad";
+    QString famName2 = "Erben";
+    User* user = pLogic->createUser(username, password);
+    pLogic->createFamily(famName1, user);
+    pLogic->createFamily(famName2, user);
+}
 
 int main(int argc, char *argv[]) {
     database::IDatabase* pDB = new database::IDatabase();
@@ -53,6 +62,7 @@ int main(int argc, char *argv[]) {
 
     pLogic->connectToDatabase();
     //testDatabase(pLogic);
+    //fillDatabase(pLogic);
     QApplication a(argc, argv);
     ApplicationWindow* app;
     MainWindow w(pLogic, app);

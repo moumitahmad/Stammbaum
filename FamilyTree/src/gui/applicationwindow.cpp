@@ -1,8 +1,9 @@
 #include "applicationwindow.h"
 #include "ui_applicationwindow.h"
-
 #include "homepage.h"
 #include "displayfam.h"
+
+#include <QDebug>
 
 ApplicationWindow::ApplicationWindow(domain::ILogic* pLogic, QWidget *parent) :
     QMainWindow(parent),
@@ -22,4 +23,10 @@ ApplicationWindow::ApplicationWindow(domain::ILogic* pLogic, QWidget *parent) :
 ApplicationWindow::~ApplicationWindow()
 {
     delete ui;
+}
+
+void ApplicationWindow::openViewPage(int familyID) {
+    qDebug() << familyID;
+    ui->stackedWidget->setCurrentIndex(2);
+    // TODO: create view page here and out id in constructor
 }

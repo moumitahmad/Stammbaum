@@ -17,6 +17,8 @@ public:
     explicit ApplicationWindow(domain::ILogic* pLogic, QWidget *parent = nullptr);
     ~ApplicationWindow();
 
+    void openViewPage(int familyID);
+
 private:
     Ui::ApplicationWindow *ui;
 };
