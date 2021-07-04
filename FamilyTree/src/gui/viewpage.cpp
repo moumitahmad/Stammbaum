@@ -2,14 +2,15 @@
 #include "ui_viewpage.h"
 #include "applicationwindow.h"
 
-ViewPage::ViewPage(domain::ILogic* pLogic, FamilyTree* displayedFamily, QWidget *parent) :
+#include <QDebug>
+
+ViewPage::ViewPage(domain::ILogic* pLogic, QWidget *parent) :
     QWidget(parent),
     m_pLogic(pLogic),
-    m_displayedFamily(displayedFamily),
     ui(new Ui::ViewPage)
 {
     ui->setupUi(this);
-    QObject::connect(ui->editButton, &QPushButton::clicked, this, &ViewPage::openEditPage);
+    //QObject::connect(ui->editButton, &QPushButton::clicked, this, &ViewPage::openEditPage);
 }
 
 ViewPage::~ViewPage() {

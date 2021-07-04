@@ -2,6 +2,7 @@
 #define VIEWPAGE_H
 
 #include <QWidget>
+#include "domain/ILogic.h"
 #include "./value-objects/familytree.h"
 
 namespace Ui {
@@ -16,7 +17,7 @@ public:
     domain::ILogic* m_pLogic;
     FamilyTree* m_displayedFamily;
 
-    explicit ViewPage(domain::ILogic* pLogic, FamilyTree* displayedFamily, QWidget *parent = nullptr);
+    explicit ViewPage(domain::ILogic* pLogic, QWidget *parent = nullptr);
     ~ViewPage();
 
 private slots:
