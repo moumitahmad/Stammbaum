@@ -52,8 +52,10 @@ void fillDatabase(domain::ILogic* pLogic) {
     QString famName1 = "Ahmad";
     QString famName2 = "Erben";
     User* user = pLogic->createUser(username, password);
-    pLogic->createFamily(famName1, user);
+    FamilyTree* fam1 = pLogic->createFamily(famName1, user);
     pLogic->createFamily(famName2, user);
+    User* editor = pLogic->createUser(famName1, password);
+    pLogic->addEditor(fam1, editor);
 }
 
 int main(int argc, char *argv[]) {

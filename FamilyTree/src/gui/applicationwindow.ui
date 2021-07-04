@@ -58,35 +58,29 @@
      <height>22</height>
     </rect>
    </property>
-   <widget class="QMenu" name="homeButton">
+   <widget class="QMenu" name="meu">
     <property name="cursor">
      <cursorShape>PointingHandCursor</cursorShape>
     </property>
     <property name="title">
-     <string>Home</string>
+     <string>Menu</string>
     </property>
+    <addaction name="actionHome"/>
+    <addaction name="actionLogout"/>
    </widget>
-   <widget class="QMenu" name="logoutButton">
-    <property name="cursor">
-     <cursorShape>PointingHandCursor</cursorShape>
-    </property>
-    <property name="toolTipDuration">
-     <number>-8</number>
-    </property>
-    <property name="layoutDirection">
-     <enum>Qt::LeftToRight</enum>
-    </property>
-    <property name="title">
-     <string>Logout</string>
-    </property>
-    <property name="toolTipsVisible">
-     <bool>false</bool>
-    </property>
-   </widget>
-   <addaction name="homeButton"/>
-   <addaction name="logoutButton"/>
+   <addaction name="meu"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionHome">
+   <property name="text">
+    <string>Home</string>
+   </property>
+  </action>
+  <action name="actionLogout">
+   <property name="text">
+    <string>Logout</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>

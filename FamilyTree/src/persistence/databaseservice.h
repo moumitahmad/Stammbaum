@@ -31,7 +31,8 @@ namespace database {
         void saveViewerFromFamily(int userId, int familyID);
         void deleteViewerFromFamily(int userId, int familyID);
 
-        QVector<FamilyTree*>* getFamilyTreesByAdminID(int adminID);
+        QVector<FamilyTree*>* getFamilyTreesByUserID(int userID);
+        FamilyTree* getFamilyTreesByID(int familyID);
 
         // member
         Member* getMemberByID(const int id);

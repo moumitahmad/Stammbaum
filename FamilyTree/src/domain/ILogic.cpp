@@ -64,6 +64,11 @@ User* domain::ILogic::loginUser(QString& name, QString& password) {
 
 // family tree
 FamilyTree* domain::ILogic::createFamily(QString& name, User* admin) {
+    // validate family name
+    qDebug() << name.length();
+    if(name.length() < 2) // min 2 characters
+        return nullptr;
+
     int id = m_pDB->saveFamily(name, admin);
     FamilyTree* family = new FamilyTree(id, name, admin);
     return family;
@@ -81,8 +86,8 @@ FamilyTree* domain::ILogic::addViewer(FamilyTree* family, User* user) {
     return family;
 }
 
-QVector<FamilyTree*>* domain::ILogic::getFamilyTreesByAdminID(int adminID) {
-    return m_pDB->getFamilyTreesByAdminID(adminID);
+QVector<FamilyTree*>* domain::ILogic::getFamilyTreesByUserID(int adminID) {
+    return m_pDB->getFamilyTreesByUserID(adminID);
 }
 
 Member* domain::ILogic::createMember(FamilyTree *family, const QString &name, const QString &birth,
