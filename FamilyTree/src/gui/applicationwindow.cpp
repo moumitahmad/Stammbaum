@@ -15,13 +15,13 @@ ApplicationWindow::ApplicationWindow(domain::ILogic* pLogic, QWidget *parent) :
 {
     ui->setupUi(this);
     Homepage* hp = new Homepage(m_pLogic, this);
-    ViewPage* vp = new ViewPage(m_pLogic, this);
-    EditPage* ep = new EditPage(m_pLogic, this);
+    m_vp = new ViewPage(m_pLogic, this);
+    m_ep = new EditPage(m_pLogic, this);
     //DisplayFam* df = new DisplayFam(m_pLogic, this);
 
     ui->HomePage->layout()->addWidget(hp);
-    ui->ViewFamily->layout()->addWidget(vp);
-    ui->EditFamily->layout()->addWidget(ep);
+    ui->ViewFamily->layout()->addWidget(m_vp);
+    ui->EditFamily->layout()->addWidget(m_ep);
     ui->stackedWidget->setCurrentIndex(0);
 
     QObject::connect(ui->actionLogout, &QAction::triggered, this, &ApplicationWindow::logout);
@@ -39,16 +39,16 @@ void ApplicationWindow::logout() {
     this->close();
 }
 
-void ApplicationWindow::openViewPage(int familyID) {
+void Ui::openViewPage(int familyID) {
     qDebug() << familyID;
     ui->stackedWidget->setCurrentIndex(2);
     // TODO: create view page here and pass id in constructor
 
 }
 
-void ApplicationWindow::openEditPage(int familyID) {
+void Ui::openEditPage(int familyID) {
     qDebug() << familyID;
     ui->stackedWidget->setCurrentIndex(3);
-    // TODO: create view page here and pass id in constructor
+    m_ep->setFamily(familyID);
 }
 

@@ -20,6 +20,8 @@ public:
     explicit ViewPage(domain::ILogic* pLogic, QWidget *parent = nullptr);
     ~ViewPage();
 
+    void setFamily(int family) const;
+
 private slots:
     void openEditPage();
 

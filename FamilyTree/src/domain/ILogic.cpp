@@ -93,7 +93,7 @@ QVector<FamilyTree*>* domain::ILogic::getFamilyTreesByUserID(int adminID) {
 Member* domain::ILogic::createMember(FamilyTree *family, const QString &name, const QString &birth,
         const QString &death, const QString &gender, const QString &biografie, Member *partner,
         QVector<Member*>* children) {
-    int id = m_pDB->saveMember(name, birth, death, gender, biografie, partner, family->getId());
+    int id = m_pDB->saveMember(name, birth, death, gender, biografie, partner->getID(), family->getId());
     Member* member = new Member(id, name, birth, death, gender, biografie, partner);
     if(!children->empty()) {
         qDebug() << "children exsist";

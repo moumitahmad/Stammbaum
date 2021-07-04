@@ -1,5 +1,6 @@
 #include "homepage.h"
 #include "ui_homepage.h"
+#include "applicationwindow.h"
 
 #include <QDebug>
 #include <QDialog>
@@ -49,10 +50,6 @@ void Homepage::displayFamilies() {
     QObject::connect(ui->newFamilyButton, &QPushButton::clicked, this, &Homepage::addFamily);
 }
 
-void Homepage::showFamily(int familyID) {
-    qDebug() << "Open Family with ID = " << familyID;
-}
-
 void Homepage::addFamily() {
     QDialog* d = new QDialog();
     QVBoxLayout* vbox = new QVBoxLayout();
@@ -88,4 +85,9 @@ void Homepage::addFamily() {
     } else if(result == QDialog::Rejected) {
         d->close();
     }
+}
+
+void Homepage::showFamily(int familyID) {
+    qDebug() << "Open Family with ID = " << familyID;
+    Ui::openViewPage(familyID);
 }

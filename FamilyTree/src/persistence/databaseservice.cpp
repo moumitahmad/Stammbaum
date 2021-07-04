@@ -372,7 +372,7 @@ Member* database::IDatabase::getMemberByID(const int id) {
     }
 }
 
-int database::IDatabase::saveMember(const QString &name, const QString &birth, const QString &death, const QString &gender, const QString &biografie, Member* partner, int familyID) {
+int database::IDatabase::saveMember(const QString &name, const QString &birth, const QString &death, const QString &gender, const QString &biografie, int partnerID, int familyID) {
     QSqlQuery q;
     q.prepare("INSERT INTO member(name, birth, death, gender, biografie, partnerID, familyID) VALUES(:name, :birth, :death, :gender, :biografie, :partnerID, :familyID);");
     q.bindValue(":name", name);
@@ -380,7 +380,7 @@ int database::IDatabase::saveMember(const QString &name, const QString &birth, c
     q.bindValue(":death", death);
     q.bindValue(":gender", gender);
     q.bindValue(":biografie", biografie);
-    q.bindValue(":partnerID", partner->getID());
+    q.bindValue(":partnerID", partnerID);
     q.bindValue(":familyID", familyID);
 
     if(q.exec()) {

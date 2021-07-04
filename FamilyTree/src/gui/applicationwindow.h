@@ -7,7 +7,10 @@
 #include "viewpage.h"
 
 namespace Ui {
-class ApplicationWindow;
+    class ApplicationWindow;
+
+    void openViewPage(int familyID);
+    void openEditPage(int familyID);
 }
 
 class ApplicationWindow : public QMainWindow
@@ -21,9 +24,6 @@ public:
 
     explicit ApplicationWindow(domain::ILogic* pLogic, QWidget *parent = nullptr);
     ~ApplicationWindow();
-
-    void openViewPage(int familyID);
-    void openEditPage(int familyID);
 
 private slots:
     void logout();
