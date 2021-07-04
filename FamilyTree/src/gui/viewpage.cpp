@@ -11,7 +11,7 @@ ViewPage::ViewPage(domain::ILogic* pLogic, QWidget *parent) :
 {
     ui->setupUi(this);
     DisplayFam* df = new DisplayFam(m_pLogic, this);
-    ui->gridLayout->addWidget(df);
+    ui->gridLayout_3->addWidget(df);
     //QObject::connect(ui->editButton, &QPushButton::clicked, this, &ViewPage::openEditPage);
 }
 
