@@ -320,9 +320,11 @@ QVector<FamilyTree*>* database::IDatabase::getFamilyTreesByAdminID(int adminID) 
             trees->push_back(family);
             qDebug() << family->getFamilyName();
         }
+        if(trees->empty())
+            return nullptr;
         return trees;
     } else {
-        qDebug() << q.lastInsertId();
+        qDebug() << q.lastError();
         qDebug() << "family->getFamilyName()";
         return nullptr;
     }

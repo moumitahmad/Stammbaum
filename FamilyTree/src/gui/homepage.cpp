@@ -6,6 +6,7 @@
 #include <QDialog>
 #include <QLineEdit>
 #include <QDialogButtonBox>
+#include <QTextLine>
 
 
 Homepage::Homepage(domain::ILogic* pLogic, QWidget *parent) :
@@ -26,6 +27,7 @@ Homepage::~Homepage()
 
 void Homepage::displayFamilies() {
     // display Families
+    ui->noFamiliesText->hide();
     QVector<FamilyTree*>* familyTrees = m_pLogic->getFamilyTreesByAdminID(m_currentUser->getId());
     if(familyTrees) {
         qDebug() << "families available";
@@ -42,6 +44,7 @@ void Homepage::displayFamilies() {
             ui->ownFamiliesGrid->layout()->addWidget(famButton);
         }
     } else {
+        ui->noFamiliesText->show();
         qDebug() << "NO families available";
     }
     QObject::connect(ui->newFamilyButton, &QPushButton::clicked, this, &Homepage::addFamily);
