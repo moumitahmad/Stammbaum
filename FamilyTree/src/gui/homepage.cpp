@@ -1,6 +1,5 @@
 #include "homepage.h"
 #include "ui_homepage.h"
-#include "applicationwindow.h"
 
 #include <QDebug>
 #include <QDialog>

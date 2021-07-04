@@ -19,8 +19,10 @@ SOURCES += \
     domain/ILogic.cpp \
     gui/applicationwindow.cpp \
     gui/displayfam.cpp \
+    gui/editpage.cpp \
     gui/homepage.cpp \
     gui/mainwindow.cpp \
+    gui/viewpage.cpp \
     main.cpp \
     persistence/databaseservice.cpp \
     value-objects/familytree.cpp \
@@ -31,8 +33,10 @@ HEADERS += \
     domain/ILogic.h \
     gui/applicationwindow.h \
     gui/displayfam.h \
+    gui/editpage.h \
     gui/homepage.h \
     gui/mainwindow.h \
+    gui/viewpage.h \
     persistence/databaseservice.h \
     value-objects/familytree.h \
     value-objects/member.h \
@@ -41,8 +45,10 @@ HEADERS += \
 FORMS += \
     gui/applicationwindow.ui \
     gui/displayfam.ui \
+    gui/editpage.ui \
     gui/homepage.ui \
-    gui/mainwindow.ui
+    gui/mainwindow.ui \
+    gui/viewpage.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
