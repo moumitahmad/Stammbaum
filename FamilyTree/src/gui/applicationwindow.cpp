@@ -3,7 +3,7 @@
 #include "homepage.h"
 #include "editpage.h"
 #include "viewpage.h"
-#include "displayfam.h"
+
 
 #include <QDebug>
 #include "mainwindow.h"
@@ -22,7 +22,7 @@ ApplicationWindow::ApplicationWindow(domain::ILogic* pLogic, QWidget *parent) :
     ui->HomePage->layout()->addWidget(hp);
     ui->ViewFamily->layout()->addWidget(vp);
     ui->EditFamily->layout()->addWidget(ep);
-    ui->stackedWidget->setCurrentIndex(0);
+    ui->stackedWidget->setCurrentIndex(1);
 
     QObject::connect(ui->actionLogout, &QAction::triggered, this, &ApplicationWindow::logout);
 }
