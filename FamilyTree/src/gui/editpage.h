@@ -23,6 +23,9 @@ public:
     void setFamily(int family) const;
 
 private slots:
+    void uploadPicture();
+    void saveChanges();
+    void discardChanges();
     void openViewPage();
 
 private:

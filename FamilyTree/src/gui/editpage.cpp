@@ -1,6 +1,7 @@
 #include "editpage.h"
 #include "ui_editpage.h"
 #include "applicationwindow.h"
+#include "displayfam.h"
 
 EditPage::EditPage(domain::ILogic* pLogic, ApplicationWindow* appWindow, QWidget *parent) :
     QWidget(parent),
@@ -9,12 +10,35 @@ EditPage::EditPage(domain::ILogic* pLogic, ApplicationWindow* appWindow, QWidget
     ui(new Ui::EditPage)
 {
     ui->setupUi(this);
-    QObject::connect(ui->ButtonView, &QPushButton::clicked, this, &EditPage::openViewPage);
+    DisplayFam* df = new DisplayFam(m_pLogic, this);
+    ui->horizontalLayout->addWidget(df);
+    QObject::connect(ui->ButtonViewFamily, &QPushButton::clicked, this, &EditPage::openViewPage);
+    QObject::connect(ui->ButtonAddPicture, &QPushButton::clicked, this, &EditPage::uploadPicture);
+    QObject::connect(ui->ButtonSave, &QPushButton::clicked, this, &EditPage::saveChanges);
+    QObject::connect(ui->ButtonCancel, &QPushButton::clicked, this, &EditPage::discardChanges);
 }
 
 EditPage::~EditPage()
 {
     delete ui;
+}
+
+void EditPage::uploadPicture(){
+
+}
+
+void EditPage::saveChanges(){
+
+}
+
+void EditPage::discardChanges(){
+    ui->In_Name->clear();
+    ui->In_Birth->clear();
+    ui->In_Death->clear();
+    ui->ChooseGender->setCurrentIndex(0);
+    ui->TextBiography->clear();
+    ui->ChoosePartner->setCurrentIndex(0);
+    ui->ChooseChildren->setCurrentIndex(0);
 }
 
 void EditPage::openViewPage(){
