@@ -3,8 +3,6 @@
 
 #include <QMainWindow>
 #include "./domain/ILogic.h"
-#include "editpage.h"
-#include "viewpage.h"
 
 namespace Ui {
     class ApplicationWindow;
@@ -20,6 +18,7 @@ public:
     explicit ApplicationWindow(domain::ILogic* pLogic, QWidget *parent = nullptr);
     ~ApplicationWindow();
 
+    void openHomePage();
     void openViewPage();
     void openEditPage();
 

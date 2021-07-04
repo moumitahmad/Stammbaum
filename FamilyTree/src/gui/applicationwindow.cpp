@@ -39,12 +39,15 @@ void ApplicationWindow::logout() {
     this->close();
 }
 
-void ApplicationWindow::openViewPage() {
-    ui->stackedWidget->setCurrentIndex(2);
+void ApplicationWindow::openHomePage() {
+    ui->stackedWidget->setCurrentIndex(0);
+}
 
+void ApplicationWindow::openViewPage() {
+    ui->stackedWidget->setCurrentIndex(1);
 }
 
 void ApplicationWindow::openEditPage() {
-    ui->stackedWidget->setCurrentIndex(3);
+    ui->stackedWidget->setCurrentIndex(2);
 }
 
