@@ -37,7 +37,7 @@ namespace domain {
         FamilyTree* addEditor(FamilyTree* family, User* user);
         FamilyTree* addViewer(FamilyTree* family, User* user);
 
-        QVector<FamilyTree*>* getFamilyTreesByAdminID(int adminID);
+        QVector<FamilyTree*>* getFamilyTreesByUserID(int adminID);
 
 
         // ---------- MEMBER

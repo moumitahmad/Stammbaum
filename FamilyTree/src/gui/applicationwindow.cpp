@@ -4,6 +4,7 @@
 #include "displayfam.h"
 
 #include <QDebug>
+#include "mainwindow.h"
 
 ApplicationWindow::ApplicationWindow(domain::ILogic* pLogic, QWidget *parent) :
     QMainWindow(parent),
@@ -19,6 +20,7 @@ ApplicationWindow::ApplicationWindow(domain::ILogic* pLogic, QWidget *parent) :
     ui->ViewFamily->layout()->addWidget(df);
     ui->stackedWidget->setCurrentIndex(1);
 
+    QObject::connect(ui->actionLogout, &QAction::triggered, this, &ApplicationWindow::logout);
 }
 
 ApplicationWindow::~ApplicationWindow()
@@ -26,8 +28,16 @@ ApplicationWindow::~ApplicationWindow()
     delete ui;
 }
 
+void ApplicationWindow::logout() {
+    qDebug() << "logout";
+    MainWindow* login = new MainWindow(m_pLogic, this);
+    login->show();
+    this->close();
+}
+
 void ApplicationWindow::openViewPage(int familyID) {
     qDebug() << familyID;
     ui->stackedWidget->setCurrentIndex(2);
     // TODO: create view page here and out id in constructor
 }
+

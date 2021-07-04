@@ -19,6 +19,9 @@ public:
 
     void openViewPage(int familyID);
 
+private slots:
+    void logout();
+
 private:
     Ui::ApplicationWindow *ui;
 };
