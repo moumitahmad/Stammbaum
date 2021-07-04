@@ -308,9 +308,10 @@ void database::IDatabase::saveViewer(int familyID, User* viewer) {
     }
 }
 
-QVector<FamilyTree*>* database::IDatabase::getFamilyTreesByAdminID(int adminID) {
+QVector<FamilyTree*>* database::IDatabase::getFamilyTreesByUserID(int userID) {
     QSqlQuery q;
-    if(q.exec("SELECT * from familytree WHERE adminID=" + QString::number(adminID) + ";")) {
+    // Families with admin rights
+    if(q.exec("SELECT * from familytree WHERE adminID=" + QString::number(userID) + ";")) {
         QVector<FamilyTree*>* trees = new QVector<FamilyTree*>;
         while(q.next()) {
             int id = q.value(0).toInt();
@@ -320,12 +321,37 @@ QVector<FamilyTree*>* database::IDatabase::getFamilyTreesByAdminID(int adminID) 
             trees->push_back(family);
             qDebug() << family->getFamilyName();
         }
+
+        // Families with viewer/editor rigths
+        if(q.exec("SELECT * from hasRights WHERE userID=" + QString::number(userID) + ";")) {
+            while(q.next()) {
+                FamilyTree* family = getFamilyTreesByID(q.value(0).toInt());
+                trees->push_back(family);
+                qDebug() << family->getFamilyName();
+            }
+        } else {
+            qDebug() << q.lastError();
+            return nullptr;
+        }
+
         if(trees->empty())
             return nullptr;
         return trees;
     } else {
         qDebug() << q.lastError();
-        qDebug() << "family->getFamilyName()";
+        return nullptr;
+    }
+}
+
+FamilyTree *database::IDatabase::getFamilyTreesByID(int familyID) {
+    QSqlQuery q;
+    QString query = "SELECT * from familytree WHERE id=" + QString::number(familyID) + ";";
+    if(q.exec(query)) {
+        q.first();
+        User* admin = getUserByID(q.value(2).toInt());
+        return new FamilyTree(q.lastInsertId().toInt(), q.value(1).toString(), admin);
+    } else {
+        qDebug() << q.lastError();
         return nullptr;
     }
 }

@@ -28,7 +28,7 @@ Homepage::~Homepage()
 void Homepage::displayFamilies() {
     // display Families
     ui->noFamiliesText->hide();
-    QVector<FamilyTree*>* familyTrees = m_pLogic->getFamilyTreesByAdminID(m_currentUser->getId());
+    QVector<FamilyTree*>* familyTrees = m_pLogic->getFamilyTreesByUserID(m_currentUser->getId());
     if(familyTrees) {
         qDebug() << "families available";
         qDebug() << familyTrees;
@@ -74,15 +74,19 @@ void Homepage::addFamily() {
     if(result == QDialog::Accepted) {
        // create new user
        QString name = nameLineEdit->text();
-       qDebug() << "New User" << "name: " << name;
-       m_pLogic->createFamily(name, m_currentUser);
-
-       // update family display
-       // remove buttons
-       QLayoutItem *child;
-       while ((child = ui->ownFamiliesGrid->layout()->takeAt(0)) != 0) {
-           delete child;
+       if(m_pLogic->createFamily(name, m_currentUser)) {
+           // update family display
+           // remove buttons
+           QLayoutItem *child;
+           while ((child = ui->ownFamiliesGrid->layout()->takeAt(0)) != 0) {
+               delete child;
+           }
+           displayFamilies();
+           d->close();
+       } else {
+           addFamily();
        }
-       displayFamilies();
+    } else if(result == QDialog::Rejected) {
+        d->close();
     }
 }
