@@ -375,28 +375,19 @@ Member* database::IDatabase::getMemberByID(const int id) {
 QVector<Member*>* database::IDatabase::getMemberByFamID(const int id) {
     QSqlQuery q;
     QString query = "SELECT * from member WHERE familyID=" + QString::number(id) + ";";
-//    q.exec(query);
-//    q.first();
-//    qDebug() << q.value(0).toInt();
-//    qDebug() <<  q.value(1).toString();
-    qDebug() << query;
     if(q.exec(query)) {
-        q.first();
-        qDebug() << q.value(0);
-        qDebug() << "q.value(0)";
         QVector<Member*>* familyMember = new QVector<Member*>;
-        qDebug() << "member->getName()1";
-//        q.first();
         while(q.next()) {
-            qDebug() << "member->getName()2";
-//            q.first();
+
             qDebug() << q.value(0).toInt();
             qDebug() <<  q.value(1).toString();
             qDebug() <<   q.value(2).toString();
             qDebug() <<   q.value(3).toString();
             qDebug() <<   q.value(4).toString();
             qDebug() <<   q.value(5).toString();
- //           Member* member = new Member(q.value(0).toInt(), q.value(1).toString(), q.value(2).toString(), q.value(3).toString(), q.value(4).toString(), q.value(5).toString(), new Member());
+            Member* partner = getMemberByID(q.value(5).toInt());
+            Member* member = new Member(q.value(0).toInt(), q.value(1).toString(), q.value(2).toString(), q.value(3).toString(), q.value(4).toString(), q.value(5).toString(), partner);
+  //          partner->setPartner();
  //           familyMember->push_back(member);
 //            qDebug() << member->getName();
 //            qDebug() << "member->getName()";
@@ -413,7 +404,7 @@ QVector<Member*>* database::IDatabase::getMemberByFamID(const int id) {
 
 
 
-int database::IDatabase::saveMember(const QString &name, const QString &birth, const QString &death, const QString &gender, const QString &biografie, Member* partner, int familyID) {
+int database::IDatabase::saveMember(const QString &name, const QString &birth, const QString &death, const QString &gender, const QString &biografie, int partnerID, int familyID) {
     QSqlQuery q;
     q.prepare("INSERT INTO member(name, birth, death, gender, biografie, partnerID, familyID) VALUES(:name, :birth, :death, :gender, :biografie, :partnerID, :familyID);");
     q.bindValue(":name", name);
@@ -421,7 +412,7 @@ int database::IDatabase::saveMember(const QString &name, const QString &birth, c
     q.bindValue(":death", death);
     q.bindValue(":gender", gender);
     q.bindValue(":biografie", biografie);
-    q.bindValue(":partnerID", partner->getID());
+    q.bindValue(":partnerID", partnerID);
     q.bindValue(":familyID", familyID);
 
     if(q.exec()) {
