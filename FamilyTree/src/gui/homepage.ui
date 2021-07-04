@@ -6,30 +6,81 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>800</width>
+    <height>600</height>
    </rect>
+  </property>
+  <property name="font">
+   <font>
+    <family>Sawasdee</family>
+   </font>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QFormLayout" name="formLayout">
+  <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">
     <layout class="QVBoxLayout" name="verticalLayout">
-     <item>
-      <layout class="QHBoxLayout" name="ownFamiliesGrid"/>
-     </item>
+     <property name="leftMargin">
+      <number>100</number>
+     </property>
+     <property name="topMargin">
+      <number>100</number>
+     </property>
+     <property name="rightMargin">
+      <number>100</number>
+     </property>
+     <property name="bottomMargin">
+      <number>100</number>
+     </property>
      <item>
       <widget class="QLabel" name="welcomeText">
+       <property name="font">
+        <font>
+         <family>Sawasdee</family>
+         <pointsize>26</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
        <property name="text">
         <string>Welcome user!</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+       <property name="margin">
+        <number>50</number>
        </property>
       </widget>
      </item>
      <item>
+      <layout class="QHBoxLayout" name="ownFamiliesGrid">
+       <item>
+        <widget class="QLabel" name="noFamiliesText">
+         <property name="font">
+          <font>
+           <pointsize>15</pointsize>
+           <italic>true</italic>
+          </font>
+         </property>
+         <property name="text">
+          <string>You haven't saved any familytrees yet.</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+         <property name="wordWrap">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
       <widget class="QPushButton" name="newFamilyButton">
        <property name="text">
-        <string>add Family</string>
+        <string>+ add Family</string>
        </property>
       </widget>
      </item>
