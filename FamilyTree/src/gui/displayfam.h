@@ -2,6 +2,7 @@
 #define DISPLAYFAM_H
 
 #include <QWidget>
+#include <QGraphicsScene>
 #include "./domain/ILogic.h"
 
 namespace Ui {
@@ -19,6 +20,11 @@ public:
 
 private:
     Ui::DisplayFam *ui;
+
+    QGraphicsScene *scene;
+    QGraphicsRectItem *rect;
+    QGraphicsRectItem *rect2;
+    QGraphicsLineItem *line;
 };
 
 #endif // DISPLAYFAM_H

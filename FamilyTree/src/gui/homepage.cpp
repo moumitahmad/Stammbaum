@@ -35,10 +35,7 @@ void Homepage::displayFamilies() {
             qDebug() << family->getFamilyName();
             QPushButton* famButton = new QPushButton();
             famButton->setText(family->getFamilyName());
-            QObject::connect(
-                        famButton, &QPushButton::clicked,
-                        std::bind(&Homepage::showFamily, this, family->getId())
-                        );
+            QObject::connect(famButton, &QPushButton::clicked,std::bind(&Homepage::showFamily, this, family->getId()));
 
             ui->ownFamiliesGrid->layout()->addWidget(famButton);
         }
