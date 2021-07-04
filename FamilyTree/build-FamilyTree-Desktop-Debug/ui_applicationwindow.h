@@ -26,6 +26,8 @@ QT_BEGIN_NAMESPACE
 class Ui_ApplicationWindow
 {
 public:
+    QAction *actionHome;
+    QAction *actionLogout;
     QWidget *centralwidget;
     QGridLayout *gridLayout_2;
     QGridLayout *gridLayout;
@@ -40,8 +42,7 @@ public:
     QFormLayout *formLayout_6;
     QFormLayout *formLayout_5;
     QMenuBar *menubar;
-    QMenu *homeButton;
-    QMenu *logoutButton;
+    QMenu *meu;
     QStatusBar *statusbar;
 
     void setupUi(QMainWindow *ApplicationWindow)
@@ -49,6 +50,10 @@ public:
         if (ApplicationWindow->objectName().isEmpty())
             ApplicationWindow->setObjectName(QString::fromUtf8("ApplicationWindow"));
         ApplicationWindow->resize(800, 600);
+        actionHome = new QAction(ApplicationWindow);
+        actionHome->setObjectName(QString::fromUtf8("actionHome"));
+        actionLogout = new QAction(ApplicationWindow);
+        actionLogout->setObjectName(QString::fromUtf8("actionLogout"));
         centralwidget = new QWidget(ApplicationWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
         gridLayout_2 = new QGridLayout(centralwidget);
@@ -97,22 +102,17 @@ public:
         menubar = new QMenuBar(ApplicationWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
         menubar->setGeometry(QRect(0, 0, 800, 22));
-        homeButton = new QMenu(menubar);
-        homeButton->setObjectName(QString::fromUtf8("homeButton"));
-        homeButton->setCursor(QCursor(Qt::PointingHandCursor));
-        logoutButton = new QMenu(menubar);
-        logoutButton->setObjectName(QString::fromUtf8("logoutButton"));
-        logoutButton->setCursor(QCursor(Qt::PointingHandCursor));
-        logoutButton->setToolTipDuration(-8);
-        logoutButton->setLayoutDirection(Qt::LeftToRight);
-        logoutButton->setToolTipsVisible(false);
+        meu = new QMenu(menubar);
+        meu->setObjectName(QString::fromUtf8("meu"));
+        meu->setCursor(QCursor(Qt::PointingHandCursor));
         ApplicationWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(ApplicationWindow);
         statusbar->setObjectName(QString::fromUtf8("statusbar"));
         ApplicationWindow->setStatusBar(statusbar);
 
-        menubar->addAction(homeButton->menuAction());
-        menubar->addAction(logoutButton->menuAction());
+        menubar->addAction(meu->menuAction());
+        meu->addAction(actionHome);
+        meu->addAction(actionLogout);
 
         retranslateUi(ApplicationWindow);
 
@@ -125,8 +125,9 @@ public:
     void retranslateUi(QMainWindow *ApplicationWindow)
     {
         ApplicationWindow->setWindowTitle(QApplication::translate("ApplicationWindow", "MainWindow", nullptr));
-        homeButton->setTitle(QApplication::translate("ApplicationWindow", "Home", nullptr));
-        logoutButton->setTitle(QApplication::translate("ApplicationWindow", "Logout", nullptr));
+        actionHome->setText(QApplication::translate("ApplicationWindow", "Home", nullptr));
+        actionLogout->setText(QApplication::translate("ApplicationWindow", "Logout", nullptr));
+        meu->setTitle(QApplication::translate("ApplicationWindow", "Menu", nullptr));
     } // retranslateUi
 
 };

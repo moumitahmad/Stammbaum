@@ -11,9 +11,8 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QFormLayout>
+#include <QtWidgets/QGraphicsView>
 #include <QtWidgets/QGridLayout>
-#include <QtWidgets/QLabel>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -21,26 +20,26 @@ QT_BEGIN_NAMESPACE
 class Ui_DisplayFam
 {
 public:
-    QFormLayout *formLayout;
+    QGridLayout *gridLayout_2;
     QGridLayout *gridLayout;
-    QLabel *label;
+    QGraphicsView *graphicsView;
 
     void setupUi(QWidget *DisplayFam)
     {
         if (DisplayFam->objectName().isEmpty())
             DisplayFam->setObjectName(QString::fromUtf8("DisplayFam"));
-        DisplayFam->resize(400, 300);
-        formLayout = new QFormLayout(DisplayFam);
-        formLayout->setObjectName(QString::fromUtf8("formLayout"));
+        DisplayFam->resize(795, 648);
+        gridLayout_2 = new QGridLayout(DisplayFam);
+        gridLayout_2->setObjectName(QString::fromUtf8("gridLayout_2"));
         gridLayout = new QGridLayout();
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
-        label = new QLabel(DisplayFam);
-        label->setObjectName(QString::fromUtf8("label"));
+        graphicsView = new QGraphicsView(DisplayFam);
+        graphicsView->setObjectName(QString::fromUtf8("graphicsView"));
 
-        gridLayout->addWidget(label, 0, 0, 1, 1);
+        gridLayout->addWidget(graphicsView, 0, 0, 1, 1);
 
 
-        formLayout->setLayout(0, QFormLayout::LabelRole, gridLayout);
+        gridLayout_2->addLayout(gridLayout, 0, 0, 1, 1);
 
 
         retranslateUi(DisplayFam);
@@ -51,7 +50,6 @@ public:
     void retranslateUi(QWidget *DisplayFam)
     {
         DisplayFam->setWindowTitle(QApplication::translate("DisplayFam", "Form", nullptr));
-        label->setText(QApplication::translate("DisplayFam", "trolololo", nullptr));
     } // retranslateUi
 
 };

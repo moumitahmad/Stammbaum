@@ -477,7 +477,8 @@ applicationwindow.o: ../src/gui/applicationwindow.cpp ../src/gui/applicationwind
 		../src/persistence/databaseservice.h \
 		ui_applicationwindow.h \
 		../src/gui/homepage.h \
-		../src/gui/displayfam.h
+		../src/gui/displayfam.h \
+		../src/gui/mainwindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o applicationwindow.o ../src/gui/applicationwindow.cpp
 
 displayfam.o: ../src/gui/displayfam.cpp ../src/gui/displayfam.h \
