@@ -16,7 +16,8 @@ ApplicationWindow::ApplicationWindow(domain::ILogic* pLogic, QWidget *parent) :
 
     ui->HomePage->layout()->addWidget(hp);
     ui->EditFamily->layout()->addWidget(df);
-    ui->stackedWidget->setCurrentIndex(0);
+    ui->ViewFamily->layout()->addWidget(df);
+    ui->stackedWidget->setCurrentIndex(1);
 
 }
 
