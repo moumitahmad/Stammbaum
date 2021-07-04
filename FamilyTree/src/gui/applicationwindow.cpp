@@ -24,6 +24,7 @@ ApplicationWindow::ApplicationWindow(domain::ILogic* pLogic, QWidget *parent) :
     ui->EditFamily->layout()->addWidget(ep);
     ui->stackedWidget->setCurrentIndex(0);
 
+    QObject::connect(ui->actionHome, &QAction::triggered, this, &ApplicationWindow::openHomePage);
     QObject::connect(ui->actionLogout, &QAction::triggered, this, &ApplicationWindow::logout);
 }
 
