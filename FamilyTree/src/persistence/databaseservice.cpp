@@ -361,7 +361,8 @@ FamilyTree *database::IDatabase::getFamilyTreeByID(int familyID) {
     if(q.exec(query)) {
         q.first();
         User* admin = getUserByID(q.value(2).toInt());
-        return new FamilyTree(q.lastInsertId().toInt(), q.value(1).toString(), admin);
+        FamilyTree* fam = new FamilyTree(q.value(0).toInt(), q.value(1).toString(), admin);
+        return fam;
     } else {
         qDebug() << q.lastError();
         return nullptr;

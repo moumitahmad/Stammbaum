@@ -99,7 +99,8 @@ QVector<FamilyTree*>* domain::ILogic::getFamilyTreesByUserID(int adminID) {
 }
 
 FamilyTree *domain::ILogic::getFamilyTreeByID(int familyId) {
-    return m_pDB->getFamilyTreeByID(familyId);
+    FamilyTree* fam = m_pDB->getFamilyTreeByID(familyId);
+    return fam;
 }
 
 void domain::ILogic::deleteFamily(FamilyTree* family) {

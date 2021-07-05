@@ -29,7 +29,10 @@ void Homepage::displayFamilies() {
     // display Families
     ui->noFamiliesText->hide();
     while (auto item = ui->ownFamiliesGrid->layout()->takeAt(0)) {
-         delete item;
+
+      //      delete item;
+
+
      }
 
     QVector<FamilyTree*>* familyTrees = m_pLogic->getFamilyTreesByUserID(m_currentUser->getId());
