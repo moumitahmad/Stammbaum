@@ -2,7 +2,7 @@ QT       += core gui sql
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-CONFIG += c++11 console
+CONFIG += c++11
 
 # The following define makes your compiler emit warnings if you use
 # any Qt feature that has been marked deprecated (the exact warnings
@@ -17,11 +17,11 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     domain/ILogic.cpp \
-    gui/applicationwindow.cpp \
     gui/displayfam.cpp \
     gui/editpage.cpp \
     gui/homepage.cpp \
     gui/mainwindow.cpp \
+    gui/userwindow.cpp \
     gui/viewpage.cpp \
     main.cpp \
     persistence/databaseservice.cpp \
@@ -31,11 +31,11 @@ SOURCES += \
 
 HEADERS += \
     domain/ILogic.h \
-    gui/applicationwindow.h \
     gui/displayfam.h \
     gui/editpage.h \
     gui/homepage.h \
     gui/mainwindow.h \
+    gui/userwindow.h \
     gui/viewpage.h \
     persistence/databaseservice.h \
     value-objects/familytree.h \
@@ -43,11 +43,11 @@ HEADERS += \
     value-objects/user.h
 
 FORMS += \
-    gui/applicationwindow.ui \
     gui/displayfam.ui \
     gui/editpage.ui \
     gui/homepage.ui \
     gui/mainwindow.ui \
+    gui/userwindow.ui \
     gui/viewpage.ui
 
 # Default rules for deployment.

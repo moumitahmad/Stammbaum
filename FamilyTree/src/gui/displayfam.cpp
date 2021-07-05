@@ -21,7 +21,7 @@ DisplayFam::DisplayFam(domain::ILogic* pLogic, QWidget *parent) :
     QPen redpen(Qt::red);
     blackpen.setWidth(6);
     redpen.setWidth(6);
-    int foo[] = { 1, 2, 3, 4, 5 }; // Eltern Array laden
+    //int foo[] = { 1, 2, 3, 4, 5 }; // Eltern Array laden
  //   int arrSize = sizeof(foo)/sizeof(foo[0]);
     int arrSize = 2;
     int startx = -100;

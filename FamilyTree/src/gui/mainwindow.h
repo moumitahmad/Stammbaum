@@ -3,28 +3,26 @@
 
 #include <QMainWindow>
 #include "./domain/ILogic.h"
-#include "applicationwindow.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
 
-class MainWindow : public QMainWindow {
+class MainWindow : public QMainWindow
+{
     Q_OBJECT
 
 public:
     domain::ILogic* m_pLogic;
-    ApplicationWindow* m_pApp;
-
-    MainWindow(domain::ILogic* pLogic, ApplicationWindow* pApp, QWidget *parent = nullptr);
+    MainWindow(domain::ILogic* pLogic, QWidget *parent = nullptr);
     ~MainWindow();
 
+    void openHomePage();
+    void openViewPage();
+    void openEditPage();
+
 private slots:
-    void switchToCreateNewUser();
-    void switchToLogIn();
-    void createNewUser();
-    void logInUser();
-    void quit();
+    void logout();
 
 private:
     Ui::MainWindow *ui;

@@ -4,7 +4,7 @@
 #include <QWidget>
 #include "domain/ILogic.h"
 #include "./value-objects/user.h"
-#include "applicationwindow.h"
+#include "mainwindow.h"
 
 namespace Ui {
 class Homepage;
@@ -15,14 +15,17 @@ class Homepage : public QWidget
     Q_OBJECT
 
 public:
-    ApplicationWindow* m_appWindow;
+    MainWindow* m_appWindow;
     domain::ILogic* m_pLogic;
     User* m_currentUser;
 
-    explicit Homepage(domain::ILogic* pLogic, ApplicationWindow* appWindow, QWidget *parent = nullptr);
+    explicit Homepage(domain::ILogic* pLogic, MainWindow* appWindow, QWidget *parent = nullptr);
     ~Homepage();
 
     void displayFamilies();
+
+signals:
+    void switchToView();
 
 private slots:
     void showFamily(int id);
