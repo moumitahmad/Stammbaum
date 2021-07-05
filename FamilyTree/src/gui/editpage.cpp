@@ -1,9 +1,9 @@
 #include "editpage.h"
 #include "ui_editpage.h"
-#include "applicationwindow.h"
+#include "mainwindow.h"
 #include "displayfam.h"
 
-EditPage::EditPage(domain::ILogic* pLogic, ApplicationWindow* appWindow, QWidget *parent) :
+EditPage::EditPage(domain::ILogic* pLogic, MainWindow* appWindow, QWidget *parent) :
     QWidget(parent),
     m_appWindow(appWindow),
     m_pLogic(pLogic),

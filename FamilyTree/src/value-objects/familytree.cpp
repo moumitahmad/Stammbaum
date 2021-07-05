@@ -1,4 +1,14 @@
 #include "familytree.h"
+#include <QDebug>
+
+FamilyTree::~FamilyTree() {
+    for(User* user : m_viewers) {
+        delete user;
+    }
+    for(User* user : m_editors) {
+        delete user;
+    }
+}
 
 int FamilyTree::getId() const {
     return m_id;

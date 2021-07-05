@@ -1,6 +1,6 @@
 #include "viewpage.h"
 #include "ui_viewpage.h"
-#include "applicationwindow.h"
+#include "mainwindow.h"
 #include "displayfam.h"
 #include <QDebug>
 #include <QDialog>
@@ -8,7 +8,7 @@
 #include <QDialogButtonBox>
 #include <QTextLine>
 
-ViewPage::ViewPage(domain::ILogic* pLogic, ApplicationWindow* appWindow, QWidget *parent) :
+ViewPage::ViewPage(domain::ILogic* pLogic, MainWindow* appWindow, QWidget *parent) :
     QWidget(parent),
     m_appWindow(appWindow),
     m_pLogic(pLogic),
@@ -89,7 +89,8 @@ void ViewPage::addViewer(){
 }
 
 void ViewPage::deleteFamily(){
-
+    qDebug() << m_displayedFamily->getId();
+    m_pLogic->deleteFamily(m_displayedFamily);
     //return to home
     m_appWindow->openHomePage();
 }

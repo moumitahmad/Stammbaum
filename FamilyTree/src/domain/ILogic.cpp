@@ -1,7 +1,7 @@
 #include "ILogic.h"
 #include "./persistence/databaseservice.h"
 #include <QDebug>
-#include <QSqlError>
+//#include <QSqlError>
 
 
 User *domain::ILogic::getCurrentUser() const {
@@ -98,6 +98,14 @@ QVector<FamilyTree*>* domain::ILogic::getFamilyTreesByUserID(int adminID) {
     return m_pDB->getFamilyTreesByUserID(adminID);
 }
 
+void domain::ILogic::deleteFamily(FamilyTree* family) {
+    qDebug() << "Delete fam in logic";
+    qDebug() << QString::number(family->getId());
+    m_pDB->deleteFamilyByID(family->getId());
+    delete family;
+    qDebug() << "FamilyTree deleted";
+}
+
 QVector<Member*>* domain::ILogic::getMembersByFamily(int familyID) {
     return m_pDB->getMemberByFamID(familyID);
 }
@@ -114,7 +122,7 @@ Member* domain::ILogic::createMember(FamilyTree *family, const QString &name, co
                 child->addParent(member);
                 member->addChild(child);
                 m_pDB->saveParentChildRelationship(child, member);
-            } catch(const std::logic_error ex) {
+            } catch(const std::logic_error& ex) {
                 qDebug() << ex.what();
                 return nullptr;
             }
@@ -177,7 +185,7 @@ Member *domain::ILogic::saveParentChildRelationship(Member* parent, Member *chil
             child->addParent(parent);
             parent->addChild(child);
             m_pDB->saveParentChildRelationship(parent, child);
-        } catch(const std::logic_error ex) {
+        } catch(const std::logic_error& ex) {
             qDebug() << ex.what();
         }
     } else {
