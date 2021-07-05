@@ -3,7 +3,7 @@
 
 #include <QMainWindow>
 #include "./domain/ILogic.h"
-#include "./gui/mainwindow.h"
+#include "mainwindow.h"
 
 namespace Ui {
 class UserWindow;

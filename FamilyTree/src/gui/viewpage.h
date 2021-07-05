@@ -2,7 +2,7 @@
 #define VIEWPAGE_H
 
 #include <QWidget>
-#include "userwindow.h"
+#include "domain/ILogic.h"
 #include "./value-objects/familytree.h"
 
 namespace Ui {
@@ -14,12 +14,17 @@ class ViewPage : public QWidget
     Q_OBJECT
 
 public:
-    MainWindow* m_appWindow;
     domain::ILogic* m_pLogic;
     FamilyTree* m_displayedFamily;
 
-    explicit ViewPage(domain::ILogic* pLogic, MainWindow* appWindow, QWidget *parent = nullptr);
+    explicit ViewPage(domain::ILogic* pLogic, QWidget *parent = nullptr);
     ~ViewPage();
+
+   void getDisplayedFamily();
+
+signals:
+    void switchToEdit();
+    void switchToHome();
 
 private slots:
     void openEditPage();

@@ -13,14 +13,16 @@ class EditPage : public QWidget
     Q_OBJECT
 
 public:
-    MainWindow* m_appWindow;
     domain::ILogic* m_pLogic;
     FamilyTree* m_displayedFamily;
 
-    explicit EditPage(domain::ILogic* pLogic, MainWindow* appWindow, QWidget *parent = nullptr);
+    explicit EditPage(domain::ILogic* pLogic, QWidget *parent = nullptr);
     ~EditPage();
 
     void setFamily(int family) const;
+
+signals:
+    void switchToView();
 
 private slots:
     void uploadPicture();
