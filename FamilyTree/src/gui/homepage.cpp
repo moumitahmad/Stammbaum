@@ -9,9 +9,8 @@
 #include <QTextLine>
 
 
-Homepage::Homepage(domain::ILogic* pLogic, MainWindow* appWindow, QWidget *parent) :
+Homepage::Homepage(domain::ILogic* pLogic, QWidget *parent) :
     QWidget(parent),
-    m_appWindow(appWindow),
     m_pLogic(pLogic),
     ui(new Ui::Homepage)
 {
@@ -29,6 +28,10 @@ Homepage::~Homepage()
 void Homepage::displayFamilies() {
     // display Families
     ui->noFamiliesText->hide();
+    while (auto item = ui->ownFamiliesGrid->layout()->takeAt(0)) {
+         delete item;
+     }
+
     QVector<FamilyTree*>* familyTrees = m_pLogic->getFamilyTreesByUserID(m_currentUser->getId());
     if(familyTrees) {
         qDebug() << "families available";
@@ -88,6 +91,6 @@ void Homepage::addFamily() {
 void Homepage::showFamily(int familyID) {
     qDebug() << "Open Family with ID = " << familyID;
     m_pLogic->setCurrentFamilyID(familyID);
-    m_appWindow->openViewPage();
+    //m_appWindow->openViewPage();
     emit switchToView();
 }

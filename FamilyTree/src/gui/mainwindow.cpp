@@ -1,8 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "homepage.h"
 #include "editpage.h"
-#include "viewpage.h"
 
 #include <QDebug>
 #include "userwindow.h"
@@ -13,17 +11,22 @@ MainWindow::MainWindow(domain::ILogic* pLogic, QWidget *parent):
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    ui->setupUi(this);
-    Homepage* hp = new Homepage(m_pLogic, this, this);
-    //QObject::connect(hp, &Homepage::switchToView, this, ...)
-    ViewPage* vp = new ViewPage(m_pLogic, this);
+
+    m_hp = new Homepage(m_pLogic, this);
+    m_vp = new ViewPage(m_pLogic, this);
     EditPage* ep = new EditPage(m_pLogic, this);
     //DisplayFam* df = new DisplayFam(m_pLogic, this);
 
-    ui->HomePage->layout()->addWidget(hp);
-    ui->ViewFamily->layout()->addWidget(vp);
+    ui->HomePage->layout()->addWidget(m_hp);
+    ui->ViewFamily->layout()->addWidget(m_vp);
     ui->EditFamily->layout()->addWidget(ep);
     ui->stackedWidget->setCurrentIndex(0);
+
+    // signals
+    QObject::connect(m_hp, &Homepage::switchToView, this, &MainWindow::openViewPage);
+    QObject::connect(ep, &EditPage::switchToView, this, &MainWindow::openViewPage);
+    QObject::connect(m_vp, &ViewPage::switchToEdit, this, &MainWindow::openEditPage);
+    QObject::connect(m_vp, &ViewPage::switchToHome, this, &MainWindow::openHomePage);
 
     QObject::connect(ui->actionHome, &QAction::triggered, this, &MainWindow::openHomePage);
     QObject::connect(ui->actionLogout, &QAction::triggered, this, &MainWindow::logout);
@@ -44,10 +47,12 @@ void MainWindow::logout() {
 
 void MainWindow::openHomePage() {
     ui->stackedWidget->setCurrentIndex(0);
+    m_hp->displayFamilies();
 }
 
 void MainWindow::openViewPage() {
     ui->stackedWidget->setCurrentIndex(1);
+    m_vp->getDisplayedFamily();
 }
 
 void MainWindow::openEditPage() {

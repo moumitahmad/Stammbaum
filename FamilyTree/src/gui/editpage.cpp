@@ -3,9 +3,8 @@
 #include "mainwindow.h"
 #include "displayfam.h"
 
-EditPage::EditPage(domain::ILogic* pLogic, MainWindow* appWindow, QWidget *parent) :
+EditPage::EditPage(domain::ILogic* pLogic, QWidget *parent) :
     QWidget(parent),
-    m_appWindow(appWindow),
     m_pLogic(pLogic),
     ui(new Ui::EditPage)
 {
@@ -42,5 +41,5 @@ void EditPage::discardChanges(){
 }
 
 void EditPage::openViewPage(){
-    m_appWindow->openViewPage();
+    emit switchToView();
 }

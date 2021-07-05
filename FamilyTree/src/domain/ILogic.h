@@ -43,6 +43,7 @@ namespace domain {
         FamilyTree* addViewer(FamilyTree* family, User* user);
 
         QVector<FamilyTree*>* getFamilyTreesByUserID(int adminID);
+        FamilyTree* getFamilyTreeByID(int familyId);
         void deleteFamily(FamilyTree* family);
 
 

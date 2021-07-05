@@ -337,7 +337,7 @@ QVector<FamilyTree*>* database::IDatabase::getFamilyTreesByUserID(int userID) {
         // Families with viewer/editor rigths
         if(q.exec("SELECT * from hasRights WHERE userID=" + QString::number(userID) + ";")) {
             while(q.next()) {
-                FamilyTree* family = getFamilyTreesByID(q.value(0).toInt());
+                FamilyTree* family = getFamilyTreeByID(q.value(0).toInt());
                 trees->push_back(family);
                 qDebug() << family->getFamilyName();
             }
@@ -355,7 +355,7 @@ QVector<FamilyTree*>* database::IDatabase::getFamilyTreesByUserID(int userID) {
     }
 }
 
-FamilyTree *database::IDatabase::getFamilyTreesByID(int familyID) {
+FamilyTree *database::IDatabase::getFamilyTreeByID(int familyID) {
     QSqlQuery q;
     QString query = "SELECT * from familytree WHERE id=" + QString::number(familyID) + ";";
     if(q.exec(query)) {

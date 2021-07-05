@@ -8,9 +8,8 @@
 #include <QDialogButtonBox>
 #include <QTextLine>
 
-ViewPage::ViewPage(domain::ILogic* pLogic, MainWindow* appWindow, QWidget *parent) :
+ViewPage::ViewPage(domain::ILogic* pLogic, QWidget *parent) :
     QWidget(parent),
-    m_appWindow(appWindow),
     m_pLogic(pLogic),
     ui(new Ui::ViewPage)
 {
@@ -27,11 +26,15 @@ ViewPage::~ViewPage() {
     delete ui;
 }
 
+void ViewPage::getDisplayedFamily() {
+    m_displayedFamily = m_pLogic->getFamilyTreeByID(m_pLogic->getCurrentFamilyID());
+}
+
 void ViewPage::openEditPage() {
     qDebug() << "Switch to Edit Mode";
-    FamilyTree* tr = new FamilyTree(m_pLogic->getCurrentFamilyID(), "noname", m_pLogic->getCurrentUser());
+    //FamilyTree* tr = new FamilyTree(m_pLogic->getCurrentFamilyID(), "noname", m_pLogic->getCurrentUser());
     //display tree;
-    m_appWindow->openEditPage();
+    emit switchToEdit();
 }
 
 void ViewPage::addEditor(){
@@ -91,7 +94,7 @@ void ViewPage::addViewer(){
 void ViewPage::deleteFamily(){
     qDebug() << m_displayedFamily->getId();
     m_pLogic->deleteFamily(m_displayedFamily);
-    //return to home
-    m_appWindow->openHomePage();
+    // return to home
+    emit switchToHome();
 }
 

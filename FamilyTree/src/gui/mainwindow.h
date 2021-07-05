@@ -2,7 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "./domain/ILogic.h"
+#include "viewpage.h"
+#include "homepage.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -14,6 +15,9 @@ class MainWindow : public QMainWindow
 
 public:
     domain::ILogic* m_pLogic;
+    Homepage* m_hp;
+    ViewPage* m_vp;
+
     MainWindow(domain::ILogic* pLogic, QWidget *parent = nullptr);
     ~MainWindow();
 
