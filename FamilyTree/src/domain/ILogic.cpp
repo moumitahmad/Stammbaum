@@ -98,6 +98,14 @@ QVector<FamilyTree*>* domain::ILogic::getFamilyTreesByUserID(int adminID) {
     return m_pDB->getFamilyTreesByUserID(adminID);
 }
 
+void domain::ILogic::deleteFamily(FamilyTree* family) {
+    qDebug() << "Delete fam in logic";
+    qDebug() << QString::number(family->getId());
+    m_pDB->deleteFamilyByID(family->getId());
+    delete family;
+    qDebug() << "FamilyTree deleted";
+}
+
 QVector<Member*>* domain::ILogic::getMembersByFamily(int familyID) {
     return m_pDB->getMemberByFamID(familyID);
 }

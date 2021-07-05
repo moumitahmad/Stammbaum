@@ -278,6 +278,18 @@ int database::IDatabase::saveFamily(QString& name, User* admin) {
     }
 }
 
+void database::IDatabase::deleteFamilyByID(const int familyID) {
+    qDebug() << "in delete fam";
+    QSqlQuery q;
+    QString query = "DELETE from familytree WHERE id=" + QString::number(familyID) + ";";
+    qDebug() << query;
+    if(q.exec(query)) {
+        qDebug() << "Familytree in DB deleted";
+    } else {
+        qDebug() << q.lastError();
+    }
+}
+
 void database::IDatabase::saveEditor(int familyID, User* editor) {
     QSqlQuery q;
     q.prepare("INSERT INTO hasRights(familyID, userID, authorization) VALUES(:familyID, :userID, :authorization);");

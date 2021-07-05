@@ -89,7 +89,8 @@ void ViewPage::addViewer(){
 }
 
 void ViewPage::deleteFamily(){
-
+    qDebug() << m_displayedFamily->getId();
+    m_pLogic->deleteFamily(m_displayedFamily);
     //return to home
     m_appWindow->openHomePage();
 }

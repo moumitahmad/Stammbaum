@@ -23,6 +23,7 @@ namespace database {
 
         // family tree
         int saveFamily(QString& name, User* admin);
+        void deleteFamilyByID(const int familyID);
         void saveEditor(int familyID, User* editor);
         void saveViewer(int familyID, User* viewer);
 
