@@ -25,15 +25,11 @@ AdminPanel::~AdminPanel()
 
 void AdminPanel::setupAdminPanel() {
     m_displayedFamily = m_pLogic->getFamilyTreeByID(m_pLogic->getCurrentFamilyID());
-<<<<<<< HEAD
     ui->userMessage->hide();
-=======
->>>>>>> 402560302d6caa4ebba64e9d60bc7cc8c3b730f5
 }
 
 
 void AdminPanel::addEditor(){
-<<<<<<< HEAD
     QString username = ui->in_Editor->text();
     qDebug() << username;
     try {
@@ -60,59 +56,6 @@ void AdminPanel::addViewer(){
     }
     ui->userMessage->show();
     ui->in_Viewer->clear();
-=======
-
-    QDialog* d = new QDialog();
-    QVBoxLayout* vbox = new QVBoxLayout();
-    QLineEdit* nameLineEdit = new QLineEdit();
-    nameLineEdit->setPlaceholderText("Enter editor username");
-
-    QDialogButtonBox * buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
-
-    QObject::connect(buttonBox, SIGNAL(accepted()), d, SLOT(accept()));
-    QObject::connect(buttonBox, SIGNAL(rejected()), d, SLOT(reject()));
-
-    vbox->addWidget(nameLineEdit);
-    vbox->addWidget(buttonBox);
-
-    d->setLayout(vbox);
-
-    int result = d->exec();
-    if(result == QDialog::Accepted) {
-       //
-       QString username = nameLineEdit->text();
-
-    } else if(result == QDialog::Rejected) {
-        d->close();
-    }
-}
-
-void AdminPanel::addViewer(){
-
-    QDialog* d = new QDialog();
-    QVBoxLayout* vbox = new QVBoxLayout();
-    QLineEdit* nameLineEdit = new QLineEdit();
-    nameLineEdit->setPlaceholderText("Enter viewer username");
-
-    QDialogButtonBox * buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
-
-    QObject::connect(buttonBox, SIGNAL(accepted()), d, SLOT(accept()));
-    QObject::connect(buttonBox, SIGNAL(rejected()), d, SLOT(reject()));
-
-    vbox->addWidget(nameLineEdit);
-    vbox->addWidget(buttonBox);
-
-    d->setLayout(vbox);
-
-    int result = d->exec();
-    if(result == QDialog::Accepted) {
-       //
-       QString username = nameLineEdit->text();
-
-    } else if(result == QDialog::Rejected) {
-        d->close();
-    }
->>>>>>> 402560302d6caa4ebba64e9d60bc7cc8c3b730f5
 }
 
 void AdminPanel::deleteFamily(){
