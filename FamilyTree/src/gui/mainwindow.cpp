@@ -15,7 +15,6 @@ MainWindow::MainWindow(domain::ILogic* pLogic, QWidget *parent):
     m_hp = new Homepage(m_pLogic, this);
     m_vp = new ViewPage(m_pLogic, this);
     EditPage* ep = new EditPage(m_pLogic, this);
-    //DisplayFam* df = new DisplayFam(m_pLogic, this);
 
     ui->HomePage->layout()->addWidget(m_hp);
     ui->ViewFamily->layout()->addWidget(m_vp);
@@ -52,7 +51,7 @@ void MainWindow::openHomePage() {
 
 void MainWindow::openViewPage() {
     ui->stackedWidget->setCurrentIndex(1);
-    m_vp->getDisplayedFamily();
+    m_vp->setupViewPage();
 }
 
 void MainWindow::openEditPage() {

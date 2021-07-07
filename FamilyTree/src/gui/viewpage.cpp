@@ -16,85 +16,37 @@ ViewPage::ViewPage(domain::ILogic* pLogic, QWidget *parent) :
     ui->setupUi(this);
     DisplayFam* df = new DisplayFam(m_pLogic, this);
     ui->horizontalLayout->addWidget(df);
-    QObject::connect(ui->ButtonAddEditor, &QPushButton::clicked, this, &ViewPage::addEditor);
-    QObject::connect(ui->ButtonAddViewer, &QPushButton::clicked, this, &ViewPage::addViewer);
-    QObject::connect(ui->ButtonDeleteFamily, &QPushButton::clicked, this, &ViewPage::deleteFamily);
     QObject::connect(ui->ButtonEditFamily, &QPushButton::clicked, this, &ViewPage::openEditPage);
+    m_ap = new AdminPanel(m_pLogic, this);
+    ui->adminPanel->layout()->addWidget(m_ap);
+    QObject::connect(m_ap, &AdminPanel::switchToHome, this, &ViewPage::openHomePage);
 }
 
 ViewPage::~ViewPage() {
     delete ui;
 }
 
-void ViewPage::getDisplayedFamily() {
+void ViewPage::setupViewPage() {
+    ui->adminPanel->layout()->removeWidget(m_ap);
     m_displayedFamily = m_pLogic->getFamilyTreeByID(m_pLogic->getCurrentFamilyID());
+    m_currentUser = m_pLogic->getCurrentUser();
+    ui->ViewFamilyWelcome->setText("Welcome to your family: " + m_displayedFamily->getFamilyName());
+
+    if(m_currentUser->getId() == m_displayedFamily->getAdmin()->getId()) {
+        ui->adminPanel->layout()->addWidget(m_ap);
+        m_ap->setupAdminPanel();
+    }
+
 }
 
 void ViewPage::openEditPage() {
     qDebug() << "Switch to Edit Mode";
-    //FamilyTree* tr = new FamilyTree(m_pLogic->getCurrentFamilyID(), "noname", m_pLogic->getCurrentUser());
-    //display tree;
     emit switchToEdit();
 }
 
-void ViewPage::addEditor(){
-
-    QDialog* d = new QDialog();
-    QVBoxLayout* vbox = new QVBoxLayout();
-    QLineEdit* nameLineEdit = new QLineEdit();
-    nameLineEdit->setPlaceholderText("Enter editor username");
-
-    QDialogButtonBox * buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
-
-    QObject::connect(buttonBox, SIGNAL(accepted()), d, SLOT(accept()));
-    QObject::connect(buttonBox, SIGNAL(rejected()), d, SLOT(reject()));
-
-    vbox->addWidget(nameLineEdit);
-    vbox->addWidget(buttonBox);
-
-    d->setLayout(vbox);
-
-    int result = d->exec();
-    if(result == QDialog::Accepted) {
-       //
-       QString username = nameLineEdit->text();
-
-    } else if(result == QDialog::Rejected) {
-        d->close();
-    }
-}
-
-void ViewPage::addViewer(){
-
-    QDialog* d = new QDialog();
-    QVBoxLayout* vbox = new QVBoxLayout();
-    QLineEdit* nameLineEdit = new QLineEdit();
-    nameLineEdit->setPlaceholderText("Enter viewer username");
-
-    QDialogButtonBox * buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
-
-    QObject::connect(buttonBox, SIGNAL(accepted()), d, SLOT(accept()));
-    QObject::connect(buttonBox, SIGNAL(rejected()), d, SLOT(reject()));
-
-    vbox->addWidget(nameLineEdit);
-    vbox->addWidget(buttonBox);
-
-    d->setLayout(vbox);
-
-    int result = d->exec();
-    if(result == QDialog::Accepted) {
-       //
-       QString username = nameLineEdit->text();
-
-    } else if(result == QDialog::Rejected) {
-        d->close();
-    }
-}
-
-void ViewPage::deleteFamily(){
-    qDebug() << m_displayedFamily->getId();
-    m_pLogic->deleteFamily(m_displayedFamily);
-    // return to home
+void ViewPage::openHomePage() {
+    qDebug() << "Switch to Homepage";
     emit switchToHome();
 }
+
 
