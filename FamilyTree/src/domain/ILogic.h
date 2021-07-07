@@ -39,8 +39,8 @@ namespace domain {
 
         // ----------- FAMILY TREE
         FamilyTree* createFamily(QString& name, User* admin); //, QVector<User*> editors = new QVector<User*>, QVector<User*> viewers = new QVector<User*>
-        FamilyTree* addEditor(FamilyTree* family, User* user);
-        FamilyTree* addViewer(FamilyTree* family, User* user);
+        FamilyTree* addEditor(FamilyTree* family, QString& username);
+        FamilyTree* addViewer(FamilyTree* family, QString& username);
 
         QVector<FamilyTree*>* getFamilyTreesByUserID(int adminID);
         FamilyTree* getFamilyTreeByID(int familyId);

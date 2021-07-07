@@ -55,27 +55,58 @@
       </widget>
      </item>
      <item>
-      <layout class="QHBoxLayout" name="ownFamiliesGrid">
-       <item>
-        <widget class="QLabel" name="noFamiliesText">
-         <property name="font">
-          <font>
-           <pointsize>15</pointsize>
-           <italic>true</italic>
-          </font>
-         </property>
-         <property name="text">
-          <string>You haven't saved any familytrees yet.</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-         <property name="wordWrap">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-      </layout>
+      <spacer name="verticalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Minimum</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="ownFamiliesGrid"/>
+     </item>
+     <item>
+      <widget class="QLabel" name="noFamiliesText">
+       <property name="font">
+        <font>
+         <pointsize>15</pointsize>
+         <italic>true</italic>
+        </font>
+       </property>
+       <property name="text">
+        <string>You haven't saved any familytrees yet.</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+       <property name="wordWrap">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="verticalSpacer">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Minimum</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
      </item>
      <item>
       <widget class="QPushButton" name="newFamilyButton">
