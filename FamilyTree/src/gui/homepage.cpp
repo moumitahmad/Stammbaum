@@ -7,6 +7,7 @@
 #include <QLineEdit>
 #include <QDialogButtonBox>
 #include <QTextLine>
+#include <QLabel>
 
 
 Homepage::Homepage(domain::ILogic* pLogic, QWidget *parent) :
@@ -18,6 +19,8 @@ Homepage::Homepage(domain::ILogic* pLogic, QWidget *parent) :
     m_currentUser = pLogic->getCurrentUser();
     ui->welcomeText->setText("Welcome " + m_currentUser->getName() + "!");
     displayFamilies();
+
+    QObject::connect(ui->newFamilyButton, &QPushButton::clicked, this, &Homepage::addFamily);
 }
 
 Homepage::~Homepage()
@@ -27,31 +30,28 @@ Homepage::~Homepage()
 
 void Homepage::displayFamilies() {
     // display Families
-    ui->noFamiliesText->hide();
+    // clear display
+    //QLayoutItem* item;
     while (auto item = ui->ownFamiliesGrid->layout()->takeAt(0)) {
-
-      //      delete item;
-
-
+        delete item;
      }
 
     QVector<FamilyTree*>* familyTrees = m_pLogic->getFamilyTreesByUserID(m_currentUser->getId());
     if(familyTrees) {
+        ui->noFamiliesText->hide();
         qDebug() << "families available";
         qDebug() << familyTrees;
         for(FamilyTree* family : *familyTrees) {
             qDebug() << family->getFamilyName();
             QPushButton* famButton = new QPushButton();
             famButton->setText(family->getFamilyName());
-            QObject::connect(famButton, &QPushButton::clicked,std::bind(&Homepage::showFamily, this, family->getId()));
-
+            QObject::connect(famButton, &QPushButton::clicked, std::bind(&Homepage::showFamily, this, family->getId()));
             ui->ownFamiliesGrid->layout()->addWidget(famButton);
         }
     } else {
         ui->noFamiliesText->show();
         qDebug() << "NO families available";
     }
-    QObject::connect(ui->newFamilyButton, &QPushButton::clicked, this, &Homepage::addFamily);
 }
 
 void Homepage::addFamily() {
@@ -60,7 +60,7 @@ void Homepage::addFamily() {
     QLineEdit* nameLineEdit = new QLineEdit();
     nameLineEdit->setPlaceholderText("Enter family name");
 
-    QDialogButtonBox * buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+    QDialogButtonBox* buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
 
     QObject::connect(buttonBox, SIGNAL(accepted()), d, SLOT(accept()));
     QObject::connect(buttonBox, SIGNAL(rejected()), d, SLOT(reject()));
@@ -74,18 +74,12 @@ void Homepage::addFamily() {
     if(result == QDialog::Accepted) {
        // create new user
        QString name = nameLineEdit->text();
-       if(m_pLogic->createFamily(name, m_currentUser)) {
+       FamilyTree* newFamily = m_pLogic->createFamily(name, m_currentUser);
+       if(newFamily != nullptr) {
            // update family display
-           // remove buttons
-           QLayoutItem *child;
-           while ((child = ui->ownFamiliesGrid->layout()->takeAt(0)) != 0) {
-               delete child;
-           }
            displayFamilies();
-           d->close();
-       } else {
-           addFamily();
        }
+       d->close();
     } else if(result == QDialog::Rejected) {
         d->close();
     }

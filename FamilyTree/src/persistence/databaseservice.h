@@ -26,6 +26,8 @@ namespace database {
         void deleteFamilyByID(const int familyID);
         void saveEditor(int familyID, User* editor);
         void saveViewer(int familyID, User* viewer);
+        QVector<User*>* getViewersByFamilyID(int family);
+        QVector<User*>* getEditorsByFamilyID(int family);
 
         void saveEditorFromFamily(int userId, int familyID);
         void deleteEditorFromFamily(int userId, int familyID);

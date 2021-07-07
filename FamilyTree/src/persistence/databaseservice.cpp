@@ -10,23 +10,10 @@
 
 // --------------- local methodes ---------------
 // user
-User* selectUserByID(QString userID) {
-    // print table user
-    QSqlQuery q;
-    q.exec("SELECT * FROM user WHERE id="+userID+";");
-    q.first();
-    int id = q.value(0).toInt();
-    QString name = q.value(1).toString();
-    QString password = q.value(2).toString();
-
-    User* user = new User(id, name, password);
-    return user;
-}
-
 User* database::IDatabase::getUserByName(QString& userName) {
     QSqlQuery q;
-    q.exec("SELECT * FROM user WHERE name='"+userName+"';");
-    if (q.first()) {
+    if (q.exec("SELECT * FROM user WHERE name='"+userName+"';")) {
+        q.first();
         int id = q.value(0).toInt();
         QString name = q.value(1).toString();
         QString userPassword = q.value(2).toString();
@@ -36,7 +23,7 @@ User* database::IDatabase::getUserByName(QString& userName) {
     } else {
         qDebug() << q.lastError();
         qDebug() << "database: user name wrong";
-        throw new std::logic_error("username is wrong.");
+        throw new std::logic_error("This username does not exsist. Please choose a different one.");
     }
 }
 
@@ -141,12 +128,12 @@ void database::IDatabase::printHasRightsTable() {
     q.exec("SELECT * FROM hasRights;");
     while(q.next()) {
         QString familyID = q.value(0).toString();
-        QString userID = q.value(1).toString();
+        int userID = q.value(1).toInt();
         QString authorization = q.value(2).toString();
         qDebug() << familyID << " " << userID << " " << authorization;
 
         FamilyTree* family = selectFamilyByID(familyID);
-        User* user = selectUserByID(userID);
+        User* user = getUserByID(userID);
         if(authorization == "editor") {
             family->addEditor(user);
         } else { // authorization == viewer
@@ -317,6 +304,36 @@ void database::IDatabase::saveViewer(int familyID, User* viewer) {
     } else {
         qDebug() << q.lastError();
         return;
+    }
+}
+
+QVector<User *> *database::IDatabase::getViewersByFamilyID(int familyID) {
+    QSqlQuery q;
+    if(q.exec("SELECT * from hasRights WHERE familyID=" + QString::number(familyID) + " AND authorization='viewer';")) {
+        QVector<User*>* viewers = new QVector<User*>;
+        while(q.next()) {
+            User* viewer = getUserByID(q.value(1).toInt());
+            viewers->push_back(viewer);
+        }
+        return viewers;
+    } else {
+        qDebug() << q.lastError();
+        return nullptr;
+    }
+}
+
+QVector<User *> *database::IDatabase::getEditorsByFamilyID(int familyID) {
+    QSqlQuery q;
+    if(q.exec("SELECT * from hasRights WHERE familyID=" + QString::number(familyID) + " AND authorization='editor';")) {
+        QVector<User*>* viewers = new QVector<User*>;
+        while(q.next()) {
+            User* editor = getUserByID(q.value(1).toInt());
+            viewers->push_back(editor);
+        }
+        return viewers;
+    } else {
+        qDebug() << q.lastError();
+        return nullptr;
     }
 }
 

@@ -82,16 +82,48 @@ FamilyTree* domain::ILogic::createFamily(QString& name, User* admin) {
     return family;
 }
 
-FamilyTree* domain::ILogic::addEditor(FamilyTree* family, User* user) {
-    m_pDB->saveEditor(family->getId(), user);
-    family->addEditor(user);
-    return family;
+FamilyTree* domain::ILogic::addEditor(FamilyTree* family, QString& username) {
+    try {
+        if(username == m_currentUser->getName()) { // the admin can not be also a editor
+            qDebug() << "throw error";
+            throw new std::logic_error("You are already the admin, so you can not take on another role.");
+            return nullptr;
+        }
+        User* editor = m_pDB->getUserByName(username);
+        QVector<User*>* editors = m_pDB->getEditorsByFamilyID(family->getId());
+        if(editors->contains(editor)) { // editor is already saved
+            throw new std::logic_error("The User is already a editor. Please choose someone else.");
+        }
+        m_pDB->saveEditor(family->getId(), editor);
+        family->addEditor(editor);
+        return family;
+    } catch(const std::logic_error& ex) {
+        qDebug() << ex.what();
+        throw ex;
+        return nullptr;
+    }
 }
 
-FamilyTree* domain::ILogic::addViewer(FamilyTree* family, User* user) {
-    m_pDB->saveViewer(family->getId(), user);
-    family->addViewer(user);
-    return family;
+FamilyTree* domain::ILogic::addViewer(FamilyTree* family, QString& username) {
+    // verify username
+    if(username == m_currentUser->getName()) { // the admin can not be also a viewer
+        qDebug() << "throw error";
+        throw new std::logic_error("You are already the admin, so you can not take on another role.");
+    }
+    try {
+        User* viewer = m_pDB->getUserByName(username);
+        QVector<User*>* viewers = m_pDB->getViewersByFamilyID(family->getId());
+        if(viewers->contains(viewer)) { // viewer is already saved
+            throw new std::logic_error("The User is already a viewer. Please choose someone else.");
+        }
+        m_pDB->saveViewer(family->getId(), viewer);
+        family->addViewer(viewer);
+        return family;
+    } catch(const std::logic_error& ex) {
+        qDebug() << ex.what();
+        throw ex;
+        return nullptr;
+    }
 }
 
 QVector<FamilyTree*>* domain::ILogic::getFamilyTreesByUserID(int adminID) {
