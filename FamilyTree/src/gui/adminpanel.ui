@@ -67,6 +67,7 @@
       </spacer>
      </item>
      <item>
+<<<<<<< HEAD
       <widget class="QLabel" name="userMessage">
        <property name="font">
         <font>
@@ -87,15 +88,20 @@
       </widget>
      </item>
      <item>
+=======
+>>>>>>> 402560302d6caa4ebba64e9d60bc7cc8c3b730f5
       <widget class="QPushButton" name="ButtonAddEditor">
        <property name="font">
         <font>
          <family>Sawasdee</family>
         </font>
        </property>
+<<<<<<< HEAD
        <property name="cursor">
         <cursorShape>PointingHandCursor</cursorShape>
        </property>
+=======
+>>>>>>> 402560302d6caa4ebba64e9d60bc7cc8c3b730f5
        <property name="text">
         <string>Add editor</string>
        </property>
@@ -118,6 +124,7 @@
       </spacer>
      </item>
      <item>
+<<<<<<< HEAD
       <widget class="QLineEdit" name="in_Viewer">
        <property name="placeholderText">
         <string extracomment="Choose a viewer"/>
@@ -125,15 +132,20 @@
       </widget>
      </item>
      <item>
+=======
+>>>>>>> 402560302d6caa4ebba64e9d60bc7cc8c3b730f5
       <widget class="QPushButton" name="ButtonAddViewer">
        <property name="font">
         <font>
          <family>Sawasdee</family>
         </font>
        </property>
+<<<<<<< HEAD
        <property name="cursor">
         <cursorShape>PointingHandCursor</cursorShape>
        </property>
+=======
+>>>>>>> 402560302d6caa4ebba64e9d60bc7cc8c3b730f5
        <property name="text">
         <string>Add viewer</string>
        </property>

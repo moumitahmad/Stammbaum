@@ -15,7 +15,11 @@ ViewPage::ViewPage(domain::ILogic* pLogic, QWidget *parent) :
 {
     ui->setupUi(this);
     DisplayFam* df = new DisplayFam(m_pLogic, this);
+<<<<<<< HEAD
     ui->displayFamilyPanel->layout()->addWidget(df);
+=======
+    ui->horizontalLayout->addWidget(df);
+>>>>>>> 402560302d6caa4ebba64e9d60bc7cc8c3b730f5
     QObject::connect(ui->ButtonEditFamily, &QPushButton::clicked, this, &ViewPage::openEditPage);
     m_ap = new AdminPanel(m_pLogic, this);
     ui->adminPanel->layout()->addWidget(m_ap);
