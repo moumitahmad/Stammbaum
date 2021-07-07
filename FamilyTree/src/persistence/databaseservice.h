@@ -25,6 +25,7 @@ namespace database {
         int saveFamily(QString& name, User* admin);
         void deleteFamilyByID(const int familyID);
         void saveEditor(int familyID, User* editor);
+        void upgradeUserRigths(int familyID, User* editor);
         void saveViewer(int familyID, User* viewer);
         QVector<User*>* getViewersByFamilyID(int family);
         QVector<User*>* getEditorsByFamilyID(int family);

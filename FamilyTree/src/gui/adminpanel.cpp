@@ -29,30 +29,31 @@ void AdminPanel::setupAdminPanel() {
 }
 
 
-void AdminPanel::addEditor(){
+void AdminPanel::addEditor() {
+    ui->userMessage->hide();
     QString username = ui->in_Editor->text();
     qDebug() << username;
     try {
         m_pLogic->addEditor(m_displayedFamily, username);
         ui->userMessage->setText("The new editor has been saved.");
-    } catch(const std::logic_error& ex) {
-        qDebug() << ex.what();
-        ui->userMessage->setText(ex.what());
+    } catch(const std::logic_error* &ex) {
+        qDebug() << ex->what();
+        ui->userMessage->setText(ex->what());
     }
     ui->userMessage->show();
     ui->in_Editor->clear();
 }
 
-void AdminPanel::addViewer(){
+void AdminPanel::addViewer() {
+    ui->userMessage->hide();
     QString username = ui->in_Viewer->text();
     qDebug() << username;
     try {
         m_pLogic->addViewer(m_displayedFamily, username);
         ui->userMessage->setText("The new viewer has been saved.");
-    } catch(const std::logic_error& ex) {
-        qDebug() << "ex.what()";
-        qDebug() << ex.what();
-        ui->userMessage->setText(ex.what());
+    } catch(const std::logic_error* &ex) {
+        qDebug() << ex->what();
+        ui->userMessage->setText(ex->what());
     }
     ui->userMessage->show();
     ui->in_Viewer->clear();

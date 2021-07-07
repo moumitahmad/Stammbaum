@@ -12,8 +12,8 @@
 // user
 User* database::IDatabase::getUserByName(QString& userName) {
     QSqlQuery q;
-    if (q.exec("SELECT * FROM user WHERE name='"+userName+"';")) {
-        q.first();
+    q.exec("SELECT * FROM user WHERE name='"+userName+"';");
+    if (q.first()) {
         int id = q.value(0).toInt();
         QString name = q.value(1).toString();
         QString userPassword = q.value(2).toString();
@@ -289,6 +289,15 @@ void database::IDatabase::saveEditor(int familyID, User* editor) {
     } else {
         qDebug() << q.lastError();
         return;
+    }
+}
+
+void database::IDatabase::upgradeUserRigths(int familyID, User *editor) {
+    QSqlQuery q;
+    if(q.exec("UPDATE hasRights SET authorization='editor' WHERE userID=" + QString::number(editor->getId()) + " AND familyID=" + QString::number(familyID) + ";")) {
+
+    } else {
+        qDebug() << q.lastError();
     }
 }
 
