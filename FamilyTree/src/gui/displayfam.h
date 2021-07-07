@@ -14,6 +14,7 @@ class DisplayFam : public QWidget
     Q_OBJECT
 
 public:
+    int family;
     domain::ILogic* m_pLogic;
     explicit DisplayFam(domain::ILogic* pLogic, QWidget *parent = nullptr);
     ~DisplayFam();

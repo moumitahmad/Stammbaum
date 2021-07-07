@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include "mainwindow.h"
+#include "displayfam.h"
 
 namespace Ui {
 class EditPage;
@@ -31,6 +32,7 @@ private slots:
     void openViewPage();
 
 private:
+    DisplayFam* df;
     Ui::EditPage *ui;
 };
 
