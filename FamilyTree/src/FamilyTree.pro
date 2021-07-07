@@ -17,6 +17,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     domain/ILogic.cpp \
+    gui/adminpanel.cpp \
     gui/displayfam.cpp \
     gui/editpage.cpp \
     gui/homepage.cpp \
@@ -31,6 +32,7 @@ SOURCES += \
 
 HEADERS += \
     domain/ILogic.h \
+    gui/adminpanel.h \
     gui/displayfam.h \
     gui/editpage.h \
     gui/homepage.h \
@@ -43,6 +45,7 @@ HEADERS += \
     value-objects/user.h
 
 FORMS += \
+    gui/adminpanel.ui \
     gui/displayfam.ui \
     gui/editpage.ui \
     gui/homepage.ui \

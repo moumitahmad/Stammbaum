@@ -3,7 +3,7 @@
 
 #include <QWidget>
 #include "domain/ILogic.h"
-#include "./value-objects/familytree.h"
+#include "adminpanel.h"
 
 namespace Ui {
 class ViewPage;
@@ -16,11 +16,13 @@ class ViewPage : public QWidget
 public:
     domain::ILogic* m_pLogic;
     FamilyTree* m_displayedFamily;
+    User* m_currentUser;
+    AdminPanel* m_ap;
 
     explicit ViewPage(domain::ILogic* pLogic, QWidget *parent = nullptr);
     ~ViewPage();
 
-   void getDisplayedFamily();
+   void setupViewPage();
 
 signals:
     void switchToEdit();
@@ -28,9 +30,7 @@ signals:
 
 private slots:
     void openEditPage();
-    void addEditor();
-    void addViewer();
-    void deleteFamily();
+    void openHomePage();
 
 private:
     Ui::ViewPage *ui;

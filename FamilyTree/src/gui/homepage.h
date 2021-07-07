@@ -14,7 +14,6 @@ class Homepage : public QWidget
     Q_OBJECT
 
 public:
-    //MainWindow* m_appWindow;
     domain::ILogic* m_pLogic;
     User* m_currentUser;
 
