@@ -44,7 +44,6 @@
    <item>
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
-<<<<<<< HEAD
       <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
         <layout class="QGridLayout" name="adminPanel"/>
@@ -60,67 +59,6 @@
          </item>
         </layout>
        </item>
-=======
-      <widget class="QLabel" name="ViewFamilyWelcome">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="minimumSize">
-        <size>
-         <width>400</width>
-         <height>60</height>
-        </size>
-       </property>
-       <property name="font">
-        <font>
-         <family>Sawasdee</family>
-         <pointsize>26</pointsize>
-         <weight>75</weight>
-         <bold>true</bold>
-        </font>
-       </property>
-       <property name="text">
-        <string>View the family tree</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <layout class="QHBoxLayout" name="horizontalLayout">
-       <item>
-        <layout class="QGridLayout" name="adminPanel"/>
-       </item>
-       <item>
-        <widget class="QWidget" name="WidgetDisplayFamily" native="true">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <widget class="QPushButton" name="ButtonEditFamily">
-          <property name="geometry">
-           <rect>
-            <x>1190</x>
-            <y>510</y>
-            <width>161</width>
-            <height>61</height>
-           </rect>
-          </property>
-          <property name="font">
-           <font>
-            <family>Sawasdee</family>
-           </font>
-          </property>
-          <property name="text">
-           <string>Edit family</string>
-          </property>
-         </widget>
-        </widget>
-       </item>
->>>>>>> 402560302d6caa4ebba64e9d60bc7cc8c3b730f5
       </layout>
      </item>
     </layout>

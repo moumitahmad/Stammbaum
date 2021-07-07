@@ -55,7 +55,6 @@
       </widget>
      </item>
      <item>
-<<<<<<< HEAD
       <spacer name="verticalSpacer_2">
        <property name="orientation">
         <enum>Qt::Vertical</enum>
@@ -72,8 +71,6 @@
       </spacer>
      </item>
      <item>
-=======
->>>>>>> 402560302d6caa4ebba64e9d60bc7cc8c3b730f5
       <layout class="QHBoxLayout" name="ownFamiliesGrid"/>
      </item>
      <item>
@@ -94,7 +91,6 @@
         <bool>false</bool>
        </property>
       </widget>
-<<<<<<< HEAD
      </item>
      <item>
       <spacer name="verticalSpacer">
@@ -111,8 +107,6 @@
         </size>
        </property>
       </spacer>
-=======
->>>>>>> 402560302d6caa4ebba64e9d60bc7cc8c3b730f5
      </item>
      <item>
       <widget class="QPushButton" name="newFamilyButton">
