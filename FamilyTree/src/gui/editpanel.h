@@ -20,7 +20,7 @@ public:
     explicit EditPanel(domain::ILogic* pLogic, QWidget *parent = nullptr);
     ~EditPanel();
 
-    void setupEditPanel();
+    void setupEditPanel(int memberID);
 
 private slots:
     void uploadPicture();

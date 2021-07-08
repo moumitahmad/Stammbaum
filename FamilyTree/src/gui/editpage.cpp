@@ -29,6 +29,7 @@ EditPage::~EditPage()
 
 void EditPage::setupEditPage() {
     m_displayedFamily = m_pLogic->getFamilyTreeByID(m_pLogic->getCurrentFamilyID());
+    ui->LabelViewFamily->setText("Edit the family tree: " + m_displayedFamily->getFamilyName());
 }
 
 void EditPage::openViewPage(){

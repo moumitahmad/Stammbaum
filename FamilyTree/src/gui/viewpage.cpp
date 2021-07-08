@@ -14,8 +14,6 @@ ViewPage::ViewPage(domain::ILogic* pLogic, QWidget *parent) :
     ui(new Ui::ViewPage)
 {
     ui->setupUi(this);
-    DisplayFam* df = new DisplayFam(m_pLogic, this);
-    ui->displayFamilyPanel->layout()->addWidget(df);
     QObject::connect(ui->ButtonEditFamily, &QPushButton::clicked, this, &ViewPage::openEditPage);
 }
 
@@ -42,6 +40,11 @@ void ViewPage::setupViewPage() {
         qDebug() << "Current User = Viewer";
         ui->ButtonEditFamily->hide();
     }
+
+    // display page
+    DisplayFam* df = new DisplayFam(m_pLogic, this);
+    ui->displayFamilyPanel->layout()->addWidget(df);
+    df->setupForView();
     qDebug() << "Viewer setup done";
 
 }

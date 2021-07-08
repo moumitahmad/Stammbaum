@@ -20,9 +20,12 @@ EditPanel::~EditPanel()
     delete ui;
 }
 
-void EditPanel::setupEditPanel() {
-    qDebug() << "Member Choosen";
+void EditPanel::setupEditPanel(int memberID) {
+    qDebug() << "Member Choosen: " << memberID;
     m_displayedFamily = m_pLogic->getFamilyTreeByID(m_pLogic->getCurrentFamilyID());
+    if(memberID != -1) { // new Member
+        m_editedMember = m_pLogic->getMemberByID(memberID);
+    }
 }
 
 void EditPanel::uploadPicture(){
@@ -51,6 +54,7 @@ void verifyEnteredData() {
 void EditPanel::saveMember(){
     verifyEnteredData();
     if(m_editedMember) { // member already exsists
+        qDebug() << m_editedMember->getName();
         //m_pLogic->updateMemberData(m_editedMember);
     } else { // new Member
         QString name = "Test";

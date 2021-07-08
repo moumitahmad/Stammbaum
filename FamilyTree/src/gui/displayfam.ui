@@ -19,10 +19,17 @@
      <item row="0" column="0">
       <widget class="QGraphicsView" name="graphicsView"/>
      </item>
-     <item row="1" column="0">
-      <widget class="QPushButton" name="memberChoosen">
+     <item row="2" column="0">
+      <widget class="QPushButton" name="updateMember">
        <property name="text">
-        <string>choose member</string>
+        <string>update Member 1</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QPushButton" name="addMember">
+       <property name="text">
+        <string>add new Member</string>
        </property>
       </widget>
      </item>

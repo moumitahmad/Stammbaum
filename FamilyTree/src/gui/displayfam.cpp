@@ -9,7 +9,7 @@ DisplayFam::DisplayFam(domain::ILogic* pLogic, QWidget *parent) :
 {
     ui->setupUi(this);
 
-    QObject::connect(ui->memberChoosen, &QPushButton::clicked, this, &DisplayFam::changeMember);
+
     //hier muss ein array mit fam geholt werden
 
     QVector<Member*>* familyMembers = m_pLogic->getMembersByFamily(1);
@@ -69,6 +69,22 @@ DisplayFam::~DisplayFam()
     delete ui;
 }
 
-void DisplayFam::changeMember() {
-    emit memberChoosen();
+void DisplayFam::setupForView() {
+    ui->addMember->hide();
+    ui->updateMember->hide();
+}
+
+void DisplayFam::setupForEdit() {
+    ui->addMember->show();
+    ui->updateMember->show();
+    QObject::connect(ui->addMember, &QPushButton::clicked, this, &DisplayFam::addNewMember);
+    QObject::connect(ui->updateMember, &QPushButton::clicked, std::bind(&DisplayFam::changeMember, this, 1));
+}
+
+void DisplayFam::changeMember(int id) {
+    emit memberChoosen(id);
+}
+
+void DisplayFam::addNewMember() {
+    emit memberChoosen(-1);
 }
