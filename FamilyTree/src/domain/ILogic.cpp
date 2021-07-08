@@ -180,6 +180,10 @@ Member* domain::ILogic::createMember(FamilyTree *family, const QString &name, co
     return member;
 }
 
+Member *domain::ILogic::getMemberByID(int memberID) {
+    return m_pDB->getMemberByID(memberID);
+}
+
 Member *domain::ILogic::updateMemberData(Member* member, const QString& change, const DB_COL_NAME position) {
     // update Member object
     switch(position) {

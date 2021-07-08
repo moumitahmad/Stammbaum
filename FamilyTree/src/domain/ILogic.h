@@ -56,6 +56,7 @@ namespace domain {
                 QVector<Member*>* children = new QVector<Member*>);
 
         // select
+        Member* getMemberByID(int memberID);
         QVector<Member*>* getMembersByFamily(int familyID);
 
         // update

@@ -1,6 +1,5 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "editpage.h"
 
 #include <QDebug>
 #include "userwindow.h"
@@ -14,16 +13,16 @@ MainWindow::MainWindow(domain::ILogic* pLogic, QWidget *parent):
 
     m_hp = new Homepage(m_pLogic, this);
     m_vp = new ViewPage(m_pLogic, this);
-    EditPage* ep = new EditPage(m_pLogic, this);
+    m_ep = new EditPage(m_pLogic, this);
 
     ui->HomePage->layout()->addWidget(m_hp);
     ui->ViewFamily->layout()->addWidget(m_vp);
-    ui->EditFamily->layout()->addWidget(ep);
+    ui->EditFamily->layout()->addWidget(m_ep);
     ui->stackedWidget->setCurrentIndex(0);
 
     // signals
     QObject::connect(m_hp, &Homepage::switchToView, this, &MainWindow::openViewPage);
-    QObject::connect(ep, &EditPage::switchToView, this, &MainWindow::openViewPage);
+    QObject::connect(m_ep, &EditPage::switchToView, this, &MainWindow::openViewPage);
     QObject::connect(m_vp, &ViewPage::switchToEdit, this, &MainWindow::openEditPage);
     QObject::connect(m_vp, &ViewPage::switchToHome, this, &MainWindow::openHomePage);
 
@@ -56,4 +55,5 @@ void MainWindow::openViewPage() {
 
 void MainWindow::openEditPage() {
     ui->stackedWidget->setCurrentIndex(2);
+    m_ep->setupEditPage();
 }

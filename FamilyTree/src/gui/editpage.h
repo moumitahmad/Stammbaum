@@ -2,8 +2,8 @@
 #define EDITPAGE_H
 
 #include <QWidget>
-#include "mainwindow.h"
-#include "displayfam.h"
+#include "domain/ILogic.h"
+#include "./value-objects/familytree.h"
 
 namespace Ui {
 class EditPage;
@@ -20,19 +20,15 @@ public:
     explicit EditPage(domain::ILogic* pLogic, QWidget *parent = nullptr);
     ~EditPage();
 
-    void setFamily(int family) const;
+    void setupEditPage();
 
 signals:
     void switchToView();
 
 private slots:
-    void uploadPicture();
-    void saveChanges();
-    void discardChanges();
     void openViewPage();
 
 private:
-    DisplayFam* df;
     Ui::EditPage *ui;
 };
 
