@@ -19,6 +19,12 @@ public:
     explicit DisplayFam(domain::ILogic* pLogic, QWidget *parent = nullptr);
     ~DisplayFam();
 
+signals:
+    void memberChoosen();
+
+private slots:
+    void changeMember();
+
 private:
     Ui::DisplayFam *ui;
 

@@ -24,9 +24,11 @@ ViewPage::~ViewPage() {
 }
 
 void ViewPage::setupViewPage() {
+    qDebug() << "Viewer setup begin";
     ui->ButtonEditFamily->show();
     delete m_ap;
     m_displayedFamily = m_pLogic->getFamilyTreeByID(m_pLogic->getCurrentFamilyID());
+    qDebug() << "got family";
     m_currentUser = m_pLogic->getCurrentUser();
     ui->ViewFamilyWelcome->setText("Welcome to your family: " + m_displayedFamily->getFamilyName());
 
@@ -40,6 +42,7 @@ void ViewPage::setupViewPage() {
         qDebug() << "Current User = Viewer";
         ui->ButtonEditFamily->hide();
     }
+    qDebug() << "Viewer setup done";
 
 }
 

@@ -20,6 +20,7 @@ SOURCES += \
     gui/adminpanel.cpp \
     gui/displayfam.cpp \
     gui/editpage.cpp \
+    gui/editpanel.cpp \
     gui/homepage.cpp \
     gui/mainwindow.cpp \
     gui/userwindow.cpp \
@@ -35,6 +36,7 @@ HEADERS += \
     gui/adminpanel.h \
     gui/displayfam.h \
     gui/editpage.h \
+    gui/editpanel.h \
     gui/homepage.h \
     gui/mainwindow.h \
     gui/userwindow.h \
@@ -48,6 +50,7 @@ FORMS += \
     gui/adminpanel.ui \
     gui/displayfam.ui \
     gui/editpage.ui \
+    gui/editpanel.ui \
     gui/homepage.ui \
     gui/mainwindow.ui \
     gui/userwindow.ui \

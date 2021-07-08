@@ -52,6 +52,7 @@ bool database::IDatabase::userIsViewer(int userID, int familyID) {
         }
     } else {
         qDebug() << q.lastError();
+        return false;
     }
 }
 

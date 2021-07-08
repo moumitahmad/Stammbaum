@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include "viewpage.h"
 #include "homepage.h"
+#include "editpage.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -17,6 +18,7 @@ public:
     domain::ILogic* m_pLogic;
     Homepage* m_hp;
     ViewPage* m_vp;
+    EditPage* m_ep;
 
     MainWindow(domain::ILogic* pLogic, QWidget *parent = nullptr);
     ~MainWindow();
