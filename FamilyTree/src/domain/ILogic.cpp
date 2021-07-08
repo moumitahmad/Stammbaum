@@ -12,6 +12,10 @@ void domain::ILogic::setCurrentUser(User *user) {
     m_currentUser = user;
 }
 
+bool domain::ILogic::userIsViewer(User *user, FamilyTree *family) const {
+    return m_pDB->userIsViewer(user->getId(), family->getId());
+}
+
 int domain::ILogic::getCurrentFamilyID() const {
     return m_currentFamilyID;
 }

@@ -20,6 +20,7 @@ namespace database {
         int saveUser(QString& name, QString& password);
         User* getUserByName(QString& userName);
         User* getUserByID(int id);
+        bool userIsViewer(int userID, int familyID);
 
         // family tree
         int saveFamily(QString& name, User* admin);

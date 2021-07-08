@@ -42,6 +42,19 @@ User *database::IDatabase::getUserByID(int id) {
     }
 }
 
+bool database::IDatabase::userIsViewer(int userID, int familyID) {
+    QSqlQuery q;
+    if(q.exec("SELECT * FROM hasRights WHERE userID=" + QString::number(userID) + " AND familyID=" + QString::number(familyID) + " AND authorization='viewer';")) {
+        if(q.first()) {
+            return true;
+        } else {
+            return false;
+        }
+    } else {
+        qDebug() << q.lastError();
+    }
+}
+
 void database::IDatabase::printTableUser() {
     // print table user
     QSqlQuery q;
