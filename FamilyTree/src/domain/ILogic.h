@@ -23,6 +23,7 @@ namespace domain {
 
         User* getCurrentUser() const;
         void setCurrentUser(User* user);
+        bool userIsViewer(User* user, FamilyTree* family) const;
 
         int getCurrentFamilyID() const;
         void setCurrentFamilyID(const int familyID);

@@ -17,9 +17,6 @@ ViewPage::ViewPage(domain::ILogic* pLogic, QWidget *parent) :
     DisplayFam* df = new DisplayFam(m_pLogic, this);
     ui->displayFamilyPanel->layout()->addWidget(df);
     QObject::connect(ui->ButtonEditFamily, &QPushButton::clicked, this, &ViewPage::openEditPage);
-    m_ap = new AdminPanel(m_pLogic, this);
-    ui->adminPanel->layout()->addWidget(m_ap);
-    QObject::connect(m_ap, &AdminPanel::switchToHome, this, &ViewPage::openHomePage);
 }
 
 ViewPage::~ViewPage() {
@@ -27,14 +24,21 @@ ViewPage::~ViewPage() {
 }
 
 void ViewPage::setupViewPage() {
-    ui->adminPanel->layout()->removeWidget(m_ap);
+    ui->ButtonEditFamily->show();
+    delete m_ap;
     m_displayedFamily = m_pLogic->getFamilyTreeByID(m_pLogic->getCurrentFamilyID());
     m_currentUser = m_pLogic->getCurrentUser();
     ui->ViewFamilyWelcome->setText("Welcome to your family: " + m_displayedFamily->getFamilyName());
 
-    if(m_currentUser->getId() == m_displayedFamily->getAdmin()->getId()) {
+    if(m_currentUser->getId() == m_displayedFamily->getAdmin()->getId()) { // user is admin
+        qDebug() << "Current User = Admin";
+        m_ap = new AdminPanel(m_pLogic, this);
         ui->adminPanel->layout()->addWidget(m_ap);
+        QObject::connect(m_ap, &AdminPanel::switchToHome, this, &ViewPage::openHomePage);
         m_ap->setupAdminPanel();
+    } else if(m_pLogic->userIsViewer(m_currentUser, m_displayedFamily)) { // user is viewer
+        qDebug() << "Current User = Viewer";
+        ui->ButtonEditFamily->hide();
     }
 
 }
