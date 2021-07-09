@@ -129,7 +129,7 @@
               </font>
              </property>
              <property name="text">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#ef2929;&quot;&gt;Account successfully created! Please log in.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#8ae234;&quot;&gt;Account successfully created! Please log in.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </property>
             </widget>
            </item>
@@ -464,7 +464,7 @@
                <item row="4" column="1">
                 <widget class="QPushButton" name="backButton">
                  <property name="text">
-                  <string>Back</string>
+                  <string>Login</string>
                  </property>
                 </widget>
                </item>

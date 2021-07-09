@@ -42,22 +42,18 @@
     </widget>
    </item>
    <item>
-    <layout class="QVBoxLayout" name="verticalLayout">
+    <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayout">
-       <item>
-        <layout class="QGridLayout" name="adminPanel"/>
-       </item>
-       <item>
-        <layout class="QGridLayout" name="displayFamilyPanel">
-         <item row="0" column="0">
-          <widget class="QCommandLinkButton" name="ButtonEditFamily">
-           <property name="text">
-            <string>Edit Family</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
+      <layout class="QGridLayout" name="adminPanel"/>
+     </item>
+     <item>
+      <layout class="QGridLayout" name="displayFamilyPanel">
+       <item row="0" column="0">
+        <widget class="QCommandLinkButton" name="ButtonEditFamily">
+         <property name="text">
+          <string>Edit Family</string>
+         </property>
+        </widget>
        </item>
       </layout>
      </item>

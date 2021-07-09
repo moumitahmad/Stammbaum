@@ -4,6 +4,7 @@
 #include <QWidget>
 #include "domain/ILogic.h"
 #include "./value-objects/familytree.h"
+#include "editpanel.h"
 
 namespace Ui {
 class EditPage;
@@ -16,6 +17,7 @@ class EditPage : public QWidget
 public:
     domain::ILogic* m_pLogic;
     FamilyTree* m_displayedFamily;
+    EditPanel* m_ep;
 
     explicit EditPage(domain::ILogic* pLogic, QWidget *parent = nullptr);
     ~EditPage();
@@ -27,6 +29,8 @@ signals:
 
 private slots:
     void openViewPage();
+    void openEditPanel(int memberID);
+    void closeEditPanel();
 
 private:
     Ui::EditPage *ui;

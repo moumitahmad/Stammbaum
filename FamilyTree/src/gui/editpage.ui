@@ -85,34 +85,18 @@
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
-        <layout class="QVBoxLayout" name="panel">
-         <item>
-          <layout class="QVBoxLayout" name="editPanel"/>
-         </item>
-         <item>
-          <widget class="QPushButton" name="ButtonViewFamily">
-           <property name="font">
-            <font>
-             <family>Sawasdee</family>
-             <pointsize>11</pointsize>
-            </font>
-           </property>
+        <layout class="QGridLayout" name="editPanel"/>
+       </item>
+       <item>
+        <layout class="QGridLayout" name="displayFamilyPanel">
+         <item row="0" column="0">
+          <widget class="QCommandLinkButton" name="ButtonViewFamily">
            <property name="text">
             <string>View family</string>
            </property>
           </widget>
          </item>
         </layout>
-       </item>
-       <item>
-        <widget class="QWidget" name="DisplayWidget" native="true">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-        </widget>
        </item>
       </layout>
      </item>

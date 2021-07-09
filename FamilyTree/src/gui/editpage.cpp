@@ -1,7 +1,6 @@
 #include "editpage.h"
 #include "ui_editpage.h"
 #include "displayfam.h"
-#include "editpanel.h"
 
 #include <QDebug>
 
@@ -14,12 +13,10 @@ EditPage::EditPage(domain::ILogic* pLogic, QWidget *parent) :
     QObject::connect(ui->ButtonViewFamily, &QPushButton::clicked, this, &EditPage::openViewPage);
 
     DisplayFam* df = new DisplayFam(m_pLogic, this);
-    ui->horizontalLayout->layout()->addWidget(df);
-    EditPanel* ep = new EditPanel(m_pLogic, this);
-    ui->editPanel->layout()->addWidget(ep);
+    ui->displayFamilyPanel->layout()->addWidget(df);
 
     // signal
-    QObject::connect(df, &DisplayFam::memberChoosen, ep, &EditPanel::setupEditPanel);
+    QObject::connect(df, &DisplayFam::memberChoosen, this, &EditPage::openEditPanel);
 }
 
 EditPage::~EditPage()
@@ -34,4 +31,15 @@ void EditPage::setupEditPage() {
 
 void EditPage::openViewPage(){
     emit switchToView();
+}
+
+void EditPage::openEditPanel(int memberID) {
+    qDebug() << "in editpage: " << memberID;
+    m_ep = new EditPanel(m_pLogic, this);
+    m_ep->setupEditPanel(memberID);
+    ui->editPanel->layout()->addWidget(m_ep);
+}
+
+void EditPage::closeEditPanel() {
+    delete m_ep;
 }

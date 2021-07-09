@@ -9,6 +9,9 @@ DisplayFam::DisplayFam(domain::ILogic* pLogic, QWidget *parent) :
 {
     ui->setupUi(this);
 
+    // connect test-buttons
+    QObject::connect(ui->addMember, &QPushButton::clicked, this, &DisplayFam::addNewMember);
+    QObject::connect(ui->updateMember, &QPushButton::clicked, std::bind(&DisplayFam::changeMember, this, 1));
 
     //hier muss ein array mit fam geholt werden
 
@@ -77,8 +80,6 @@ void DisplayFam::setupForView() {
 void DisplayFam::setupForEdit() {
     ui->addMember->show();
     ui->updateMember->show();
-    QObject::connect(ui->addMember, &QPushButton::clicked, this, &DisplayFam::addNewMember);
-    QObject::connect(ui->updateMember, &QPushButton::clicked, std::bind(&DisplayFam::changeMember, this, 1));
 }
 
 void DisplayFam::changeMember(int id) {

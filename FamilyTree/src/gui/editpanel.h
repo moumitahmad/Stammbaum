@@ -26,6 +26,7 @@ private slots:
     void uploadPicture();
     void saveMember();
     void discardChanges();
+    void deleteMember();
 
 private:
     Ui::EditPanel *ui;

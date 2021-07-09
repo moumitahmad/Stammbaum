@@ -50,10 +50,9 @@ namespace domain {
 
         // ---------- MEMBER
         // create
-        Member* createMember(FamilyTree* family, const QString& name, const QString& birth = "Unknown",
-                const QString& death = "Unknown", const QString& gender = "Unknown",
-                const QString& biografie = nullptr, Member* partner = new Member(),
-                QVector<Member*>* children = new QVector<Member*>);
+        Member* createMember(FamilyTree* family, const QString& name, const QString& birth,
+                const QString& death, const QString& gender, const QString& biografie,
+                Member* partner = new Member(), QVector<Member*>* children = new QVector<Member*>);
 
         // select
         Member* getMemberByID(int memberID);
