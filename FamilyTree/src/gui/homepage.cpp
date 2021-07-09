@@ -17,7 +17,7 @@ Homepage::Homepage(domain::ILogic* pLogic, QWidget *parent) :
 {
     ui->setupUi(this);
     m_currentUser = pLogic->getCurrentUser();
-    ui->welcomeText->setText("Welcome " + m_currentUser->getName() + "!");
+    ui->welcomeText->setText("<html><head/><body><p><span style='color:#3465a4;'>Welcome " + m_currentUser->getName() + "!</span></p></body></html>");
     displayFamilies();
 
     QObject::connect(ui->newFamilyButton, &QPushButton::clicked, this, &Homepage::addFamily);

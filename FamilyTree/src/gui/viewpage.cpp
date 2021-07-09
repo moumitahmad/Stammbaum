@@ -28,7 +28,7 @@ void ViewPage::setupViewPage() {
     m_displayedFamily = m_pLogic->getFamilyTreeByID(m_pLogic->getCurrentFamilyID());
     qDebug() << "got family";
     m_currentUser = m_pLogic->getCurrentUser();
-    ui->ViewFamilyWelcome->setText("Welcome to your family: " + m_displayedFamily->getFamilyName());
+    ui->ViewFamilyWelcome->setText("<html><head/><body><p><span style='color:#3465a4;'>Welcome to your family: " + m_displayedFamily->getFamilyName() + "</span></p></body></html>");
 
     if(m_currentUser->getId() == m_displayedFamily->getAdmin()->getId()) { // user is admin
         qDebug() << "Current User = Admin";

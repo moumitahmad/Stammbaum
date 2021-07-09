@@ -37,7 +37,7 @@
       </font>
      </property>
      <property name="text">
-      <string>View the family tree</string>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#3465a4;&quot;&gt;View the family tree&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
     </widget>
    </item>

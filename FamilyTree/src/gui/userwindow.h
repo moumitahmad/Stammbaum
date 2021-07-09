@@ -20,6 +20,8 @@ public:
     explicit UserWindow(domain::ILogic* pLogic, QWidget *parent = nullptr);
     ~UserWindow();
 
+    void hideErrors();
+
 private slots:
     void switchToCreateNewUser();
     void switchToLogIn();

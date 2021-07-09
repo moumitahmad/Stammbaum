@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>688</width>
-    <height>459</height>
+    <width>724</width>
+    <height>481</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -52,7 +52,7 @@
                 </font>
                </property>
                <property name="text">
-                <string>Welcome to the Family Tree Project!</string>
+                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#3465a4;&quot;&gt;Welcome to the Family Tree Project!&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                </property>
               </widget>
              </item>
@@ -87,7 +87,7 @@
               </font>
              </property>
              <property name="text">
-              <string>Log in to access your family tree.</string>
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:16pt;&quot;&gt;Log in to access your family tree.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </property>
             </widget>
            </item>
@@ -108,7 +108,7 @@
               </font>
              </property>
              <property name="text">
-              <string>No user found with this data. Please try again.</string>
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#ef2929;&quot;&gt;No user found with this data. Please try again.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </property>
             </widget>
            </item>
@@ -129,7 +129,7 @@
               </font>
              </property>
              <property name="text">
-              <string>Account successfully created! Please log in.</string>
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#ef2929;&quot;&gt;Account successfully created! Please log in.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </property>
             </widget>
            </item>
@@ -187,6 +187,19 @@
              </item>
              <item>
               <layout class="QGridLayout" name="gridLayout_2">
+               <item row="0" column="0">
+                <widget class="QLabel" name="username">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="text">
+                  <string>Username</string>
+                 </property>
+                </widget>
+               </item>
                <item row="4" column="1">
                 <widget class="QPushButton" name="newUserButton">
                  <property name="text">
@@ -210,26 +223,6 @@
                  </property>
                 </spacer>
                </item>
-               <item row="0" column="0">
-                <widget class="QLabel" name="username">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="text">
-                  <string>Username</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="1" column="0">
-                <widget class="QLabel" name="password">
-                 <property name="text">
-                  <string>Password</string>
-                 </property>
-                </widget>
-               </item>
                <item row="3" column="1">
                 <widget class="QPushButton" name="loginButton">
                  <property name="text">
@@ -239,6 +232,13 @@
                </item>
                <item row="0" column="1">
                 <widget class="QLineEdit" name="in_username"/>
+               </item>
+               <item row="1" column="0">
+                <widget class="QLabel" name="password">
+                 <property name="text">
+                  <string>Password</string>
+                 </property>
+                </widget>
                </item>
                <item row="1" column="1">
                 <widget class="QLineEdit" name="in_password"/>
@@ -283,7 +283,7 @@
             <x>0</x>
             <y>0</y>
             <width>661</width>
-            <height>390</height>
+            <height>456</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_7">
@@ -306,7 +306,7 @@
                 </font>
                </property>
                <property name="text">
-                <string>Welcome to the Family Tree Project!</string>
+                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#3465a4;&quot;&gt;Welcome to the Family Tree Project!&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                </property>
               </widget>
              </item>
@@ -341,7 +341,7 @@
               </font>
              </property>
              <property name="text">
-              <string>Here you can sign up.</string>
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:16pt;&quot;&gt;Here you can sign up.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </property>
             </widget>
            </item>
@@ -362,7 +362,7 @@
               </font>
              </property>
              <property name="text">
-              <string>Username already taken. Please choose a different one.</string>
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#ef2929;&quot;&gt;Username already taken. Please choose a different one.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </property>
             </widget>
            </item>
@@ -383,7 +383,7 @@
               </font>
              </property>
              <property name="text">
-              <string>Username must be at least 5 characters long.</string>
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#ef2929;&quot;&gt;Username must be at least 5 characters long.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </property>
             </widget>
            </item>
@@ -404,7 +404,7 @@
               </font>
              </property>
              <property name="text">
-              <string>Password must be at least 7 characters long.</string>
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#ef2929;&quot;&gt;Password must be at least 7 characters long.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </property>
             </widget>
            </item>
@@ -448,29 +448,6 @@
                  </property>
                 </widget>
                </item>
-               <item row="2" column="1">
-                <spacer name="verticalSpacer_8">
-                 <property name="orientation">
-                  <enum>Qt::Vertical</enum>
-                 </property>
-                 <property name="sizeType">
-                  <enum>QSizePolicy::Fixed</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>20</width>
-                   <height>40</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-               <item row="3" column="1">
-                <widget class="QPushButton" name="newUserButton_2">
-                 <property name="text">
-                  <string>Sign Up</string>
-                 </property>
-                </widget>
-               </item>
                <item row="0" column="0">
                 <widget class="QLabel" name="username_3">
                  <property name="sizePolicy">
@@ -494,8 +471,31 @@
                <item row="0" column="1">
                 <widget class="QLineEdit" name="in_new_username"/>
                </item>
+               <item row="2" column="1">
+                <spacer name="verticalSpacer_8">
+                 <property name="orientation">
+                  <enum>Qt::Vertical</enum>
+                 </property>
+                 <property name="sizeType">
+                  <enum>QSizePolicy::Fixed</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>20</width>
+                   <height>40</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
                <item row="1" column="1">
                 <widget class="QLineEdit" name="in_new_password"/>
+               </item>
+               <item row="3" column="1">
+                <widget class="QPushButton" name="newUserButton_2">
+                 <property name="text">
+                  <string>Sign Up</string>
+                 </property>
+                </widget>
                </item>
               </layout>
              </item>
@@ -530,7 +530,6 @@
           </layout>
          </widget>
         </widget>
-        <widget class="QWidget" name="page_3"/>
        </widget>
       </item>
      </layout>
@@ -542,7 +541,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>688</width>
+     <width>724</width>
      <height>22</height>
     </rect>
    </property>

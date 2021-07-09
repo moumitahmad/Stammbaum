@@ -14,13 +14,7 @@ UserWindow::UserWindow(domain::ILogic* pLogic, QWidget *parent) :
     ui->setupUi(this);
     ui->stackedWidget->setCurrentIndex(0);
 
-    // hide error and additional messages
-    ui->errorLabelLogin->hide();
-    ui->errorLabelNameNotValid->hide();
-    ui->errorLabelNameTaken->hide();
-    ui->errorLabelPasswordNotValid->hide();
-    ui->accountCreatedLabel->hide();
-    ui->placeholder->hide();
+    this->hideErrors();
 
     //additional settings
     ui->in_password->setEchoMode(QLineEdit::Password);
@@ -36,6 +30,16 @@ UserWindow::UserWindow(domain::ILogic* pLogic, QWidget *parent) :
 UserWindow::~UserWindow()
 {
     delete ui;
+}
+
+void UserWindow::hideErrors() {
+    // hide error and additional messages
+    ui->errorLabelLogin->hide();
+    ui->errorLabelNameNotValid->hide();
+    ui->errorLabelNameTaken->hide();
+    ui->errorLabelPasswordNotValid->hide();
+    ui->accountCreatedLabel->hide();
+    ui->placeholder->hide();
 }
 
 void UserWindow::switchToCreateNewUser() {
@@ -57,6 +61,7 @@ void UserWindow::switchToLogIn() {
 }
 
 void UserWindow::createNewUser(){
+    hideErrors();
     QString username;
     QString password;
 
@@ -95,6 +100,7 @@ void UserWindow::createNewUser(){
 
 
 void UserWindow::logInUser(){
+    hideErrors();
     QString username = ui->in_username->text();
     QString password = ui->in_password->text();
 
