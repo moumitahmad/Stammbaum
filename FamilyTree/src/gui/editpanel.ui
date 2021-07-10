@@ -117,7 +117,7 @@
       <widget class="QComboBox" name="In_FirstParent">
        <item>
         <property name="text">
-         <string/>
+         <string>no parent</string>
         </property>
        </item>
       </widget>
@@ -149,9 +149,12 @@
      </item>
      <item row="8" column="1">
       <widget class="QComboBox" name="ChoosePartner">
+       <property name="currentIndex">
+        <number>0</number>
+       </property>
        <item>
         <property name="text">
-         <string/>
+         <string>no partner</string>
         </property>
        </item>
       </widget>
@@ -265,7 +268,13 @@
       </widget>
      </item>
      <item row="10" column="1">
-      <widget class="QComboBox" name="In_SecondParent"/>
+      <widget class="QComboBox" name="In_SecondParent">
+       <item>
+        <property name="text">
+         <string>no second parent</string>
+        </property>
+       </item>
+      </widget>
      </item>
     </layout>
    </item>
