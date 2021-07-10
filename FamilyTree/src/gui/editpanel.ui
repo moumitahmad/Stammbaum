@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>321</width>
-    <height>552</height>
+    <width>323</width>
+    <height>555</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -117,7 +117,7 @@
       <widget class="QComboBox" name="In_FirstParent">
        <item>
         <property name="text">
-         <string/>
+         <string>no parent</string>
         </property>
        </item>
       </widget>
@@ -151,7 +151,7 @@
       <widget class="QComboBox" name="ChoosePartner">
        <item>
         <property name="text">
-         <string/>
+         <string>no partner</string>
         </property>
        </item>
       </widget>
@@ -233,7 +233,7 @@
         </size>
        </property>
        <property name="currentText">
-        <string>Unknown</string>
+        <string>Male</string>
        </property>
        <item>
         <property name="text">
@@ -265,7 +265,13 @@
       </widget>
      </item>
      <item row="10" column="1">
-      <widget class="QComboBox" name="In_SecondParent"/>
+      <widget class="QComboBox" name="In_SecondParent">
+       <item>
+        <property name="text">
+         <string>no second parent</string>
+        </property>
+       </item>
+      </widget>
      </item>
     </layout>
    </item>
