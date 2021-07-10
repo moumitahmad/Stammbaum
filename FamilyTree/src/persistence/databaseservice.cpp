@@ -516,6 +516,15 @@ void database::IDatabase::updateMember(Member* member, const QString& change, co
     }
 }
 
+void database::IDatabase::deleteMember(Member *member) {
+    QSqlQuery q;
+    if(q.exec("DELETE from member WHERE id=" + QString::number(member->getID()) + ";")) {
+        qDebug() << "Member deleted";
+    } else {
+        qDebug() << q.lastError();
+    }
+}
+
 void database::IDatabase::updatePartnerFromMember(Member *partner, Member *member) {
     QSqlQuery q;
     QString query = "UPDATE member SET partnerID = " + QString::number(partner->getID()) + " WHERE id = " + QString::number(member->getID()) +  ";";

@@ -16,7 +16,7 @@ EditPanel::EditPanel(domain::ILogic* pLogic, QWidget *parent) :
 
     QObject::connect(ui->ButtonAddPicture, &QPushButton::clicked, this, &EditPanel::uploadPicture);
     QObject::connect(ui->ButtonSave, &QPushButton::clicked, this, &EditPanel::saveMember);
-    QObject::connect(ui->ButtonCancel, &QPushButton::clicked, this, &EditPanel::discardChanges);
+    QObject::connect(ui->ButtonCancel, &QPushButton::clicked, this, &EditPanel::reset);
     QObject::connect(ui->ButtonDelete, &QPushButton::clicked, this, &EditPanel::deleteMember);
 }
 
@@ -26,6 +26,8 @@ EditPanel::~EditPanel()
 }
 
 void EditPanel::setupEditPanel(int memberID) {
+    // reset
+    reset();
     qDebug() << "Member Choosen: " << memberID;
     m_displayedFamily = m_pLogic->getFamilyTreeByID(m_pLogic->getCurrentFamilyID());
 
@@ -45,11 +47,11 @@ void EditPanel::setupEditPanel(int memberID) {
             qDebug() << p->getName();
             if(p->getName() != m_editedMember->getName()) {
                 ui->ChoosePartner->addItem(p->getName());
-                ui->ChoosePartner->setItemData(index, p->getID());
+                //ui->ChoosePartner->setItemData(index, p->getID());
                 ui->In_FirstParent->addItem(p->getName());
-                ui->In_FirstParent->setItemData(index, p->getID());
+                //ui->In_FirstParent->setItemData(index, p->getID());
                 ui->In_SecondParent->addItem(p->getName());
-                ui->In_SecondParent->setItemData(index, p->getID());
+                //ui->In_SecondParent->setItemData(index, p->getID());
                 index++;
             }
         }
@@ -58,7 +60,7 @@ void EditPanel::setupEditPanel(int memberID) {
     // TODO: fill-in exsisting data
 }
 
-void EditPanel::uploadPicture(){
+void EditPanel::uploadPicture() {
 
     QFileDialog *dialog = new QFileDialog();
     dialog->setAcceptMode(QFileDialog::AcceptOpen);
@@ -77,7 +79,7 @@ void EditPanel::uploadPicture(){
     }
 }
 
-void EditPanel::saveMember(){
+void EditPanel::saveMember() {
     ui->ErrorMessage->hide();
     // data from userinput
     QString name = ui->In_Name->text();
@@ -132,17 +134,28 @@ void EditPanel::saveMember(){
     emit closePanel();
 }
 
-void EditPanel::discardChanges(){
+void EditPanel::reset(){
+    ui->ButtonDelete->show();
     ui->In_Name->clear();
-    ui->ChoosenBirth->clear();
-    ui->ChoosenDeath->clear();
+    QDate defaultDate(9999, 12, 31);
+    ui->ChoosenBirth->setDate(defaultDate);
+    ui->ChoosenDeath->setDate(defaultDate);
     ui->ChooseGender->setCurrentIndex(0);
     ui->TextBiography->clear();
+
     ui->ChoosePartner->setCurrentIndex(0);
     ui->In_FirstParent->setCurrentIndex(0);
     ui->In_SecondParent->setCurrentIndex(0);
+    for(int i=1; i < ui->ChoosePartner->count(); i++) {
+        ui->ChoosePartner->removeItem(i);
+        ui->In_FirstParent->removeItem(i);
+        ui->In_SecondParent->removeItem(i);
+    }
+    m_editedMember = nullptr;
 }
 
 void EditPanel::deleteMember() {
-
+    qDebug() << "delete " << m_editedMember->getName() << ":";
+    m_pLogic->deleteMember(m_editedMember);
+    emit closePanel();
 }

@@ -13,7 +13,7 @@ DisplayFam::DisplayFam(domain::ILogic* pLogic, QWidget *parent) :
 
     // connect test-buttons
     QObject::connect(ui->addMember, &QPushButton::clicked, this, &DisplayFam::addNewMember);
-    QObject::connect(ui->updateMember, &QPushButton::clicked, std::bind(&DisplayFam::changeMember, this, 1));
+    QObject::connect(ui->updateMember, &QPushButton::clicked, this, &DisplayFam::changeMember);
 
     //hier muss ein array mit fam geholt werden
 
@@ -92,15 +92,18 @@ void DisplayFam::mousePressEvent(QMouseEvent *event) {
 void DisplayFam::setupForView() {
     ui->addMember->hide();
     ui->updateMember->hide();
+    ui->UpdateID->hide();
 }
 
 void DisplayFam::setupForEdit() {
     ui->addMember->show();
     ui->updateMember->show();
+    ui->UpdateID->show();
 }
 
-void DisplayFam::changeMember(int id) {
-    emit memberChoosen(id);
+void DisplayFam::changeMember() {
+    qDebug() << ui->UpdateID->text();
+    emit memberChoosen(ui->UpdateID->text().toInt());
 }
 
 void DisplayFam::addNewMember() {

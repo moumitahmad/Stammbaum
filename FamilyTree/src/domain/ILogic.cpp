@@ -263,3 +263,18 @@ Member *domain::ILogic::deleteParentChildRelationship(Member* parent, Member *ch
     }
     return parent;
 }
+
+void domain::ILogic::deleteMember(Member *member) {
+    m_pDB->deleteMember(member);
+    for(Member* child : member->getChildren()) {
+        deleteParentChildRelationship(member, child);
+    }
+    for(Member* parent : member->getParents()) {
+        deleteParentChildRelationship(parent, member);
+    }
+    if(member->getPartner()) {
+        qDebug() << "has partner";
+        deletePartnerFromMember(member, member->getPartner());
+    }
+    delete member;
+}

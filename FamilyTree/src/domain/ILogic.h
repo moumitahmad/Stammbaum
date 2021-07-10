@@ -65,6 +65,9 @@ namespace domain {
         Member* deletePartnerFromMember(Member* member, Member* partner);
         Member* saveParentChildRelationship(Member* parent, Member* child);
         Member* deleteParentChildRelationship(Member* parent, Member* child);
+
+        // delete
+        void deleteMember(Member* member);
     };
 
 }

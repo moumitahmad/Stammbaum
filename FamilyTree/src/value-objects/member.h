@@ -33,6 +33,7 @@ public:
     const QString& getName() const;
     Member* getPartner() const;
     QVector<Member*> getChildren() const;
+    QVector<Member*> getParents() const;
 
     //setter
     void setName(const QString& name);

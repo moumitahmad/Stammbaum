@@ -85,7 +85,13 @@
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
-        <layout class="QGridLayout" name="editPanel"/>
+        <widget class="QWidget" name="editPanel" native="true">
+         <layout class="QGridLayout" name="gridLayout_3">
+          <item row="0" column="0">
+           <layout class="QGridLayout" name="gridLayout_2"/>
+          </item>
+         </layout>
+        </widget>
        </item>
        <item>
         <layout class="QGridLayout" name="displayFamilyPanel">

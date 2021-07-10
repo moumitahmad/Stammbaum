@@ -28,7 +28,7 @@ signals:
 private slots:
     void uploadPicture();
     void saveMember();
-    void discardChanges();
+    void reset();
     void deleteMember();
 
 private:
