@@ -21,6 +21,7 @@ SOURCES += \
     gui/displayfam.cpp \
     gui/editpage.cpp \
     gui/editpanel.cpp \
+    gui/famitem.cpp \
     gui/homepage.cpp \
     gui/mainwindow.cpp \
     gui/userwindow.cpp \
@@ -37,6 +38,7 @@ HEADERS += \
     gui/displayfam.h \
     gui/editpage.h \
     gui/editpanel.h \
+    gui/famitem.h \
     gui/homepage.h \
     gui/mainwindow.h \
     gui/userwindow.h \
