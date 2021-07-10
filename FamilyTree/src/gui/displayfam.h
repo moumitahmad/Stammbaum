@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QGraphicsScene>
 #include "./domain/ILogic.h"
+#include "famitem.h"
 
 namespace Ui {
 class DisplayFam;
@@ -33,9 +34,13 @@ private:
     Ui::DisplayFam *ui;
 
     QGraphicsScene *scene;
+    famItem *item;
     QGraphicsRectItem *rect;
     QGraphicsRectItem *rect2;
     QGraphicsLineItem *line;
+
+protected:
+    void mousePressEvent(QMouseEvent *event);
 };
 
 #endif // DISPLAYFAM_H

@@ -431,40 +431,57 @@ QVector<Member*>* database::IDatabase::getMembersByFamID(const int id) {
     QSqlQuery q;
     QString query = "SELECT * from member WHERE familyID=" + QString::number(id) + ";";
     if(q.exec(query)) {
-        QVector<Member*>* familyMembers = new QVector<Member*>;
+        QVector<Member*>* familyMember = new QVector<Member*>;
+        QVector<Member*>* partnerCreated = new QVector<Member*>;
         while(q.next()) {
+                bool found = false;
+                for(Member* m: *partnerCreated) {
+                    if (m->getID() == q.value(0).toInt()) {
+                        found= true;
+                        break;
+                    }
+                }
+                qDebug() << q.value(0).toInt();
+                qDebug() <<  q.value(1).toString();
+                qDebug() <<   q.value(2).toString();
+                qDebug() <<   q.value(7).toString();
+                if (found == false) {
+                   if(!(q.value(7).toString().isEmpty())) {
+                        Member* partner = getMemberByID(q.value(7).toInt());
+                        Member* member = new Member(q.value(0).toInt(), q.value(1).toString(), q.value(2).toString(), q.value(3).toString(), q.value(4).toString(), q.value(5).toString(), partner);
+                        partner->setPartner(member);
+                        partnerCreated->push_back(partner);
+                        familyMember->push_back(member);
+                        familyMember->push_back(partner);
+                   } else {
+                        Member* member = new Member(q.value(0).toInt(), q.value(1).toString(), q.value(2).toString(), q.value(3).toString(), q.value(4).toString(), q.value(5).toString());
+                        familyMember->push_back(member);
+                   }
 
-            /*qDebug() << q.value(0).toInt();
-            qDebug() <<  q.value(1).toString();
-            qDebug() <<   q.value(2).toString();
-            qDebug() <<   q.value(3).toString();
-            qDebug() <<   q.value(4).toString();
-            qDebug() <<   q.value(5).toString();*/
-
-            Member* member = new Member(q.value(0).toInt(), q.value(1).toString(), q.value(2).toString(), q.value(3).toString(), q.value(4).toString(), q.value(5).toString());
-
-            Member* partner;
-            if(q.value(6).toInt() == 0) {
-                partner = nullptr;
-            } else {
-                partner = getMemberByID(q.value(6).toInt());
-                member->setPartner(partner);
-            }
-
-            qDebug() << member->getName();
-            // get children
-
-            familyMembers->push_back(member);
-//            qDebug() << member->getName();
-//            qDebug() << "member->getName()";
+                }
         }
-        if(familyMembers->empty())
+
+        //hier müssen eltern-kinder beziehungen gesetzt werden
+
+        if(familyMember->empty())
             return nullptr;
-        return familyMembers;
+        setCPRelations(familyMember);
+        return familyMember;
     } else {
         qDebug() << q.lastError();
         throw new std::logic_error("Member with this familyID does not exsist.");
     }
+}
+
+QVector<Member*>* database::IDatabase::setCPRelations(QVector<Member*>* family) {
+        for(Member* m : *family){
+            QVector<Member*> children = getChildrenFromMemberID(m->getID());
+            for (Member* c: children) {
+                m->addChild(c);
+                c->addParent(m);
+            }
+        }
+        return family;
 }
 
 
@@ -537,6 +554,23 @@ QVector<Member*> database::IDatabase::getChildrenFromMemberID(const int id) {
         throw new std::logic_error("Member does not has any children");
     }
 }
+
+//QVector<Member*> database::IDatabase::getParentFromMemberID(const int id) {
+//    QSqlQuery q;
+//    q.prepare("SELECT * from hasParent WHERE childID=:id;");
+//    q.bindValue(":id", id);
+//    if(q.exec()) {
+//        QVector<Member*> parents;
+//        while(q.next()) {
+//            Member* member = getMemberByID(q.value(0).toInt());
+//            parents.push_back(member);
+//        }
+//        return parents;
+//    } else {
+//        qDebug() << q.lastError();
+//        throw new std::logic_error("Parents are not known");
+//    }
+//}
 
 void database::IDatabase::saveParentChildRelationship(Member* child, Member* parent) {
     QSqlQuery q;
