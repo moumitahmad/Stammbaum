@@ -414,10 +414,12 @@ FamilyTree *database::IDatabase::getFamilyTreeByID(int familyID) {
 // ---------------- MEMBER ------------------------
 Member* database::IDatabase::getMemberByID(const int id) {
     QSqlQuery q;
-    QString query = "SELECT * from member WHERE id=" + QString::number(id) + ";";
-    if(q.exec(query)) {
-        q.first();
-        Member* member = new Member(q.lastInsertId().toInt(), q.value(1).toString(), q.value(2).toString(), q.value(3).toString(), q.value(4).toString(), q.value(5).toString(), new Member());
+    QString query = "SELECT m.id, m.name, m.birth, m.death, m.gender, m.biografie from member m  WHERE id=" + QString::number(id) + ";";
+    qDebug() << query;
+    q.exec(query);
+    if(q.first()) {
+        //q.first();
+        Member* member = new Member(q.value(0).toInt(), q.value(1).toString(), q.value(2).toString(), q.value(3).toString(), q.value(4).toString(), q.value(5).toString());
         return member;
     } else {
         qDebug() << q.lastError();
@@ -425,30 +427,40 @@ Member* database::IDatabase::getMemberByID(const int id) {
     }
 }
 
-QVector<Member*>* database::IDatabase::getMemberByFamID(const int id) {
+QVector<Member*>* database::IDatabase::getMembersByFamID(const int id) {
     QSqlQuery q;
     QString query = "SELECT * from member WHERE familyID=" + QString::number(id) + ";";
     if(q.exec(query)) {
-        QVector<Member*>* familyMember = new QVector<Member*>;
+        QVector<Member*>* familyMembers = new QVector<Member*>;
         while(q.next()) {
 
-            qDebug() << q.value(0).toInt();
+            /*qDebug() << q.value(0).toInt();
             qDebug() <<  q.value(1).toString();
             qDebug() <<   q.value(2).toString();
             qDebug() <<   q.value(3).toString();
             qDebug() <<   q.value(4).toString();
-            qDebug() <<   q.value(5).toString();
-            Member* partner = getMemberByID(q.value(5).toInt());
-            Member* member = new Member(q.value(0).toInt(), q.value(1).toString(), q.value(2).toString(), q.value(3).toString(), q.value(4).toString(), q.value(5).toString(), partner);
-  //          partner->setPartner();
- //           familyMember->push_back(member);
+            qDebug() <<   q.value(5).toString();*/
+
+            Member* member = new Member(q.value(0).toInt(), q.value(1).toString(), q.value(2).toString(), q.value(3).toString(), q.value(4).toString(), q.value(5).toString());
+
+            Member* partner;
+            if(q.value(6).toInt() == 0) {
+                partner = nullptr;
+            } else {
+                partner = getMemberByID(q.value(6).toInt());
+                member->setPartner(partner);
+            }
+
+            qDebug() << member->getName();
+            // get children
+
+            familyMembers->push_back(member);
 //            qDebug() << member->getName();
 //            qDebug() << "member->getName()";
         }
-        qDebug() << "member->getName()3";
-        if(familyMember->empty())
+        if(familyMembers->empty())
             return nullptr;
-        return familyMember;
+        return familyMembers;
     } else {
         qDebug() << q.lastError();
         throw new std::logic_error("Member with this familyID does not exsist.");
@@ -457,15 +469,14 @@ QVector<Member*>* database::IDatabase::getMemberByFamID(const int id) {
 
 
 
-int database::IDatabase::saveMember(const QString &name, const QString &birth, const QString &death, const QString &gender, const QString &biografie, int partnerID, int familyID) {
+int database::IDatabase::saveMember(const QString &name, const QString &birth, const QString &death, const QString &gender, const QString &biografie, int familyID) {
     QSqlQuery q;
-    q.prepare("INSERT INTO member(name, birth, death, gender, biografie, partnerID, familyID) VALUES(:name, :birth, :death, :gender, :biografie, :partnerID, :familyID);");
+    q.prepare("INSERT INTO member(name, birth, death, gender, biografie, familyID) VALUES(:name, :birth, :death, :gender, :biografie, :familyID);");
     q.bindValue(":name", name);
     q.bindValue(":birth", birth);
     q.bindValue(":death", death);
     q.bindValue(":gender", gender);
     q.bindValue(":biografie", biografie);
-    q.bindValue(":partnerID", partnerID);
     q.bindValue(":familyID", familyID);
 
     if(q.exec()) {

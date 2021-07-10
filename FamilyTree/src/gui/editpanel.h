@@ -22,6 +22,9 @@ public:
 
     void setupEditPanel(int memberID);
 
+signals:
+    void closePanel();
+
 private slots:
     void uploadPicture();
     void saveMember();

@@ -36,6 +36,7 @@ void EditPage::openViewPage(){
 void EditPage::openEditPanel(int memberID) {
     qDebug() << "in editpage: " << memberID;
     m_ep = new EditPanel(m_pLogic, this);
+    QObject::connect(m_ep, &EditPanel::closePanel, this, &EditPage::closeEditPanel);
     m_ep->setupEditPanel(memberID);
     ui->editPanel->layout()->addWidget(m_ep);
 }

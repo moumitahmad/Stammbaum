@@ -156,14 +156,18 @@ void domain::ILogic::deleteFamily(FamilyTree* family) {
 }
 
 QVector<Member*>* domain::ILogic::getMembersByFamily(int familyID) {
-    return m_pDB->getMemberByFamID(familyID);
+    return m_pDB->getMembersByFamID(familyID);
 }
 
 Member* domain::ILogic::createMember(FamilyTree *family, const QString &name, const QString &birth,
         const QString &death, const QString &gender, const QString &biografie, Member *partner,
         QVector<Member*>* children) {
-    int id = m_pDB->saveMember(name, birth, death, gender, biografie, partner->getID(), family->getId());
-    Member* member = new Member(id, name, birth, death, gender, biografie, partner);
+    int id = m_pDB->saveMember(name, birth, death, gender, biografie, family->getId());
+    Member* member = new Member(id, name, birth, death, gender, biografie);
+    if(partner) {
+        m_pDB->updatePartnerFromMember(partner, member);
+        member->setPartner(partner);
+    }
     if(!children->empty()) {
         qDebug() << "children exsist";
         for(Member* child : *children) {

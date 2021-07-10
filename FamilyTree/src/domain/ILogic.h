@@ -52,7 +52,7 @@ namespace domain {
         // create
         Member* createMember(FamilyTree* family, const QString& name, const QString& birth,
                 const QString& death, const QString& gender, const QString& biografie,
-                Member* partner = new Member(), QVector<Member*>* children = new QVector<Member*>);
+                Member* partner = nullptr, QVector<Member*>* children = new QVector<Member*>);
 
         // select
         Member* getMemberByID(int memberID);

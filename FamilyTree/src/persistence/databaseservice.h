@@ -41,8 +41,8 @@ namespace database {
 
         // member
         Member* getMemberByID(const int id);
-        QVector<Member*>* getMemberByFamID(const int id);
-        int saveMember(const QString& name, const QString& birth, const QString& death, const QString& gender, const QString& biografie, int partnerID, int familyID);
+        QVector<Member*>* getMembersByFamID(const int id);
+        int saveMember(const QString& name, const QString& birth, const QString& death, const QString& gender, const QString& biografie, int familyID);
         void updateMember(Member* member, const QString& change, const QString& position);
 
         // relationships

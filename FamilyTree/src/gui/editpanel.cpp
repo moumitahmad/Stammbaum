@@ -42,6 +42,7 @@ void EditPanel::setupEditPanel(int memberID) {
     if(membersFromFam != nullptr) {
         int index = 0;
         for(Member* p : *membersFromFam) {
+            qDebug() << p->getName();
             if(p->getName() != m_editedMember->getName()) {
                 ui->ChoosePartner->addItem(p->getName());
                 ui->ChoosePartner->setItemData(index, p->getID());
@@ -128,6 +129,7 @@ void EditPanel::saveMember(){
             m_pLogic->saveParentChildRelationship(m_pLogic->getMemberByID(parent2ID), m_editedMember);
         }
     }
+    emit closePanel();
 }
 
 void EditPanel::discardChanges(){
