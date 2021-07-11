@@ -31,6 +31,8 @@ private slots:
     void saveMember();
     void resetUI();
     void deleteMember();
+    void toggleBirthDate();
+    void toggleDeathDate();
 
 private:
     Ui::EditPanel *ui;

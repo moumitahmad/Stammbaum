@@ -18,6 +18,10 @@ EditPanel::EditPanel(domain::ILogic* pLogic, QWidget *parent) :
     QObject::connect(ui->ButtonSave, &QPushButton::clicked, this, &EditPanel::saveMember);
     QObject::connect(ui->ButtonCancel, &QPushButton::clicked, this, &EditPanel::resetUI);
     QObject::connect(ui->ButtonDelete, &QPushButton::clicked, this, &EditPanel::deleteMember);
+
+    ui->ChoosenBirth->setDateRange(ui->ChoosenBirth->minimumDate(), QDateTime::currentDateTime().date());
+    QObject::connect(ui->BirthCheckBox, &QCheckBox::clicked, this, &EditPanel::toggleBirthDate);
+    QObject::connect(ui->DeathCheckBox, &QCheckBox::clicked, this, &EditPanel::toggleDeathDate);
 }
 
 EditPanel::~EditPanel()
@@ -141,14 +145,11 @@ void EditPanel::saveMember() {
         ui->ErrorMessage->show();
         return;
     }
-
-    // TODO: verify dates
-
     // add defaults
-    if(birth == DEFAULT_DATE) {
+    if(!ui->BirthCheckBox->isChecked()) {
         birth = "Unknown";
     }
-    if(death == DEFAULT_DATE) {
+    if(!ui->DeathCheckBox->isChecked()) {
         death = "Unknown";
     }
     if(biografie.length() == 0) {
@@ -157,7 +158,23 @@ void EditPanel::saveMember() {
 
     if(m_editedMember->getName() != "") { // member already exsists
         qDebug() << "Update member: " << m_editedMember->getName();
-        //m_pLogic->updateMemberData(m_editedMember);
+        m_editedMember = m_pLogic->updateMemberData(m_editedMember, name, birth, death, gender, biografie);
+        // relationships
+        if(partnerID != 0 && partnerID != m_editedMember->getPartner()->getID()) {
+            Member* partner = m_membersFromFam->at(partnerID);
+            m_pLogic->deletePartnerFromMember(m_editedMember, partner); // delete old connection
+            m_editedMember = m_pLogic->savePartnerFromMember(m_editedMember, partner);
+        }
+        if(parent1ID != 0 && parent1ID != m_editedMember->getPartner()->getID()) {
+            Member* parent1 = m_membersFromFam->at(parent1ID);
+            m_pLogic->deleteParentChildRelationship(parent1, m_editedMember);
+            m_editedMember = m_pLogic->saveParentChildRelationship(parent1, m_editedMember);
+        }
+        if(parent2ID != 0 && parent2ID != m_editedMember->getPartner()->getID()) {
+            Member* parent2 = m_membersFromFam->at(parent2ID);
+            m_pLogic->deleteParentChildRelationship(parent2, m_editedMember);
+            m_editedMember = m_pLogic->saveParentChildRelationship(parent2, m_editedMember);
+        }
     } else { // new Member
         qDebug() << "create new member";
         qDebug() << name << " | " << birth << " | " << death << " | " << gender << " | " << biografie;
@@ -165,15 +182,15 @@ void EditPanel::saveMember() {
 
         // save relationships
         if(partnerID != 0) {
-            m_pLogic->savePartnerFromMember(m_editedMember, m_membersFromFam->at(partnerID));
+            m_editedMember = m_pLogic->savePartnerFromMember(m_editedMember, m_membersFromFam->at(partnerID));
         }
         if(parent1ID != 0) {
             Member* parent1 = m_membersFromFam->at(parent1ID);
-            m_pLogic->saveParentChildRelationship(parent1, m_editedMember);
+            m_editedMember = m_pLogic->saveParentChildRelationship(parent1, m_editedMember);
         }
         if(parent2ID != 0) {
             Member* parent2 = m_membersFromFam->at(parent2ID);
-            m_pLogic->saveParentChildRelationship(parent2, m_editedMember);
+            m_editedMember = m_pLogic->saveParentChildRelationship(parent2, m_editedMember);
         }
     }
     emit closePanel();
@@ -182,9 +199,10 @@ void EditPanel::saveMember() {
 void EditPanel::resetUI(){
     ui->ButtonDelete->show();
     ui->In_Name->clear();
-    QDate defaultDate(9999, 12, 31);
-    ui->ChoosenBirth->setDate(defaultDate);
-    ui->ChoosenDeath->setDate(defaultDate);
+    ui->ChoosenBirth->setDateRange(ui->ChoosenBirth->minimumDate(), QDateTime::currentDateTime().date());
+    ui->ChoosenDeath->setDateRange(ui->ChoosenDeath->minimumDate(), QDateTime::currentDateTime().date());
+    ui->BirthCheckBox->setChecked(true);
+    ui->DeathCheckBox->setChecked(true);
     ui->ChooseGender->setCurrentIndex(3);
     ui->TextBiography->clear();
 
@@ -203,4 +221,26 @@ void EditPanel::deleteMember() {
     qDebug() << "delete " << m_editedMember->getName() << ":";
     m_pLogic->deleteMember(m_editedMember);
     emit closePanel();
+}
+
+void EditPanel::toggleBirthDate() {
+    qDebug() << "toggle Birth:";
+    if(ui->BirthCheckBox->isChecked()) {
+        qDebug() << "true";
+        ui->ChoosenBirth->setEnabled(true);
+        return;
+    }
+    qDebug() << "false";
+    ui->ChoosenBirth->setEnabled(false);
+}
+
+void EditPanel::toggleDeathDate() {
+    qDebug() << "toggle Death:";
+    if(ui->DeathCheckBox->isChecked()) {
+        qDebug() << "true";
+        ui->ChoosenDeath->setEnabled(true);
+        return;
+    }
+    qDebug() << "false";
+    ui->ChoosenDeath->setEnabled(false);
 }

@@ -542,9 +542,15 @@ int database::IDatabase::saveMember(const QString &name, const QString &birth, c
     }
 }
 
-void database::IDatabase::updateMember(Member* member, const QString& change, const QString& position) {
+void database::IDatabase::updateMemberData(Member* member) {
     QSqlQuery q;
-    QString query = "UPDATE member SET " + position + "='" + change + "' WHERE id=" + QString::number(member->getID()) + ";";
+    QString query = "UPDATE member SET "
+                        "name='" + member->getName() + "', "
+                        "birth='" + member->getBirth() + "', "
+                        "death='" + member->getBirth() + "', "
+                        "gender='" + member->getBirth() + "', "
+                        "biografie='" + member->getBirth() + "' "
+                        "WHERE id=" + QString::number(member->getID()) + ";";
 
     if(q.exec(query)) {
         qDebug() << "Member updated";
