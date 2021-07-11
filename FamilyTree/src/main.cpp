@@ -15,10 +15,8 @@ int main(int argc, char *argv[])
     domain::ILogic* pLogic = new domain::ILogic(pDB);
     pLogic->connectToDatabase();
 
-
     //MainWindow mw(pLogic);
     UserWindow uw(pLogic);
     uw.show();
-
     return a.exec();
 }
