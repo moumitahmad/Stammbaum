@@ -258,7 +258,7 @@ Member *domain::ILogic::saveParentChildRelationship(Member* parent, Member *chil
         try {
             child->addParent(parent);
             parent->addChild(child);
-            m_pDB->saveParentChildRelationship(parent, child);
+            m_pDB->saveParentChildRelationship(child, parent);
         } catch(const std::logic_error& ex) {
             qDebug() << ex.what();
         }

@@ -16,6 +16,7 @@ public:
     domain::ILogic* m_pLogic;
     FamilyTree* m_displayedFamily;
     Member* m_editedMember;
+    QVector<Member*>* m_membersFromFam;
 
     explicit EditPanel(domain::ILogic* pLogic, QWidget *parent = nullptr);
     ~EditPanel();

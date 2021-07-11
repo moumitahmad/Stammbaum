@@ -83,19 +83,21 @@ void EditPanel::setupEditPanel(int memberID) {
     }
 
     // show all potential partners and parents
-    QVector<Member*>* membersFromFam = m_pLogic->getMembersByFamily(m_displayedFamily->getId());
-    if(membersFromFam != nullptr) {
+    m_membersFromFam = m_pLogic->getMembersByFamily(m_displayedFamily->getId());
+    if(m_membersFromFam != nullptr) {
         int index = 0;
-        for(Member* p : *membersFromFam) {
+        for(Member* p : *m_membersFromFam) {
             qDebug() << p->getName();
             if(p->getName() != m_editedMember->getName()) {
                 ui->ChoosePartner->addItem(p->getName());
-                //ui->ChoosePartner->setItemData(index, p->getID());
+                ui->ChoosePartner->setItemData(index, p->getID());
                 ui->In_FirstParent->addItem(p->getName());
                 //ui->In_FirstParent->setItemData(index, p->getID());
                 ui->In_SecondParent->addItem(p->getName());
                 //ui->In_SecondParent->setItemData(index, p->getID());
                 index++;
+            } else {
+                m_membersFromFam->remove(index);
             }
         }
     }
@@ -128,9 +130,9 @@ void EditPanel::saveMember() {
     QString death = ui->ChoosenDeath->text();
     QString gender = ui->ChooseGender->currentText();
     QString biografie = ui->TextBiography->toPlainText();
-    int partnerID = ui->ChoosePartner->currentData().toInt();
-    int parent1ID = ui->In_FirstParent->currentData().toInt();
-    int parent2ID = ui->In_SecondParent->currentData().toInt();
+    int partnerID = ui->ChoosePartner->currentIndex();
+    int parent1ID = ui->In_FirstParent->currentIndex();
+    int parent2ID = ui->In_SecondParent->currentIndex();
     qDebug() << name << " | " << birth << " | " << death << " | " << gender << " | " << biografie << " | " << partnerID << " | " << parent1ID << " | " << parent2ID;
 
     // verify name
@@ -159,17 +161,19 @@ void EditPanel::saveMember() {
     } else { // new Member
         qDebug() << "create new member";
         qDebug() << name << " | " << birth << " | " << death << " | " << gender << " | " << biografie;
-        m_pLogic->createMember(m_displayedFamily, name, birth, death, gender, biografie);
+        m_editedMember = m_pLogic->createMember(m_displayedFamily, name, birth, death, gender, biografie);
 
         // save relationships
         if(partnerID != 0) {
-            m_pLogic->savePartnerFromMember(m_editedMember, m_pLogic->getMemberByID(partnerID));
+            m_pLogic->savePartnerFromMember(m_editedMember, m_membersFromFam->at(partnerID));
         }
         if(parent1ID != 0) {
-            m_pLogic->saveParentChildRelationship(m_pLogic->getMemberByID(parent1ID), m_editedMember);
+            Member* parent1 = m_membersFromFam->at(parent1ID);
+            m_pLogic->saveParentChildRelationship(parent1, m_editedMember);
         }
         if(parent2ID != 0) {
-            m_pLogic->saveParentChildRelationship(m_pLogic->getMemberByID(parent2ID), m_editedMember);
+            Member* parent2 = m_membersFromFam->at(parent2ID);
+            m_pLogic->saveParentChildRelationship(parent2, m_editedMember);
         }
     }
     emit closePanel();
