@@ -476,7 +476,18 @@ QVector<Member*>* database::IDatabase::getMembersByFamID(const int id) {
 QVector<Member*>* database::IDatabase::setCPRelations(QVector<Member*>* family) {
         for(Member* m : *family){
             QVector<Member*> children = getChildrenFromMemberID(m->getID());
-            for (Member* c: children) {
+            QVector<Member*>* childrenFromArray = new QVector<Member*>;
+            for (Member* c:children) {
+                int id = c->getID();
+                for (Member* fm: *family) {
+                    if (id == fm->getID()) {
+                        childrenFromArray->push_back(fm);
+                        break;
+                    }
+                }
+            }
+
+            for (Member* c: *childrenFromArray) {
                 m->addChild(c);
                 c->addParent(m);
             }
