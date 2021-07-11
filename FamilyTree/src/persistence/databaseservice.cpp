@@ -418,7 +418,6 @@ Member* database::IDatabase::getMemberByID(const int id) {
     qDebug() << query;
     q.exec(query);
     if(q.first()) {
-        //q.first();
         Member* member = new Member(q.value(0).toInt(), q.value(1).toString(), q.value(2).toString(), q.value(3).toString(), q.value(4).toString(), q.value(5).toString());
         return member;
     } else {
@@ -473,6 +472,33 @@ QVector<Member*>* database::IDatabase::getMembersByFamID(const int id) {
     }
 }
 
+Member *database::IDatabase::getPartnerFromMember(const int memberID) {
+    QSqlQuery q;
+    if(q.exec("SELECT member.partnerID from member WHERE id=" + QString::number(memberID) + ";")) {
+        q.first();
+        int partnerID = q.value(0).toInt();
+        if(partnerID != 0)
+            return getMemberByID(partnerID);
+    } else {
+        qDebug() << q.lastError();
+    }
+    return nullptr;
+}
+
+QVector<Member*>* database::IDatabase::getParentsFromMemberID(const int memberID) {
+    QSqlQuery q;
+    if(q.exec("SELECT hp.parentID from hasParent hp WHERE childID=" + QString::number(memberID) + ";")) {
+        QVector<Member*>* parents = new QVector<Member*>;
+        while(q.next()) {
+            parents->push_back(getMemberByID(q.value(0).toInt()));
+        }
+        return parents;
+    } else {
+        qDebug() << q.lastError();
+        return nullptr;
+    }
+}
+
 QVector<Member*>* database::IDatabase::setCPRelations(QVector<Member*>* family) {
         for(Member* m : *family){
             QVector<Member*> children = getChildrenFromMemberID(m->getID());
@@ -522,6 +548,15 @@ void database::IDatabase::updateMember(Member* member, const QString& change, co
 
     if(q.exec(query)) {
         qDebug() << "Member updated";
+    } else {
+        qDebug() << q.lastError();
+    }
+}
+
+void database::IDatabase::deleteMember(Member *member) {
+    QSqlQuery q;
+    if(q.exec("DELETE from member WHERE id=" + QString::number(member->getID()) + ";")) {
+        qDebug() << "Member deleted";
     } else {
         qDebug() << q.lastError();
     }

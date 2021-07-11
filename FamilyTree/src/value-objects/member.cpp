@@ -1,6 +1,14 @@
 #include "member.h"
 #include <QDebug>
 
+Member::~Member()
+{
+    delete m_partner;
+    for(Member* child : m_children) {
+        delete child;
+    }
+}
+
 int Member::getID() const {
     return m_id;
 }
@@ -9,12 +17,28 @@ const QString& Member::getName() const {
     return m_name;
 }
 
+const QString& Member::getBirth() const {
+    return m_birth;
+}
+
+const QString& Member::getDeath() const {
+    return m_death;
+}
+
+const QString& Member::getGender() const {
+    return m_gender;
+}
+
 Member *Member::getPartner() const {
     return m_partner;
 }
 
 QVector<Member *> Member::getChildren() const {
     return m_children;
+}
+
+QVector<Member *> Member::getParents() const {
+    return m_parents;
 }
 
 void Member::setName(const QString &name) {

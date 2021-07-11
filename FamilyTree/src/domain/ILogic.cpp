@@ -185,7 +185,24 @@ Member* domain::ILogic::createMember(FamilyTree *family, const QString &name, co
 }
 
 Member *domain::ILogic::getMemberByID(int memberID) {
-    return m_pDB->getMemberByID(memberID);
+    Member* member = m_pDB->getMemberByID(memberID);
+    // get relationships
+    QVector<Member*> children = m_pDB->getChildrenFromMemberID(member->getID());
+    for(Member* child : children) {
+        member->addChild(child);
+        child->addParent(member);
+    }
+    QVector<Member*>* parents = m_pDB->getParentsFromMemberID(member->getID());
+    for(Member* parent : *parents) {
+        parent->addChild(member);
+        member->addParent(parent);
+    }
+    Member* partner = m_pDB->getPartnerFromMember(member->getID());
+    if(partner) {
+        member->setPartner(partner);
+        partner->setPartner(member);
+    }
+    return member;
 }
 
 Member *domain::ILogic::updateMemberData(Member* member, const QString& change, const DB_COL_NAME position) {
@@ -241,7 +258,7 @@ Member *domain::ILogic::saveParentChildRelationship(Member* parent, Member *chil
         try {
             child->addParent(parent);
             parent->addChild(child);
-            m_pDB->saveParentChildRelationship(parent, child);
+            m_pDB->saveParentChildRelationship(child, parent);
         } catch(const std::logic_error& ex) {
             qDebug() << ex.what();
         }
@@ -262,4 +279,21 @@ Member *domain::ILogic::deleteParentChildRelationship(Member* parent, Member *ch
         throw new std::logic_error("The relationship between the Child and Parent does not exsist and can not be deleted.");
     }
     return parent;
+}
+
+void domain::ILogic::deleteMember(Member *member) {
+    for(Member* child : member->getChildren()) {
+        qDebug() << "has child";
+        deleteParentChildRelationship(member, child);
+    }
+    for(Member* parent : member->getParents()) {
+        qDebug() << "has parent";
+        deleteParentChildRelationship(parent, member);
+    }
+    if(member->getPartner()) {
+        qDebug() << "has partner";
+        deletePartnerFromMember(member->getPartner(), member);
+    }
+    m_pDB->deleteMember(member);
+    delete member;
 }

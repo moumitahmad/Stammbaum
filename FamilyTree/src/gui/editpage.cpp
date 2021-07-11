@@ -15,8 +15,14 @@ EditPage::EditPage(domain::ILogic* pLogic, QWidget *parent) :
     DisplayFam* df = new DisplayFam(m_pLogic, this);
     ui->displayFamilyPanel->layout()->addWidget(df);
 
+    m_ep = new EditPanel(m_pLogic, this);
+    ui->editPanel->layout()->addWidget(m_ep);
+    QObject::connect(m_ep, &EditPanel::closePanel, this, &EditPage::closeEditPanel);
+    ui->editPanel->hide();
+
     // signal
     QObject::connect(df, &DisplayFam::memberChoosen, this, &EditPage::openEditPanel);
+
 }
 
 EditPage::~EditPage()
@@ -35,12 +41,10 @@ void EditPage::openViewPage(){
 
 void EditPage::openEditPanel(int memberID) {
     qDebug() << "in editpage: " << memberID;
-    m_ep = new EditPanel(m_pLogic, this);
-    QObject::connect(m_ep, &EditPanel::closePanel, this, &EditPage::closeEditPanel);
+    ui->editPanel->show();
     m_ep->setupEditPanel(memberID);
-    ui->editPanel->layout()->addWidget(m_ep);
 }
 
 void EditPage::closeEditPanel() {
-    delete m_ep;
+    ui->editPanel->hide();
 }
