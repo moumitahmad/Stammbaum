@@ -31,6 +31,9 @@ public:
     // getter
     int getID() const;
     const QString& getName() const;
+    const QString& getBirth() const;
+    const QString& getDeath() const;
+    const QString& getGender() const;
     Member* getPartner() const;
     QVector<Member*> getChildren() const;
     QVector<Member*> getParents() const;

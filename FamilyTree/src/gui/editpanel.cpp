@@ -16,7 +16,7 @@ EditPanel::EditPanel(domain::ILogic* pLogic, QWidget *parent) :
 
     QObject::connect(ui->ButtonAddPicture, &QPushButton::clicked, this, &EditPanel::uploadPicture);
     QObject::connect(ui->ButtonSave, &QPushButton::clicked, this, &EditPanel::saveMember);
-    QObject::connect(ui->ButtonCancel, &QPushButton::clicked, this, &EditPanel::reset);
+    QObject::connect(ui->ButtonCancel, &QPushButton::clicked, this, &EditPanel::resetUI);
     QObject::connect(ui->ButtonDelete, &QPushButton::clicked, this, &EditPanel::deleteMember);
 }
 
@@ -25,15 +25,58 @@ EditPanel::~EditPanel()
     delete ui;
 }
 
+int getIndex(QString value) {
+    if(value == "Male") {
+        return 0;
+    }
+    if(value == "Female") {
+        return 1;
+    }
+    if(value == "Diverse") {
+        return 2;
+    }
+    if(value == "Unknown") {
+        return 3;
+    }
+    qDebug() << "Error in editpanel::getIndex";
+    return -1;
+}
+
 void EditPanel::setupEditPanel(int memberID) {
     // reset
-    reset();
+    resetUI();
     qDebug() << "Member Choosen: " << memberID;
     m_displayedFamily = m_pLogic->getFamilyTreeByID(m_pLogic->getCurrentFamilyID());
 
     if(memberID != -1) { // update Member
         ui->ButtonSave->setText("Update");
         m_editedMember = m_pLogic->getMemberByID(memberID);
+
+        // fill-in exsisting data
+        ui->In_Name->setText(m_editedMember->getName());
+        ui->ChooseGender->setCurrentIndex(getIndex(m_editedMember->getGender()));
+        QString birth = m_editedMember->getBirth();
+        QDate date(9999, 12, 31);
+        if(birth != "Unknown") {
+            QStringList pieces = birth.split(".");
+            int d = pieces.value(0).toInt();
+            int m = pieces.value(1).toInt();
+            int y = pieces.value(2).toInt();
+            date.setDate(y, m, d);
+        }
+        ui->ChoosenBirth->setDate(date);
+        QString death = m_editedMember->getDeath();
+        if(death != "Unknown") {
+            QStringList pieces = death.split(".");
+            int d = pieces.value(0).toInt();
+            int m = pieces.value(1).toInt();
+            int y = pieces.value(2).toInt();
+            date.setDate(y, m, d);
+        } else {
+            date.setDate(9999, 12, 31);
+        }
+        ui->ChoosenDeath->setDate(date);
+
     } else {
         ui->ButtonDelete->hide();
         m_editedMember = new Member(); // save default member in m_editedMember so that compairisons work
@@ -56,8 +99,6 @@ void EditPanel::setupEditPanel(int memberID) {
             }
         }
     }
-
-    // TODO: fill-in exsisting data
 }
 
 void EditPanel::uploadPicture() {
@@ -134,13 +175,13 @@ void EditPanel::saveMember() {
     emit closePanel();
 }
 
-void EditPanel::reset(){
+void EditPanel::resetUI(){
     ui->ButtonDelete->show();
     ui->In_Name->clear();
     QDate defaultDate(9999, 12, 31);
     ui->ChoosenBirth->setDate(defaultDate);
     ui->ChoosenDeath->setDate(defaultDate);
-    ui->ChooseGender->setCurrentIndex(0);
+    ui->ChooseGender->setCurrentIndex(3);
     ui->TextBiography->clear();
 
     ui->ChoosePartner->setCurrentIndex(0);

@@ -166,7 +166,7 @@
         </size>
        </property>
        <property name="currentText">
-        <string>Male</string>
+        <string>Unknown</string>
        </property>
        <item>
         <property name="text">

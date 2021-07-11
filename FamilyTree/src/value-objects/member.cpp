@@ -17,6 +17,18 @@ const QString& Member::getName() const {
     return m_name;
 }
 
+const QString& Member::getBirth() const {
+    return m_birth;
+}
+
+const QString& Member::getDeath() const {
+    return m_death;
+}
+
+const QString& Member::getGender() const {
+    return m_gender;
+}
+
 Member *Member::getPartner() const {
     return m_partner;
 }

@@ -28,7 +28,7 @@ signals:
 private slots:
     void uploadPicture();
     void saveMember();
-    void reset();
+    void resetUI();
     void deleteMember();
 
 private:
