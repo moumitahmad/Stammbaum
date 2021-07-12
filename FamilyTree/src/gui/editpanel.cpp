@@ -4,6 +4,7 @@
 #include <qfiledialog.h>
 
 const QString DEFAULT_DATE = "31.12.9999";
+const QString IMAGES_DIR = "./images";
 
 EditPanel::EditPanel(domain::ILogic* pLogic, QWidget *parent) :
     QWidget(parent),
@@ -120,6 +121,7 @@ void EditPanel::uploadPicture() {
     } else if(result == QDialog::Rejected) {
         dialog->close();
     }
+
 }
 
 void EditPanel::saveMember() {
