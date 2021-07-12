@@ -30,7 +30,6 @@ Homepage::~Homepage()
 
 void Homepage::displayFamilies() {
     // display Families
-    // clear display
     //QLayoutItem* item;
     while (auto item = ui->ownFamiliesGrid->layout()->takeAt(0)) {
         delete item;

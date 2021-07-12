@@ -19,12 +19,16 @@ ViewPage::ViewPage(domain::ILogic* pLogic, QWidget *parent) :
 
 ViewPage::~ViewPage() {
     delete ui;
+    delete m_pLogic;
+    delete m_displayedFamily;
+    delete m_currentUser;
+    delete m_ap;
 }
 
 void ViewPage::setupViewPage() {
     qDebug() << "Viewer setup begin";
     ui->ButtonEditFamily->show();
-    delete m_ap;
+    m_ap = nullptr;
     m_displayedFamily = m_pLogic->getFamilyTreeByID(m_pLogic->getCurrentFamilyID());
     qDebug() << "got family";
     m_currentUser = m_pLogic->getCurrentUser();

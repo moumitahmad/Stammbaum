@@ -206,8 +206,8 @@ void EditPanel::saveMember() {
         if(partnerID != 0) {
             if(!m_editedMember->getPartner() || partnerID != m_editedMember->getPartner()->getID())
                 m_editedMember = m_pLogic->savePartnerFromMember(m_editedMember, partner);
-        } else if(!m_editedMember->getPartner()) {
-            m_pLogic->deletePartnerFromMember(m_editedMember, partner);
+        } else if(m_editedMember->getPartner()) {
+            m_pLogic->deletePartnerFromMember(m_editedMember, m_editedMember->getPartner());
         }
         QVector<Member*> parents = m_editedMember->getParents();
         Member* parent1 = findMember(parent1ID);
@@ -217,8 +217,8 @@ void EditPanel::saveMember() {
                     m_pLogic->deleteParentChildRelationship(parents.at(0), m_editedMember);
                 m_editedMember = m_pLogic->saveParentChildRelationship(parent1, m_editedMember);
             }
-        } else if(parents.length() < 0) {
-            m_editedMember = m_pLogic->deleteParentChildRelationship(parent1, m_editedMember);
+        } else if(parents.length() > 0) {
+            m_editedMember = m_pLogic->deleteParentChildRelationship(parents.at(0), m_editedMember);
         }
         Member* parent2 = findMember(parent2ID);
         if(parent2ID != 0) {
@@ -228,7 +228,7 @@ void EditPanel::saveMember() {
                 m_editedMember = m_pLogic->saveParentChildRelationship(parent2, m_editedMember);
             }
         } else if(parents.length() > 1) {
-            m_editedMember = m_pLogic->deleteParentChildRelationship(parent2, m_editedMember);
+            m_editedMember = m_pLogic->deleteParentChildRelationship(parents.at(1), m_editedMember);
         }
     } else { // new Member
         qDebug() << "create new member";
@@ -237,14 +237,14 @@ void EditPanel::saveMember() {
 
         // save relationships
         if(partnerID != 0) {
-            m_editedMember = m_pLogic->savePartnerFromMember(m_editedMember, m_membersFromFam->at(partnerID));
+            m_editedMember = m_pLogic->savePartnerFromMember(m_editedMember, findMember(partnerID));
         }
         if(parent1ID != 0) {
-            Member* parent1 = m_membersFromFam->at(parent1ID);
+            Member* parent1 = findMember(parent1ID);
             m_editedMember = m_pLogic->saveParentChildRelationship(parent1, m_editedMember);
         }
         if(parent2ID != 0) {
-            Member* parent2 = m_membersFromFam->at(parent2ID);
+            Member* parent2 = findMember(parent2ID);
             m_editedMember = m_pLogic->saveParentChildRelationship(parent2, m_editedMember);
         }
     }

@@ -228,8 +228,9 @@ Member *domain::ILogic::savePartnerFromMember(Member *member, Member *partner) {
 Member *domain::ILogic::deletePartnerFromMember(Member *member, Member *partner) {
     if(member->getPartner()->getID() == partner->getID()) {
         qDebug() << "DELETE";
-        member->setPartner(nullptr);
         m_pDB->deletePartnerFromMember(member);
+        member->setPartner(nullptr);
+        partner->setPartner(nullptr);
     } else {
         throw new std::logic_error("The Member was never a Partner and can not be deleted.");
     }

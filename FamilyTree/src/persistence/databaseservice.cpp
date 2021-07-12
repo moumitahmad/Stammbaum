@@ -580,7 +580,7 @@ void database::IDatabase::updatePartnerFromMember(Member *partner, Member *membe
 
 void database::IDatabase::deletePartnerFromMember(Member *member) {
     QSqlQuery q;
-    QString query = "UPDATE member SET partnerID = NULL WHERE id = " + QString::number(member->getID()) +  ";";
+    QString query = "UPDATE member SET partnerID = NULL WHERE id=" + QString::number(member->getID()) +  " OR id=" + QString::number(member->getPartner()->getID()) + ";";
 
     if(q.exec(query)) {
         qDebug() << "Partner from Member deleted";
