@@ -15,16 +15,91 @@ DisplayFam::DisplayFam(domain::ILogic* pLogic, QWidget *parent) :
     QObject::connect(ui->addMember, &QPushButton::clicked, this, &DisplayFam::addNewMember);
     QObject::connect(ui->updateMember, &QPushButton::clicked, this, &DisplayFam::changeMember);
 
-    //hier muss ein array mit fam geholt werden
 
-    QVector<Member*>* familyMembers = m_pLogic->getMembersByFamily(1);
+//    int currentFamily = m_pLogic->getCurrentFamilyID();
+    QVector<Member*>* familyMembers = m_pLogic->getMembersByFamily(1);   //currentFamily);
+    Member* treeStart;
 
-    qDebug() << familyMembers << "members";
+
+    for(Member* m: *familyMembers) {
+        if (m->getParents().length()<1) {
+            treeStart=m;
+            break;
+        }
+    }
+    QVector<Member*> allChildren = treeStart->getChildren();
+
+
     scene = new QGraphicsScene(this);
     ui->graphicsView->setScene(scene);
 
-//    item = new famItem(-100,-100,100,100);
-//    scene->addItem(item);
+
+        int startx = -100;
+        int starty = -100;
+        int startxSave = startx;
+        int startySave = starty;
+        int widthRect = 100;
+        QPen redpen(Qt::red);
+
+
+        item = new famItem(startx,starty,widthRect,widthRect, treeStart);
+        scene->addItem(item);
+
+
+          if (treeStart->getPartner()) {
+              item = new famItem(startx+200,starty,widthRect,widthRect, treeStart->getPartner());
+              scene->addItem(item); //hier eventuell noch einige berechnungen und variablen einfügen
+              startx += 200;
+              line = scene->addLine(startxSave+widthRect,startySave+widthRect/2, startx,starty+widthRect/2,redpen);
+              line = scene->addLine(50, -50, 50, 50, redpen);
+          } // Else wenn es nur ein elternteil gibt andernfalls könnte man ein icom mit unbekannt einfügen wenn elternteil nicht bekannt ist
+
+
+
+    // eltern zeichnen
+    // kinder zeichnen
+        int middlex = 50;
+        int middley = 50;
+        int childrenSize = allChildren.size();
+
+        if(childrenSize % 2) { //ungerade
+            int lineStart = middlex;
+            int lineEnd = middlex;
+            if (childrenSize>1) {
+                lineStart -= 200*(childrenSize-1)/2;
+                lineEnd += 200*(childrenSize-1)/2;
+                line = scene->addLine(lineStart,middley,lineEnd,middley,redpen);
+            }
+
+           for (int i=0;i<childrenSize;i++) {
+               line = scene->addLine(lineStart+200*i,middley,lineStart+200*i,middley+50,redpen);
+               item = new famItem(lineStart-50+200*i,middley+50,widthRect,widthRect, allChildren[i]);
+               scene->addItem(item);
+           }
+        } else if (!(childrenSize % 2)) { // gerade
+            qDebug() << childrenSize;
+            int lineStart = middlex-100;
+            int lineEnd = middlex+100;
+
+            if (childrenSize>2) {
+                lineStart -= (childrenSize/2-1)*200;
+                lineEnd += (childrenSize/2-1)*200;
+            }
+            line = scene->addLine(lineStart,middley,lineEnd,middley,redpen);
+            for (int i=0;i<childrenSize;i++) {
+                line = scene->addLine(lineStart+200*i,middley,lineStart+200*i,middley+50,redpen);
+                item = new famItem(lineStart-50+200*i,middley+50,widthRect,widthRect, allChildren[i]);
+                scene->addItem(item);
+            }
+
+        }
+
+
+
+
+
+    //wenn es noch kinder von kindern gibt, buttons einfügen
+
 
 
 
