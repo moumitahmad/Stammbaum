@@ -16,7 +16,7 @@
   <layout class="QGridLayout" name="gridLayout">
    <item row="1" column="0">
     <layout class="QGridLayout" name="gridLayout_3">
-     <item row="1" column="1">
+     <item row="1" column="2">
       <widget class="QLineEdit" name="In_Name">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
@@ -48,7 +48,7 @@
        </property>
       </widget>
      </item>
-     <item row="13" column="1">
+     <item row="13" column="2">
       <spacer name="verticalSpacer">
        <property name="orientation">
         <enum>Qt::Vertical</enum>
@@ -82,7 +82,7 @@
        </property>
       </widget>
      </item>
-     <item row="16" column="1">
+     <item row="16" column="2">
       <layout class="QHBoxLayout" name="horizontalLayout_3">
        <item>
         <widget class="QPushButton" name="ButtonSave">
@@ -100,7 +100,7 @@
        </item>
       </layout>
      </item>
-     <item row="9" column="1">
+     <item row="9" column="2">
       <widget class="QComboBox" name="In_FirstParent">
        <item>
         <property name="text">
@@ -116,7 +116,7 @@
        </property>
       </widget>
      </item>
-     <item row="3" column="1">
+     <item row="3" column="2">
       <widget class="QDateEdit" name="ChoosenBirth">
        <property name="dateTime">
         <datetime>
@@ -136,7 +136,7 @@
        </property>
       </widget>
      </item>
-     <item row="10" column="1">
+     <item row="10" column="2">
       <widget class="QComboBox" name="In_SecondParent">
        <item>
         <property name="text">
@@ -145,7 +145,14 @@
        </item>
       </widget>
      </item>
-     <item row="6" column="1">
+     <item row="14" column="2">
+      <widget class="QPushButton" name="ButtonDelete">
+       <property name="text">
+        <string>Delete</string>
+       </property>
+      </widget>
+     </item>
+     <item row="6" column="2">
       <widget class="QComboBox" name="ChooseGender">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
@@ -197,7 +204,7 @@
        </property>
       </widget>
      </item>
-     <item row="11" column="1">
+     <item row="11" column="2">
       <widget class="QPushButton" name="ButtonAddPicture">
        <property name="text">
         <string>Add Picture</string>
@@ -211,7 +218,7 @@
        </property>
       </widget>
      </item>
-     <item row="8" column="1">
+     <item row="8" column="2">
       <widget class="QComboBox" name="ChoosePartner">
        <item>
         <property name="text">
@@ -220,7 +227,7 @@
        </item>
       </widget>
      </item>
-     <item row="7" column="1">
+     <item row="7" column="2">
       <widget class="QTextEdit" name="TextBiography">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
@@ -242,8 +249,11 @@
        </property>
       </widget>
      </item>
-     <item row="5" column="1">
+     <item row="5" column="2">
       <widget class="QDateEdit" name="ChoosenDeath">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
        <property name="dateTime">
         <datetime>
          <hour>0</hour>
@@ -269,10 +279,23 @@
        </property>
       </widget>
      </item>
-     <item row="14" column="1">
-      <widget class="QPushButton" name="ButtonDelete">
+     <item row="3" column="3">
+      <widget class="QCheckBox" name="BirthCheckBox">
        <property name="text">
-        <string>Delete</string>
+        <string/>
+       </property>
+       <property name="tristate">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="3">
+      <widget class="QCheckBox" name="DeathCheckBox">
+       <property name="text">
+        <string/>
+       </property>
+       <property name="tristate">
+        <bool>false</bool>
        </property>
       </widget>
      </item>

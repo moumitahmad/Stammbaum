@@ -415,7 +415,6 @@ FamilyTree *database::IDatabase::getFamilyTreeByID(int familyID) {
 Member* database::IDatabase::getMemberByID(const int id) {
     QSqlQuery q;
     QString query = "SELECT m.id, m.name, m.birth, m.death, m.gender, m.biografie from member m  WHERE id=" + QString::number(id) + ";";
-    qDebug() << query;
     q.exec(query);
     if(q.first()) {
         Member* member = new Member(q.value(0).toInt(), q.value(1).toString(), q.value(2).toString(), q.value(3).toString(), q.value(4).toString(), q.value(5).toString());
@@ -542,9 +541,15 @@ int database::IDatabase::saveMember(const QString &name, const QString &birth, c
     }
 }
 
-void database::IDatabase::updateMember(Member* member, const QString& change, const QString& position) {
+void database::IDatabase::updateMemberData(Member* member) {
     QSqlQuery q;
-    QString query = "UPDATE member SET " + position + "='" + change + "' WHERE id=" + QString::number(member->getID()) + ";";
+    QString query = "UPDATE member SET "
+                        "name='" + member->getName() + "', "
+                        "birth='" + member->getBirth() + "', "
+                        "death='" + member->getDeath() + "', "
+                        "gender='" + member->getGender() + "', "
+                        "biografie='" + member->getBiografie() + "' "
+                        "WHERE id=" + QString::number(member->getID()) + ";";
 
     if(q.exec(query)) {
         qDebug() << "Member updated";

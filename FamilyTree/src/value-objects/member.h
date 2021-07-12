@@ -34,6 +34,7 @@ public:
     const QString& getBirth() const;
     const QString& getDeath() const;
     const QString& getGender() const;
+    const QString& getBiografie() const;
     Member* getPartner() const;
     QVector<Member*> getChildren() const;
     QVector<Member*> getParents() const;

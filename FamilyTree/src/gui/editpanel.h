@@ -22,6 +22,8 @@ public:
     ~EditPanel();
 
     void setupEditPanel(int memberID);
+    void showPotentionRelationships();
+    Member* findMember(int id);
 
 signals:
     void closePanel();
@@ -31,6 +33,9 @@ private slots:
     void saveMember();
     void resetUI();
     void deleteMember();
+    void toggleBirthDate();
+    void toggleDeathDate();
+    void toggleSecondParent();
 
 private:
     Ui::EditPanel *ui;

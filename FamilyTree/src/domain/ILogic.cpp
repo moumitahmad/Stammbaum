@@ -205,38 +205,23 @@ Member *domain::ILogic::getMemberByID(int memberID) {
     return member;
 }
 
-Member *domain::ILogic::updateMemberData(Member* member, const QString& change, const DB_COL_NAME position) {
+Member *domain::ILogic::updateMemberData(Member* member, QString& name, QString& birth, QString& death, QString& gender, QString& biografie) {
     // update Member object
-    switch(position) {
-    case NAME:
-        member->setName(change);
-        m_pDB->updateMember(member, change, "name");
-        break;
-    case BIRTH:
-        member->setBirth(change);
-        m_pDB->updateMember(member, change, "birth");
-        break;
-    case DEATH:
-        member->setDeath(change);
-        m_pDB->updateMember(member, change, "death");
-        break;
-    case GENDER:
-        member->setGender(change);
-        m_pDB->updateMember(member, change, "gender");
-        break;
-    case BIOGRAFIE:
-        member->setBiografie(change);
-        m_pDB->updateMember(member, change, "biografie");
-        break;
-    default:
-        qDebug() << ">> ERROR: The column position does not exsist";
-    }
+    member->setName(name);
+    member->setBirth(birth);
+    member->setDeath(death);
+    member->setGender(gender);
+    member->setBiografie(biografie);
+    // update db
+    m_pDB->updateMemberData(member);
     return member;
 }
 
 Member *domain::ILogic::savePartnerFromMember(Member *member, Member *partner) {
     member->setPartner(partner);
+    partner->setPartner(member);
     m_pDB->updatePartnerFromMember(partner, member);
+    m_pDB->updatePartnerFromMember(member, partner);
     return member;
 }
 

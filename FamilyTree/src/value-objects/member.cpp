@@ -7,6 +7,9 @@ Member::~Member()
     for(Member* child : m_children) {
         delete child;
     }
+    for(Member* parent : m_parents) {
+        delete parent;
+    }
 }
 
 int Member::getID() const {
@@ -27,6 +30,10 @@ const QString& Member::getDeath() const {
 
 const QString& Member::getGender() const {
     return m_gender;
+}
+
+const QString &Member::getBiografie() const {
+    return m_biografie;
 }
 
 Member *Member::getPartner() const {
