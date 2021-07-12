@@ -7,6 +7,9 @@ Member::~Member()
     for(Member* child : m_children) {
         delete child;
     }
+    for(Member* parent : m_parents) {
+        delete parent;
+    }
 }
 
 int Member::getID() const {

@@ -3,7 +3,6 @@
 #include <QDebug>
 #include <qfiledialog.h>
 
-const QString DEFAULT_DATE = "31.12.9999";
 
 EditPanel::EditPanel(domain::ILogic* pLogic, QWidget *parent) :
     QWidget(parent),
@@ -22,11 +21,17 @@ EditPanel::EditPanel(domain::ILogic* pLogic, QWidget *parent) :
     ui->ChoosenBirth->setDateRange(ui->ChoosenBirth->minimumDate(), QDateTime::currentDateTime().date());
     QObject::connect(ui->BirthCheckBox, &QCheckBox::clicked, this, &EditPanel::toggleBirthDate);
     QObject::connect(ui->DeathCheckBox, &QCheckBox::clicked, this, &EditPanel::toggleDeathDate);
+
+    QObject::connect(ui->In_FirstParent, &QComboBox::currentTextChanged, this, &EditPanel::toggleSecondParent);
 }
 
 EditPanel::~EditPanel()
 {
     delete ui;
+    delete m_pLogic;
+    delete m_displayedFamily;
+    delete m_membersFromFam;
+    delete m_editedMember;
 }
 
 int getIndex(QString value) {
@@ -50,20 +55,22 @@ void EditPanel::showPotentionRelationships() {
     // show all potential partners and parents
     m_membersFromFam = m_pLogic->getMembersByFamily(m_displayedFamily->getId());
     if(m_membersFromFam != nullptr) {
-        int index = 0;
         for(Member* p : *m_membersFromFam) {
-            qDebug() << p->getName();
-            if(p->getName() != m_editedMember->getName()) {
-                ui->ChoosePartner->addItem(p->getName());
-                ui->ChoosePartner->setItemData(index, p->getID());
-                ui->In_FirstParent->addItem(p->getName());
-                ui->In_SecondParent->addItem(p->getName());
-                index++;
-            } else {
-                m_membersFromFam->remove(index);
+            if(p->getID() != m_editedMember->getID()) {
+                ui->ChoosePartner->insertItem(p->getID(), p->getName());
+                ui->In_FirstParent->insertItem(p->getID(), p->getName());
+                ui->In_SecondParent->insertItem(p->getID(), p->getName());
             }
         }
     }
+}
+
+Member* EditPanel::findMember(int id) {
+    for(Member* member : *m_membersFromFam) {
+        if(member->getID() == id)
+            return member;
+    }
+    return nullptr;
 }
 
 void EditPanel::setupEditPanel(int memberID) {
@@ -77,6 +84,7 @@ void EditPanel::setupEditPanel(int memberID) {
         m_editedMember = m_pLogic->getMemberByID(memberID);
 
         showPotentionRelationships();
+
 
         // fill-in exsisting data
         ui->In_Name->setText(m_editedMember->getName());
@@ -116,9 +124,10 @@ void EditPanel::setupEditPanel(int memberID) {
             }
             if(m_editedMember->getParents().length() > 0 && id == m_editedMember->getParents().at(0)->getID()) {
                 ui->In_FirstParent->setCurrentIndex(i);
-            }
-            if(m_editedMember->getParents().length() == 2 && id == m_editedMember->getParents().at(1)->getID()) {
-                ui->In_SecondParent->setCurrentIndex(i);
+                ui->In_SecondParent->setEnabled(true);
+                if(m_editedMember->getParents().length() == 2 && id == m_editedMember->getParents().at(1)->getID()) {
+                    ui->In_SecondParent->setCurrentIndex(i);
+                }
             }
         }
 
@@ -156,9 +165,17 @@ void EditPanel::saveMember() {
     QString death = ui->ChoosenDeath->text();
     QString gender = ui->ChooseGender->currentText();
     QString biografie = ui->TextBiography->toPlainText();
+
     int partnerID = ui->ChoosePartner->currentIndex();
     int parent1ID = ui->In_FirstParent->currentIndex();
     int parent2ID = ui->In_SecondParent->currentIndex();
+    if(m_editedMember->getID() <= partnerID)
+        partnerID++;
+    if(m_editedMember->getID() <= parent1ID)
+        parent1ID++;
+    if(m_editedMember->getID() <= parent2ID)
+        parent2ID++;
+
     qDebug() << name << " | " << birth << " | " << death << " | " << gender << " | " << biografie << " | " << partnerID << " | " << parent1ID << " | " << parent2ID;
 
     // verify name
@@ -182,20 +199,33 @@ void EditPanel::saveMember() {
         qDebug() << "Update member: " << m_editedMember->getName();
         m_editedMember = m_pLogic->updateMemberData(m_editedMember, name, birth, death, gender, biografie);
         // relationships
-        if(partnerID != 0 && partnerID != m_editedMember->getPartner()->getID()) {
-            Member* partner = m_membersFromFam->at(partnerID);
-            m_pLogic->deletePartnerFromMember(m_editedMember, partner); // delete old connection
-            m_editedMember = m_pLogic->savePartnerFromMember(m_editedMember, partner);
+        Member* partner = findMember(partnerID);
+        if(partnerID != 0) {
+            if(!m_editedMember->getPartner() || partnerID != m_editedMember->getPartner()->getID())
+                m_editedMember = m_pLogic->savePartnerFromMember(m_editedMember, partner);
+        } else if(!m_editedMember->getPartner()) {
+            m_pLogic->deletePartnerFromMember(m_editedMember, partner);
         }
-        if(parent1ID != 0 && parent1ID != m_editedMember->getPartner()->getID()) {
-            Member* parent1 = m_membersFromFam->at(parent1ID);
-            m_pLogic->deleteParentChildRelationship(parent1, m_editedMember);
-            m_editedMember = m_pLogic->saveParentChildRelationship(parent1, m_editedMember);
+        QVector<Member*> parents = m_editedMember->getParents();
+        Member* parent1 = findMember(parent1ID);
+        if(parent1ID != 0) {
+            if(parents.length() == 0 || parent1ID != parents.at(0)->getID()) {
+                if(parents.length() == 1)
+                    m_pLogic->deleteParentChildRelationship(parents.at(0), m_editedMember);
+                m_editedMember = m_pLogic->saveParentChildRelationship(parent1, m_editedMember);
+            }
+        } else if(parents.length() < 0) {
+            m_editedMember = m_pLogic->deleteParentChildRelationship(parent1, m_editedMember);
         }
-        if(parent2ID != 0 && parent2ID != m_editedMember->getPartner()->getID()) {
-            Member* parent2 = m_membersFromFam->at(parent2ID);
-            m_pLogic->deleteParentChildRelationship(parent2, m_editedMember);
-            m_editedMember = m_pLogic->saveParentChildRelationship(parent2, m_editedMember);
+        Member* parent2 = findMember(parent2ID);
+        if(parent2ID != 0) {
+            if(parents.length() == 1 || parent2ID != parents.at(1)->getID()) {
+                if(parents.length() == 2)
+                    m_pLogic->deleteParentChildRelationship(parents.at(1), m_editedMember);
+                m_editedMember = m_pLogic->saveParentChildRelationship(parent2, m_editedMember);
+            }
+        } else if(parents.length() > 1) {
+            m_editedMember = m_pLogic->deleteParentChildRelationship(parent2, m_editedMember);
         }
     } else { // new Member
         qDebug() << "create new member";
@@ -233,12 +263,16 @@ void EditPanel::resetUI(){
     ui->ChoosePartner->setCurrentIndex(0);
     ui->In_FirstParent->setCurrentIndex(0);
     ui->In_SecondParent->setCurrentIndex(0);
-    for(int i=1; i < ui->ChoosePartner->count(); i++) {
-        ui->ChoosePartner->removeItem(i);
-        ui->In_FirstParent->removeItem(i);
-        ui->In_SecondParent->removeItem(i);
-    }
+    ui->ChoosePartner->clear();
+    ui->ChoosePartner->addItem("no partner");
+    ui->In_FirstParent->clear();
+    ui->In_FirstParent->addItem("no parents");
+    ui->In_SecondParent->clear();
+    ui->In_SecondParent->addItem("no second parent");
+    ui->In_SecondParent->setEnabled(false);
+
     m_editedMember = nullptr;
+    m_membersFromFam = nullptr;
 }
 
 void EditPanel::deleteMember() {
@@ -268,3 +302,13 @@ void EditPanel::toggleDeathDate() {
     qDebug() << "false";
     ui->ChoosenDeath->setEnabled(false);
 }
+
+void EditPanel::toggleSecondParent()
+{
+    if(ui->In_FirstParent->currentIndex() != 0) {
+        ui->In_SecondParent->setEnabled(true);
+    } else {
+        ui->In_SecondParent->setEnabled(false);
+    }
+}
+

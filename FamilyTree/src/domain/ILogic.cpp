@@ -219,7 +219,9 @@ Member *domain::ILogic::updateMemberData(Member* member, QString& name, QString&
 
 Member *domain::ILogic::savePartnerFromMember(Member *member, Member *partner) {
     member->setPartner(partner);
+    partner->setPartner(member);
     m_pDB->updatePartnerFromMember(partner, member);
+    m_pDB->updatePartnerFromMember(member, partner);
     return member;
 }
 
