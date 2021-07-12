@@ -17,6 +17,11 @@ QVector<Member *> Member::getChildren() const {
     return m_children;
 }
 
+QVector<Member*> Member::getParents() const {
+    return m_parents;
+}
+
+
 void Member::setName(const QString &name) {
     m_name = name;
 }

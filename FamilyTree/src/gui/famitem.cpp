@@ -27,6 +27,7 @@ void famItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, Q
     if (Pressed) {
         QPen pen2(Qt::red, 3);
         painter->setPen(pen2);
+        painter->drawText(rect, Qt::AlignCenter, m_member->getName());
     }
 
     painter->drawRect(rect);
