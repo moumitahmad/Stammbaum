@@ -29,6 +29,10 @@ const QString& Member::getGender() const {
     return m_gender;
 }
 
+const QString &Member::getBiografie() const {
+    return m_biografie;
+}
+
 Member *Member::getPartner() const {
     return m_partner;
 }

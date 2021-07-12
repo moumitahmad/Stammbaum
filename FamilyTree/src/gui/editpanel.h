@@ -22,6 +22,7 @@ public:
     ~EditPanel();
 
     void setupEditPanel(int memberID);
+    void showPotentionRelationships();
 
 signals:
     void closePanel();

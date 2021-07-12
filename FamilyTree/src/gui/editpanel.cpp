@@ -46,6 +46,26 @@ int getIndex(QString value) {
     return -1;
 }
 
+void EditPanel::showPotentionRelationships() {
+    // show all potential partners and parents
+    m_membersFromFam = m_pLogic->getMembersByFamily(m_displayedFamily->getId());
+    if(m_membersFromFam != nullptr) {
+        int index = 0;
+        for(Member* p : *m_membersFromFam) {
+            qDebug() << p->getName();
+            if(p->getName() != m_editedMember->getName()) {
+                ui->ChoosePartner->addItem(p->getName());
+                ui->ChoosePartner->setItemData(index, p->getID());
+                ui->In_FirstParent->addItem(p->getName());
+                ui->In_SecondParent->addItem(p->getName());
+                index++;
+            } else {
+                m_membersFromFam->remove(index);
+            }
+        }
+    }
+}
+
 void EditPanel::setupEditPanel(int memberID) {
     // reset
     resetUI();
@@ -56,8 +76,11 @@ void EditPanel::setupEditPanel(int memberID) {
         ui->ButtonSave->setText("Update");
         m_editedMember = m_pLogic->getMemberByID(memberID);
 
+        showPotentionRelationships();
+
         // fill-in exsisting data
         ui->In_Name->setText(m_editedMember->getName());
+        ui->TextBiography->setText(m_editedMember->getBiografie());
         ui->ChooseGender->setCurrentIndex(getIndex(m_editedMember->getGender()));
         QString birth = m_editedMember->getBirth();
         QDate date(9999, 12, 31);
@@ -67,6 +90,9 @@ void EditPanel::setupEditPanel(int memberID) {
             int m = pieces.value(1).toInt();
             int y = pieces.value(2).toInt();
             date.setDate(y, m, d);
+        } else {
+            ui->BirthCheckBox->setChecked(false);
+            ui->ChoosenBirth->setEnabled(false);
         }
         ui->ChoosenBirth->setDate(date);
         QString death = m_editedMember->getDeath();
@@ -78,32 +104,28 @@ void EditPanel::setupEditPanel(int memberID) {
             date.setDate(y, m, d);
         } else {
             date.setDate(9999, 12, 31);
+            ui->DeathCheckBox->setChecked(false);
+            ui->ChoosenDeath->setEnabled(false);
         }
         ui->ChoosenDeath->setDate(date);
+        int id;
+        for(int i=0; i<m_membersFromFam->length(); i++) {
+            id = m_membersFromFam->at(i)->getID();
+            if(m_editedMember->getPartner() && id == m_editedMember->getPartner()->getID()) {
+                ui->ChoosePartner->setCurrentIndex(i);
+            }
+            if(m_editedMember->getParents().length() > 0 && id == m_editedMember->getParents().at(0)->getID()) {
+                ui->In_FirstParent->setCurrentIndex(i);
+            }
+            if(m_editedMember->getParents().length() == 2 && id == m_editedMember->getParents().at(1)->getID()) {
+                ui->In_SecondParent->setCurrentIndex(i);
+            }
+        }
 
     } else {
         ui->ButtonDelete->hide();
         m_editedMember = new Member(); // save default member in m_editedMember so that compairisons work
-    }
-
-    // show all potential partners and parents
-    m_membersFromFam = m_pLogic->getMembersByFamily(m_displayedFamily->getId());
-    if(m_membersFromFam != nullptr) {
-        int index = 0;
-        for(Member* p : *m_membersFromFam) {
-            qDebug() << p->getName();
-            if(p->getName() != m_editedMember->getName()) {
-                ui->ChoosePartner->addItem(p->getName());
-                ui->ChoosePartner->setItemData(index, p->getID());
-                ui->In_FirstParent->addItem(p->getName());
-                //ui->In_FirstParent->setItemData(index, p->getID());
-                ui->In_SecondParent->addItem(p->getName());
-                //ui->In_SecondParent->setItemData(index, p->getID());
-                index++;
-            } else {
-                m_membersFromFam->remove(index);
-            }
-        }
+        showPotentionRelationships();
     }
 }
 
@@ -200,7 +222,9 @@ void EditPanel::resetUI(){
     ui->ButtonDelete->show();
     ui->In_Name->clear();
     ui->ChoosenBirth->setDateRange(ui->ChoosenBirth->minimumDate(), QDateTime::currentDateTime().date());
+    ui->ChoosenBirth->setEnabled(true);
     ui->ChoosenDeath->setDateRange(ui->ChoosenDeath->minimumDate(), QDateTime::currentDateTime().date());
+    ui->ChoosenDeath->setEnabled(true);
     ui->BirthCheckBox->setChecked(true);
     ui->DeathCheckBox->setChecked(true);
     ui->ChooseGender->setCurrentIndex(3);
