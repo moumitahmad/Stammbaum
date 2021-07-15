@@ -90,4 +90,5 @@ void Homepage::showFamily(int familyID) {
     m_pLogic->setCurrentFamilyID(familyID);
     //m_appWindow->openViewPage();
     emit switchToView();
+    emit drawFamily();
 }
