@@ -22,6 +22,8 @@ public:
 
     void setupForView();
     void setupForEdit();
+    void changeView();
+
 
 signals:
     void memberChoosen(int id); // id=-1 -> new Member
@@ -40,7 +42,7 @@ private:
     QGraphicsLineItem *line;
 
 protected:
-    void mousePressEvent(QMouseEvent *event);
+    void paintEvent(QPaintEvent *event);
 };
 
 #endif // DISPLAYFAM_H
