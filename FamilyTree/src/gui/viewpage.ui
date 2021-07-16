@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1441</width>
-    <height>708</height>
+    <width>1500</width>
+    <height>800</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -47,8 +47,8 @@
       <layout class="QGridLayout" name="adminPanel"/>
      </item>
      <item>
-      <layout class="QGridLayout" name="displayFamilyPanel">
-       <item row="0" column="0">
+      <layout class="QVBoxLayout" name="displayFamilyPanel">
+       <item>
         <widget class="QCommandLinkButton" name="ButtonEditFamily">
          <property name="text">
           <string>Edit Family</string>

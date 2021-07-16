@@ -24,6 +24,7 @@ public:
     void setupEditPanel(int memberID);
     void showPotentionRelationships();
     Member* findMember(int id);
+    void showError(const QString& message) const;
 
 signals:
     void closePanel();

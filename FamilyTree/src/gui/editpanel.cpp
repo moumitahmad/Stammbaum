@@ -93,7 +93,7 @@ void EditPanel::setupEditPanel(int memberID) {
         ui->TextBiography->setText(m_editedMember->getBiografie());
         ui->ChooseGender->setCurrentIndex(getIndex(m_editedMember->getGender()));
         QString birth = m_editedMember->getBirth();
-        QDate date(9999, 12, 31);
+        QDate date(QDateTime::currentDateTime().date());
         if(birth != "Unknown") {
             QStringList pieces = birth.split(".");
             int d = pieces.value(0).toInt();
@@ -113,27 +113,30 @@ void EditPanel::setupEditPanel(int memberID) {
             int y = pieces.value(2).toInt();
             date.setDate(y, m, d);
         } else {
-            date.setDate(9999, 12, 31);
+            date = QDateTime::currentDateTime().date();
             ui->DeathCheckBox->setChecked(false);
             ui->ChoosenDeath->setEnabled(false);
         }
         ui->ChoosenDeath->setDate(date);
-        int id;
+
+        QVector<Member*> parents = m_editedMember->getParents();
         for(int i=0; i<m_membersFromFam->length(); i++) {
-            id = m_membersFromFam->at(i)->getID();
-            if(m_editedMember->getPartner() && id == m_editedMember->getPartner()->getID()) {
+            if(m_editedMember->getPartner() && m_editedMember->getPartner()->getID() == m_membersFromFam->at(i)->getID()) {
                 ui->ChoosePartner->setCurrentIndex(i);
+                qDebug() << "partner: " << i;
             }
-            if(m_editedMember->getParents().length() > 0 && id == m_editedMember->getParents().at(0)->getID()) {
+            if(parents.length() > 0) {
                 ui->In_FirstParent->setCurrentIndex(i);
                 ui->In_SecondParent->setEnabled(true);
-                if(m_editedMember->getParents().length() == 2 && id == m_editedMember->getParents().at(1)->getID()) {
-                    ui->In_SecondParent->setCurrentIndex(i);
-                }
+                qDebug() << "parent1: " << i;
+            }
+            if(parents.length() > 1) {
+                ui->In_SecondParent->setCurrentIndex(i);
+                qDebug() << "parent2: " << i;
             }
         }
-
     } else {
+        ui->ButtonSave->setText("Save");
         ui->ButtonDelete->hide();
         m_editedMember = new Member(); // save default member in m_editedMember so that compairisons work
         showPotentionRelationships();
@@ -160,6 +163,11 @@ void EditPanel::uploadPicture() {
 
 }
 
+void EditPanel::showError(const QString& message) const {
+    ui->ErrorMessage->setText(message);
+    ui->ErrorMessage->show();
+}
+
 void EditPanel::saveMember() {
     ui->ErrorMessage->hide();
     // data from userinput
@@ -183,8 +191,7 @@ void EditPanel::saveMember() {
 
     // verify name
     if(name.length() == 0) { // name is not filled in
-        ui->ErrorMessage->setText("<html><head/><body><p><span style='color:#ef2929;'>A name is requiered for every member.</span></p></body></html>");
-        ui->ErrorMessage->show();
+        showError("<html><head/><body><p><span style='color:#ef2929;'>Every member requires a name.</span></p></body></html>");
         return;
     }
     // add defaults
@@ -260,19 +267,19 @@ void EditPanel::resetUI(){
     ui->ChoosenDeath->setEnabled(true);
     ui->BirthCheckBox->setChecked(true);
     ui->DeathCheckBox->setChecked(true);
-    ui->ChooseGender->setCurrentIndex(3);
+    ui->ChooseGender->setCurrentIndex(0);
     ui->TextBiography->clear();
 
+    ui->ChoosePartner->clear();
+    ui->In_FirstParent->clear();
+    ui->In_SecondParent->clear();
+    ui->ChoosePartner->addItem("no partner");
+    ui->In_FirstParent->addItem("no parents");
+    ui->In_SecondParent->addItem("no second parent");
+    ui->In_SecondParent->setEnabled(false);
     ui->ChoosePartner->setCurrentIndex(0);
     ui->In_FirstParent->setCurrentIndex(0);
     ui->In_SecondParent->setCurrentIndex(0);
-    ui->ChoosePartner->clear();
-    ui->ChoosePartner->addItem("no partner");
-    ui->In_FirstParent->clear();
-    ui->In_FirstParent->addItem("no parents");
-    ui->In_SecondParent->clear();
-    ui->In_SecondParent->addItem("no second parent");
-    ui->In_SecondParent->setEnabled(false);
 
     m_editedMember = nullptr;
     m_membersFromFam = nullptr;

@@ -38,6 +38,8 @@ void ViewPage::setupViewPage() {
         qDebug() << "Current User = Admin";
         m_ap = new AdminPanel(m_pLogic, this);
         ui->adminPanel->layout()->addWidget(m_ap);
+        ui->horizontalLayout->setStretchFactor(ui->adminPanel, 1);
+        ui->horizontalLayout->setStretchFactor(ui->displayFamilyPanel, 3);
         QObject::connect(m_ap, &AdminPanel::switchToHome, this, &ViewPage::openHomePage);
         m_ap->setupAdminPanel();
     } else if(m_pLogic->userIsViewer(m_currentUser, m_displayedFamily)) { // user is viewer
