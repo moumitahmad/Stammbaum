@@ -1,6 +1,6 @@
 #include "editpage.h"
 #include "ui_editpage.h"
-
+#include "displayfam.h"
 
 #include <QDebug>
 
@@ -12,7 +12,7 @@ EditPage::EditPage(domain::ILogic* pLogic, QWidget *parent) :
     ui->setupUi(this);
     QObject::connect(ui->ButtonViewFamily, &QPushButton::clicked, this, &EditPage::openViewPage);
 
-    df = new DisplayFam(m_pLogic, this);
+    DisplayFam* df = new DisplayFam(m_pLogic, this);
     ui->displayFamilyPanel->layout()->addWidget(df);
 
     m_ep = new EditPanel(m_pLogic, this);
@@ -28,11 +28,6 @@ EditPage::EditPage(domain::ILogic* pLogic, QWidget *parent) :
 EditPage::~EditPage()
 {
     delete ui;
-}
-
-void EditPage::drawFamily() {
- //   df->update();
-    df->changeView();
 }
 
 void EditPage::setupEditPage() {

@@ -5,7 +5,6 @@
 #include "domain/ILogic.h"
 #include "./value-objects/familytree.h"
 #include "editpanel.h"
-#include "displayfam.h"
 
 namespace Ui {
 class EditPage;
@@ -19,13 +18,11 @@ public:
     domain::ILogic* m_pLogic;
     FamilyTree* m_displayedFamily;
     EditPanel* m_ep;
-    DisplayFam* df;
 
     explicit EditPage(domain::ILogic* pLogic, QWidget *parent = nullptr);
     ~EditPage();
 
     void setupEditPage();
-    void drawFamily();
 
 signals:
     void switchToView();

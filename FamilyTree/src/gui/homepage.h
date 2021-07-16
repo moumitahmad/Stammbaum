@@ -24,7 +24,6 @@ public:
 
 signals:
     void switchToView();
-    void drawFamily();
 
 private slots:
     void showFamily(int id);
