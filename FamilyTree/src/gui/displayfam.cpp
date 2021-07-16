@@ -13,7 +13,11 @@ DisplayFam::DisplayFam(domain::ILogic* pLogic, QWidget *parent) :
 
     // connect test-buttons
     QObject::connect(ui->addMember, &QPushButton::clicked, this, &DisplayFam::addNewMember);
+<<<<<<< HEAD
     QObject::connect(ui->updateMember, &QPushButton::clicked, this, &DisplayFam::changeMember);
+=======
+    QObject::connect(ui->updateMember, &QPushButton::clicked, std::bind(&DisplayFam::changeMember, this, 1));
+>>>>>>> parent of 5f5521a (familie übergeben)
 
 
 //    int currentFamily = m_pLogic->getCurrentFamilyID();
