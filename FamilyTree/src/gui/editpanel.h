@@ -22,9 +22,6 @@ public:
     ~EditPanel();
 
     void setupEditPanel(int memberID);
-    void showPotentionRelationships();
-    Member* findMember(int id);
-    void showError(const QString& message) const;
 
 signals:
     void closePanel();
@@ -40,6 +37,10 @@ private slots:
 
 private:
     Ui::EditPanel *ui;
+    void showPotentionRelationships();
+    Member* findMember(int id);
+    void showError(const QString& message) const;
+    bool relationshipValid(int& partnerID, int& parent1ID, int& parent2ID);
 };
 
 #endif // EDITPANEL_H

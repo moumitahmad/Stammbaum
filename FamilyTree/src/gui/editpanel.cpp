@@ -168,6 +168,32 @@ void EditPanel::showError(const QString& message) const {
     ui->ErrorMessage->show();
 }
 
+bool EditPanel::relationshipValid(int& partnerID, int& parent1ID, int& parent2ID) {
+    if(partnerID == parent1ID || partnerID == parent2ID) {
+        showError("A parent can not also be a partner.");
+        return false;
+    }
+    if(parent1ID == parent2ID) {
+        showError("A member needs different parents.");
+        return false;
+    }
+    QVector<Member*> siblings = m_pLogic->getSiblingsFromMember(m_editedMember);
+    //bool noError = true;
+    for(Member* sibling : siblings) {
+        if(sibling->getID() == partnerID) {
+            showError("A sibling can not also be a partner.");
+            return false;
+        }
+        if(sibling->getID() == parent1ID || sibling->getID() == parent2ID) {
+            showError("A sibling can not also be a parent.");
+            return false;
+        }
+    }
+    qDebug() << ">> GAAAARRR: outside for";
+
+    return true;
+}
+
 void EditPanel::saveMember() {
     ui->ErrorMessage->hide();
     // data from userinput
@@ -192,6 +218,9 @@ void EditPanel::saveMember() {
     // verify name
     if(name.length() == 0) { // name is not filled in
         showError("<html><head/><body><p><span style='color:#ef2929;'>Every member requires a name.</span></p></body></html>");
+        return;
+    }
+    if(!relationshipValid(partnerID, parent1ID, parent2ID)) {
         return;
     }
     // add defaults
