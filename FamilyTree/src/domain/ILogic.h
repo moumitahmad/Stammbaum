@@ -57,6 +57,7 @@ namespace domain {
         // select
         Member* getMemberByID(int memberID);
         QVector<Member*>* getMembersByFamily(int familyID);
+        QVector<Member*> getSiblingsFromMember(const Member* member);
 
         // update
         Member* updateMemberData(Member* member, QString& name, QString& birth, QString& death, QString& gender, QString& biografie);

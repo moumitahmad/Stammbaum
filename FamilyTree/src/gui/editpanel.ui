@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>323</width>
-    <height>600</height>
+    <width>343</width>
+    <height>800</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,6 +16,174 @@
   <layout class="QGridLayout" name="gridLayout">
    <item row="1" column="0">
     <layout class="QGridLayout" name="gridLayout_3">
+     <item row="3" column="2">
+      <widget class="QDateEdit" name="ChoosenBirth">
+       <property name="dateTime">
+        <datetime>
+         <hour>0</hour>
+         <minute>0</minute>
+         <second>0</second>
+         <year>9999</year>
+         <month>12</month>
+         <day>31</day>
+        </datetime>
+       </property>
+       <property name="displayFormat">
+        <string>dd.MM.yyyy</string>
+       </property>
+       <property name="calendarPopup">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="3">
+      <widget class="QCheckBox" name="DeathCheckBox">
+       <property name="text">
+        <string/>
+       </property>
+       <property name="tristate">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="7" column="2">
+      <widget class="QTextEdit" name="TextBiography">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>200</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>200</width>
+         <height>16777215</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="0">
+      <widget class="QLabel" name="LabelBirth">
+       <property name="text">
+        <string>Birth</string>
+       </property>
+      </widget>
+     </item>
+     <item row="11" column="2">
+      <widget class="QPushButton" name="ButtonAddPicture">
+       <property name="text">
+        <string>Add Picture</string>
+       </property>
+      </widget>
+     </item>
+     <item row="17" column="2">
+      <layout class="QHBoxLayout" name="horizontalLayout_3">
+       <item>
+        <widget class="QPushButton" name="ButtonSave">
+         <property name="text">
+          <string>Save</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="ButtonCancel">
+         <property name="text">
+          <string>Cancel</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item row="8" column="2">
+      <widget class="QComboBox" name="ChoosePartner">
+       <item>
+        <property name="text">
+         <string>no partner</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item row="7" column="0">
+      <widget class="QLabel" name="LabelBiography">
+       <property name="text">
+        <string>Biography</string>
+       </property>
+      </widget>
+     </item>
+     <item row="9" column="0">
+      <widget class="QLabel" name="firstParentLabel">
+       <property name="text">
+        <string>first Parent</string>
+       </property>
+      </widget>
+     </item>
+     <item row="10" column="2">
+      <widget class="QComboBox" name="In_SecondParent">
+       <item>
+        <property name="text">
+         <string>no second parent</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item row="6" column="2">
+      <widget class="QComboBox" name="ChooseGender">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>200</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>200</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="currentText">
+        <string>Male</string>
+       </property>
+       <item>
+        <property name="text">
+         <string>Male</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Female</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Diverse</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Unknown</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item row="6" column="0">
+      <widget class="QLabel" name="LabelGender">
+       <property name="text">
+        <string>Gender</string>
+       </property>
+      </widget>
+     </item>
      <item row="1" column="2">
       <widget class="QLineEdit" name="In_Name">
        <property name="sizePolicy">
@@ -41,65 +209,6 @@
        </property>
       </widget>
      </item>
-     <item row="8" column="0">
-      <widget class="QLabel" name="label">
-       <property name="text">
-        <string>Partner</string>
-       </property>
-      </widget>
-     </item>
-     <item row="13" column="2">
-      <spacer name="verticalSpacer">
-       <property name="orientation">
-        <enum>Qt::Vertical</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>20</width>
-         <height>40</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item row="5" column="0">
-      <widget class="QLabel" name="LabelDeath">
-       <property name="text">
-        <string>Death</string>
-       </property>
-      </widget>
-     </item>
-     <item row="7" column="0">
-      <widget class="QLabel" name="LabelBiography">
-       <property name="text">
-        <string>Biography</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="0">
-      <widget class="QLabel" name="LabelName">
-       <property name="text">
-        <string>Name</string>
-       </property>
-      </widget>
-     </item>
-     <item row="16" column="2">
-      <layout class="QHBoxLayout" name="horizontalLayout_3">
-       <item>
-        <widget class="QPushButton" name="ButtonSave">
-         <property name="text">
-          <string>Save</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="ButtonCancel">
-         <property name="text">
-          <string>Cancel</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
      <item row="9" column="2">
       <widget class="QComboBox" name="In_FirstParent">
        <item>
@@ -109,40 +218,11 @@
        </item>
       </widget>
      </item>
-     <item row="3" column="0">
-      <widget class="QLabel" name="LabelBirth">
+     <item row="8" column="0">
+      <widget class="QLabel" name="label">
        <property name="text">
-        <string>Birth</string>
+        <string>Partner</string>
        </property>
-      </widget>
-     </item>
-     <item row="3" column="2">
-      <widget class="QDateEdit" name="ChoosenBirth">
-       <property name="dateTime">
-        <datetime>
-         <hour>0</hour>
-         <minute>0</minute>
-         <second>0</second>
-         <year>9999</year>
-         <month>12</month>
-         <day>31</day>
-        </datetime>
-       </property>
-       <property name="displayFormat">
-        <string>dd.MM.yyyy</string>
-       </property>
-       <property name="calendarPopup">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item row="10" column="2">
-      <widget class="QComboBox" name="In_SecondParent">
-       <item>
-        <property name="text">
-         <string>no second parent</string>
-        </property>
-       </item>
       </widget>
      </item>
      <item row="14" column="2">
@@ -152,51 +232,6 @@
        </property>
       </widget>
      </item>
-     <item row="6" column="2">
-      <widget class="QComboBox" name="ChooseGender">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="minimumSize">
-        <size>
-         <width>200</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>200</width>
-         <height>16777215</height>
-        </size>
-       </property>
-       <property name="currentText">
-        <string>Unknown</string>
-       </property>
-       <item>
-        <property name="text">
-         <string>Male</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Female</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Diverse</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Unknown</string>
-        </property>
-       </item>
-      </widget>
-     </item>
      <item row="10" column="0">
       <widget class="QLabel" name="label_2">
        <property name="text">
@@ -204,48 +239,26 @@
        </property>
       </widget>
      </item>
-     <item row="11" column="2">
-      <widget class="QPushButton" name="ButtonAddPicture">
-       <property name="text">
-        <string>Add Picture</string>
+     <item row="13" column="2">
+      <spacer name="verticalSpacer">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
        </property>
-      </widget>
-     </item>
-     <item row="6" column="0">
-      <widget class="QLabel" name="LabelGender">
-       <property name="text">
-        <string>Gender</string>
+       <property name="sizeType">
+        <enum>QSizePolicy::Expanding</enum>
        </property>
-      </widget>
-     </item>
-     <item row="8" column="2">
-      <widget class="QComboBox" name="ChoosePartner">
-       <item>
-        <property name="text">
-         <string>no partner</string>
-        </property>
-       </item>
-      </widget>
-     </item>
-     <item row="7" column="2">
-      <widget class="QTextEdit" name="TextBiography">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="minimumSize">
+       <property name="sizeHint" stdset="0">
         <size>
-         <width>200</width>
-         <height>0</height>
+         <width>20</width>
+         <height>40</height>
         </size>
        </property>
-       <property name="maximumSize">
-        <size>
-         <width>200</width>
-         <height>16777215</height>
-        </size>
+      </spacer>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="LabelName">
+       <property name="text">
+        <string>Name</string>
        </property>
       </widget>
      </item>
@@ -272,13 +285,6 @@
        </property>
       </widget>
      </item>
-     <item row="9" column="0">
-      <widget class="QLabel" name="firstParentLabel">
-       <property name="text">
-        <string>first Parent</string>
-       </property>
-      </widget>
-     </item>
      <item row="3" column="3">
       <widget class="QCheckBox" name="BirthCheckBox">
        <property name="text">
@@ -289,15 +295,28 @@
        </property>
       </widget>
      </item>
-     <item row="5" column="3">
-      <widget class="QCheckBox" name="DeathCheckBox">
+     <item row="5" column="0">
+      <widget class="QLabel" name="LabelDeath">
        <property name="text">
-        <string/>
-       </property>
-       <property name="tristate">
-        <bool>false</bool>
+        <string>Death</string>
        </property>
       </widget>
+     </item>
+     <item row="15" column="2">
+      <spacer name="verticalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Minimum</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
      </item>
     </layout>
    </item>

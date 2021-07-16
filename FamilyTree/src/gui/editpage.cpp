@@ -12,32 +12,41 @@ EditPage::EditPage(domain::ILogic* pLogic, QWidget *parent) :
     ui->setupUi(this);
     QObject::connect(ui->ButtonViewFamily, &QPushButton::clicked, this, &EditPage::openViewPage);
 
-    df = new DisplayFam(m_pLogic, this);
-    ui->displayFamilyPanel->layout()->addWidget(df);
+    m_df = new DisplayFam(m_pLogic, this);
+    ui->displayFamilyPanel->addWidget(m_df);
+
+    m_mp = new MemberPanel(m_pLogic, this);
+    ui->allMembersPanel->addWidget(m_mp);
 
     m_ep = new EditPanel(m_pLogic, this);
     ui->editPanel->layout()->addWidget(m_ep);
+    ui->horizontalLayout->setStretchFactor(ui->editPanel, 1);
+    ui->horizontalLayout->setStretchFactor(ui->mainPanel, 3);
     QObject::connect(m_ep, &EditPanel::closePanel, this, &EditPage::closeEditPanel);
     ui->editPanel->hide();
 
     // signal
-    QObject::connect(df, &DisplayFam::memberChoosen, this, &EditPage::openEditPanel);
+    QObject::connect(m_df, &DisplayFam::memberChoosen, this, &EditPage::openEditPanel);
 
 }
 
 EditPage::~EditPage()
 {
     delete ui;
+    delete m_ep;
+    delete m_mp;
+    delete m_df;
 }
 
 void EditPage::drawFamily() {
  //   df->update();
-    df->changeView();
+    m_df->changeView();
 }
 
 void EditPage::setupEditPage() {
     m_displayedFamily = m_pLogic->getFamilyTreeByID(m_pLogic->getCurrentFamilyID());
     ui->LabelViewFamily->setText("<html><head/><body><p><span style='color:#3465a4;'>Edit the family tree: " + m_displayedFamily->getFamilyName() + "</span></p></body></html>");
+    m_mp->setupMemberPanel();
 }
 
 void EditPage::openViewPage(){
@@ -52,4 +61,5 @@ void EditPage::openEditPanel(int memberID) {
 
 void EditPage::closeEditPanel() {
     ui->editPanel->hide();
+    m_mp->setupMemberPanel();
 }

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1434</width>
-    <height>706</height>
+    <width>1500</width>
+    <height>800</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -94,13 +94,19 @@
         </widget>
        </item>
        <item>
-        <layout class="QGridLayout" name="displayFamilyPanel">
-         <item row="0" column="0">
+        <layout class="QGridLayout" name="mainPanel">
+         <item row="3" column="0">
+          <layout class="QGridLayout" name="allMembersPanel"/>
+         </item>
+         <item row="1" column="0">
           <widget class="QCommandLinkButton" name="ButtonViewFamily">
            <property name="text">
             <string>View family</string>
            </property>
           </widget>
+         </item>
+         <item row="2" column="0">
+          <layout class="QGridLayout" name="displayFamilyPanel"/>
          </item>
         </layout>
        </item>

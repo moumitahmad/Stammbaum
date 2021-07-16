@@ -159,6 +159,36 @@ QVector<Member*>* domain::ILogic::getMembersByFamily(int familyID) {
     return m_pDB->getMembersByFamID(familyID);
 }
 
+bool vectorContainsMember(QVector<Member*>& vector, Member* member) {
+    for(Member* v : vector) {
+        if(v->getID() == member->getID())
+            return true;
+    }
+    return false;
+}
+
+QVector<Member *> domain::ILogic::getSiblingsFromMember(const Member *member) {
+    QVector<Member*> siblings;
+    QVector<Member*> parents = member->getParents();
+    QVector<Member*> children1;
+    QVector<Member*> children2;
+    if(parents.length() > 0) {
+        children1 = m_pDB->getChildrenFromMemberID(parents.at(0)->getID());
+        for(Member* child : children1) {
+            if(child->getID() != member->getID())
+                siblings.push_back(child);
+        }
+        if(parents.length() > 1) {
+            children2 = m_pDB->getChildrenFromMemberID(parents.at(1)->getID());
+            for(Member* child : children2) {
+                if(child->getID() != member->getID() && !vectorContainsMember(siblings, child))
+                    siblings.push_back(child);
+            }
+        }
+    }
+    return siblings;
+}
+
 Member* domain::ILogic::createMember(FamilyTree *family, const QString &name, const QString &birth,
         const QString &death, const QString &gender, const QString &biografie, Member *partner,
         QVector<Member*>* children) {

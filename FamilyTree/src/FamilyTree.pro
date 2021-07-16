@@ -24,6 +24,7 @@ SOURCES += \
     gui/famitem.cpp \
     gui/homepage.cpp \
     gui/mainwindow.cpp \
+    gui/memberpanel.cpp \
     gui/userwindow.cpp \
     gui/viewpage.cpp \
     main.cpp \
@@ -41,6 +42,7 @@ HEADERS += \
     gui/famitem.h \
     gui/homepage.h \
     gui/mainwindow.h \
+    gui/memberpanel.h \
     gui/userwindow.h \
     gui/viewpage.h \
     persistence/databaseservice.h \
@@ -55,6 +57,7 @@ FORMS += \
     gui/editpanel.ui \
     gui/homepage.ui \
     gui/mainwindow.ui \
+    gui/memberpanel.ui \
     gui/userwindow.ui \
     gui/viewpage.ui
 
