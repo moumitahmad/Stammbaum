@@ -1,3 +1,3 @@
-# Stammbaum
+# Stammbaum - FamilyTree
 
-Stammbusch hhiiihii
+An application to visualize families in a tree.
