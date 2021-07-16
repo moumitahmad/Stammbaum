@@ -16,10 +16,6 @@ DisplayFam::DisplayFam(domain::ILogic* pLogic, QWidget *parent) :
 
  //   this->update();
 
-    // connect test-buttons
-    QObject::connect(ui->addMember, &QPushButton::clicked, this, &DisplayFam::addNewMember);
-    QObject::connect(ui->updateMember, &QPushButton::clicked, this, &DisplayFam::changeMember);
-
 
 //    int currentFamily = m_pLogic->getCurrentFamilyID();
 //    QVector<Member*>* familyMembers = m_pLogic->getMembersByFamily(1);   //currentFamily);
@@ -262,24 +258,3 @@ DisplayFam::~DisplayFam()
     delete ui;
 }
 
-
-void DisplayFam::setupForView() {
-    ui->addMember->hide();
-    ui->updateMember->hide();
-    ui->UpdateID->hide();
-}
-
-void DisplayFam::setupForEdit() {
-    ui->addMember->show();
-    ui->updateMember->show();
-    ui->UpdateID->show();
-}
-
-void DisplayFam::changeMember() {
-    qDebug() << ui->UpdateID->text();
-    emit memberChoosen(ui->UpdateID->text().toInt());
-}
-
-void DisplayFam::addNewMember() {
-    emit memberChoosen(-1);
-}

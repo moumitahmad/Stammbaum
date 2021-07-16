@@ -24,14 +24,6 @@ public:
     void setupForEdit();
     void changeView();
 
-
-signals:
-    void memberChoosen(int id); // id=-1 -> new Member
-
-private slots:
-    void changeMember();
-    void addNewMember();
-
 private:
     Ui::DisplayFam *ui;
 

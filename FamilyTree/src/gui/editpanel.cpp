@@ -164,16 +164,16 @@ void EditPanel::uploadPicture() {
 }
 
 void EditPanel::showError(const QString& message) const {
-    ui->ErrorMessage->setText(message);
+    ui->ErrorMessage->setText("<html><head/><body><p><span style='color:#ef2929;'>" + message + "</span></p></body></html>");
     ui->ErrorMessage->show();
 }
 
 bool EditPanel::relationshipValid(int& partnerID, int& parent1ID, int& parent2ID) {
-    if(partnerID == parent1ID || partnerID == parent2ID) {
+    if(partnerID != 0 && (partnerID == parent1ID || partnerID == parent2ID)) {
         showError("A parent can not also be a partner.");
         return false;
     }
-    if(parent1ID == parent2ID) {
+    if(parent1ID != 0 && parent2ID != 0 && parent1ID == parent2ID) {
         showError("A member needs different parents.");
         return false;
     }

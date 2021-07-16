@@ -24,6 +24,13 @@ public:
     void resetUI();
     void updatePanel();
 
+signals:
+    void memberChoosen(int id); // id=-1 -> new Member
+
+private slots:
+    void changeMember(int id);
+    void addNewMember();
+
 private:
     Ui::MemberPanel *ui;
 };
