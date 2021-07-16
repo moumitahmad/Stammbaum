@@ -50,7 +50,6 @@ void ViewPage::setupViewPage() {
     // display page
     DisplayFam* df = new DisplayFam(m_pLogic, this);
     ui->displayFamilyPanel->layout()->addWidget(df);
-    df->setupForView();
     qDebug() << "Viewer setup done";
 
 }

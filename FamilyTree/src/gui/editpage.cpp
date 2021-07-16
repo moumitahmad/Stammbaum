@@ -26,7 +26,7 @@ EditPage::EditPage(domain::ILogic* pLogic, QWidget *parent) :
     ui->editPanel->hide();
 
     // signal
-    QObject::connect(m_df, &DisplayFam::memberChoosen, this, &EditPage::openEditPanel);
+    QObject::connect(m_mp, &MemberPanel::memberChoosen, this, &EditPage::openEditPanel);
 
 }
 
