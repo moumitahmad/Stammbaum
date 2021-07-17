@@ -38,6 +38,7 @@ private:
     FamilyTree* m_displayedFamily;
     Member* m_editedMember;
     QVector<Member*> m_possibleRelationships;
+    QString m_imagePath = "";
 
     void showPotentionRelationships();
     void showError(const QString& message) const;

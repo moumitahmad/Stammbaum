@@ -414,10 +414,10 @@ FamilyTree *database::IDatabase::getFamilyTreeByID(int familyID) {
 // ---------------- MEMBER ------------------------
 Member* database::IDatabase::getMemberByID(const int id) {
     QSqlQuery q;
-    QString query = "SELECT m.id, m.name, m.birth, m.death, m.gender, m.biografie from member m  WHERE id=" + QString::number(id) + ";";
+    QString query = "SELECT m.id, m.name, m.birth, m.death, m.gender, m.biografie, m.picturePath from member m  WHERE id=" + QString::number(id) + ";";
     q.exec(query);
     if(q.first()) {
-        Member* member = new Member(q.value(0).toInt(), q.value(1).toString(), q.value(2).toString(), q.value(3).toString(), q.value(4).toString(), q.value(5).toString());
+        Member* member = new Member(q.value(0).toInt(), q.value(1).toString(), q.value(2).toString(), q.value(3).toString(), q.value(4).toString(), q.value(5).toString(), q.value(6).toString());
         return member;
     } else {
         qDebug() << q.lastError();
@@ -439,27 +439,21 @@ QVector<Member*>* database::IDatabase::getMembersByFamID(const int id) {
                         break;
                     }
                 }
-                qDebug() << q.value(0).toInt();
-                qDebug() <<  q.value(1).toString();
-                qDebug() <<   q.value(2).toString();
-                qDebug() <<   q.value(7).toString();
                 if (found == false) {
                    if(!(q.value(7).toString().isEmpty())) {
                         Member* partner = getMemberByID(q.value(7).toInt());
-                        Member* member = new Member(q.value(0).toInt(), q.value(1).toString(), q.value(2).toString(), q.value(3).toString(), q.value(4).toString(), q.value(5).toString(), partner);
+                        Member* member = new Member(q.value(0).toInt(), q.value(1).toString(), q.value(2).toString(), q.value(3).toString(), q.value(4).toString(), q.value(5).toString(), q.value(6).toString(), partner);
                         partner->setPartner(member);
                         partnerCreated->push_back(partner);
                         familyMember->push_back(member);
                         familyMember->push_back(partner);
                    } else {
-                        Member* member = new Member(q.value(0).toInt(), q.value(1).toString(), q.value(2).toString(), q.value(3).toString(), q.value(4).toString(), q.value(5).toString());
+                        Member* member = new Member(q.value(0).toInt(), q.value(1).toString(), q.value(2).toString(), q.value(3).toString(), q.value(4).toString(), q.value(5).toString(), q.value(6).toString());
                         familyMember->push_back(member);
                    }
 
                 }
         }
-
-        //hier müssen eltern-kinder beziehungen gesetzt werden
 
         if(familyMember->empty())
             return nullptr;
@@ -522,14 +516,15 @@ QVector<Member*>* database::IDatabase::setCPRelations(QVector<Member*>* family) 
 
 
 
-int database::IDatabase::saveMember(const QString &name, const QString &birth, const QString &death, const QString &gender, const QString &biografie, int familyID) {
+int database::IDatabase::saveMember(const QString &name, const QString &birth, const QString &death, const QString &gender, const QString &biografie, const QString &imagePath, int familyID) {
     QSqlQuery q;
-    q.prepare("INSERT INTO member(name, birth, death, gender, biografie, familyID) VALUES(:name, :birth, :death, :gender, :biografie, :familyID);");
+    q.prepare("INSERT INTO member(name, birth, death, gender, biografie, picturePath, familyID) VALUES(:name, :birth, :death, :gender, :biografie, :imagePath, :familyID);");
     q.bindValue(":name", name);
     q.bindValue(":birth", birth);
     q.bindValue(":death", death);
     q.bindValue(":gender", gender);
     q.bindValue(":biografie", biografie);
+    q.bindValue(":imagePath", imagePath);
     q.bindValue(":familyID", familyID);
 
     if(q.exec()) {
@@ -548,7 +543,8 @@ void database::IDatabase::updateMemberData(Member* member) {
                         "birth='" + member->getBirth() + "', "
                         "death='" + member->getDeath() + "', "
                         "gender='" + member->getGender() + "', "
-                        "biografie='" + member->getBiografie() + "' "
+                        "biografie='" + member->getBiografie() + "', "
+                        "picturePath='" + member->getImagePath() + "' "
                         "WHERE id=" + QString::number(member->getID()) + ";";
 
     if(q.exec(query)) {

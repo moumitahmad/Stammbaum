@@ -36,6 +36,10 @@ const QString &Member::getBiografie() const {
     return m_biografie;
 }
 
+const QString &Member::getImagePath() const {
+    return m_imagePath;
+}
+
 Member *Member::getPartner() const {
     return m_partner;
 }
@@ -70,6 +74,10 @@ void Member::setBiografie(const QString &biografie) {
 
 void Member::setPartner(Member *partner) {
     m_partner = partner;
+}
+
+void Member::setImagePath(QString &path) {
+    m_imagePath = path;
 }
 
 void Member::addParent(Member* parent) {

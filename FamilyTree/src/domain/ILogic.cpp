@@ -190,10 +190,10 @@ QVector<Member *> domain::ILogic::getSiblingsFromMember(const Member *member) {
 }
 
 Member* domain::ILogic::createMember(FamilyTree *family, const QString &name, const QString &birth,
-        const QString &death, const QString &gender, const QString &biografie, Member *partner,
+        const QString &death, const QString &gender, const QString &biografie, const QString& imagePath, Member *partner,
         QVector<Member*>* children) {
-    int id = m_pDB->saveMember(name, birth, death, gender, biografie, family->getId());
-    Member* member = new Member(id, name, birth, death, gender, biografie);
+    int id = m_pDB->saveMember(name, birth, death, gender, biografie, imagePath, family->getId());
+    Member* member = new Member(id, name, birth, death, gender, biografie, imagePath);
     if(partner) {
         m_pDB->updatePartnerFromMember(partner, member);
         member->setPartner(partner);
@@ -235,13 +235,14 @@ Member *domain::ILogic::getMemberByID(int memberID) {
     return member;
 }
 
-Member *domain::ILogic::updateMemberData(Member* member, QString& name, QString& birth, QString& death, QString& gender, QString& biografie) {
+Member *domain::ILogic::updateMemberData(Member* member, QString& name, QString& birth, QString& death, QString& gender, QString& biografie, QString& imagePath) {
     // update Member object
     member->setName(name);
     member->setBirth(birth);
     member->setDeath(death);
     member->setGender(gender);
     member->setBiografie(biografie);
+    member->setImagePath(imagePath);
     // update db
     m_pDB->updateMemberData(member);
     return member;

@@ -180,8 +180,9 @@ void EditPanel::selectPicture() {
         messageBox.setText("Image successfully added!");
         messageBox.setFixedSize(500,200);
         messageBox.exec();
+        m_imagePath = QString::fromStdString(imageAddressString);
 
-    } catch (std::filesystem::filesystem_error e) {
+    } catch (std::filesystem::filesystem_error& e) {
         //show error dialog
         QMessageBox messageBox;
         messageBox.critical(0,"Error","Image has already been added!");
@@ -201,7 +202,7 @@ void EditPanel::removePicture() {
         messageBox.setText("Image successfully removed!");
         messageBox.setFixedSize(500,200);
         messageBox.exec();
-
+        m_imagePath = "";
     } catch (std::filesystem::filesystem_error e) {
         qDebug() << e.code().message().c_str();
         //show error dialog
@@ -278,7 +279,7 @@ void EditPanel::saveMember() {
 
     if(m_editedMember->getName() != "") { // member already exsists
         qDebug() << "Update member: " << m_editedMember->getName();
-        m_editedMember = m_pLogic->updateMemberData(m_editedMember, name, birth, death, gender, biografie);
+        m_editedMember = m_pLogic->updateMemberData(m_editedMember, name, birth, death, gender, biografie, m_imagePath);
         // relationships
         if(partnerID != 0) {
             Member* partner = m_possibleRelationships.at(partnerID);
@@ -312,7 +313,7 @@ void EditPanel::saveMember() {
     } else { // new Member
         qDebug() << "create new member";
         qDebug() << name << " | " << birth << " | " << death << " | " << gender << " | " << biografie;
-        m_editedMember = m_pLogic->createMember(m_displayedFamily, name, birth, death, gender, biografie);
+        m_editedMember = m_pLogic->createMember(m_displayedFamily, name, birth, death, gender, biografie, m_imagePath);
 
         // save relationships
         if(partnerID != 0) {
