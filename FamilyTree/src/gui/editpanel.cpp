@@ -2,9 +2,14 @@
 #include "ui_editpanel.h"
 #include <QDebug>
 #include <qfiledialog.h>
+#include <cstdlib>
+#include <iostream>
+#include <fstream>
+#include <filesystem>
+#include <qmessagebox.h>
 
 
-const QString IMAGES_DIR = "./images";
+const std::filesystem::path IMAGES_DIR = "../src/images";
 
 EditPanel::EditPanel(domain::ILogic* pLogic, QWidget *parent) :
     QWidget(parent),
@@ -150,7 +155,7 @@ void EditPanel::setupEditPanel(int memberID) {
 }
 
 void EditPanel::uploadPicture() {
-
+    std::filesystem::path imagePath;
     QFileDialog *dialog = new QFileDialog();
     dialog->setAcceptMode(QFileDialog::AcceptOpen);
     dialog->setFileMode(QFileDialog::ExistingFile);
@@ -159,14 +164,22 @@ void EditPanel::uploadPicture() {
     int result = dialog->exec();
     if(result == QDialog::Accepted) {
         // save image address
-        QString image = dialog->selectedFiles()[0];
-        qDebug() << image;
-        // save file in database
-        // TO IMPLEMENT
+        QString testMe = dialog->selectedFiles()[0];
+        imagePath = testMe.toStdString();
     } else if(result == QDialog::Rejected) {
         dialog->close();
     }
-
+    try {
+        const std::filesystem::path constImagePath = imagePath;
+        qDebug() << "chosen file: " << constImagePath.c_str();
+        qDebug() << "target directory: " << IMAGES_DIR.c_str();
+        std::filesystem::copy(constImagePath, IMAGES_DIR);
+    } catch (std::filesystem::__cxx11::filesystem_error e) {
+        //show error dialog
+        QMessageBox messageBox;
+        messageBox.critical(0,"Error","File already exists!");
+        messageBox.setFixedSize(500,200);
+    }
 }
 
 void EditPanel::showError(const QString& message) const {
