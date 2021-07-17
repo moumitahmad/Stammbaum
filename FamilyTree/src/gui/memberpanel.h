@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include "domain/ILogic.h"
+#include "QPushButton"
 
 namespace Ui {
 class MemberPanel;
@@ -30,6 +31,7 @@ signals:
 private slots:
     void changeMember(int id);
     void addNewMember();
+    void activateButton(QPushButton& button);
 
 private:
     Ui::MemberPanel *ui;
