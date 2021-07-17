@@ -24,6 +24,9 @@ public:
     void setupForEdit();
     void changeView();
 
+signals:
+    void memberChoosen(int id); // id=-1 -> new Member
+
 private:
     Ui::DisplayFam *ui;
 
