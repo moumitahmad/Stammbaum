@@ -459,7 +459,7 @@ QVector<Member*>* database::IDatabase::getMembersByFamID(const int id) {
                 }
         }
 
-        //hier müssen eltern-kinder beziehungen gesetzt werden
+
 
         if(familyMember->empty())
             return nullptr;
