@@ -28,12 +28,25 @@ Homepage::~Homepage()
     delete ui;
 }
 
+void clearFamiliesLayout(QLayout *layout) {
+    if (layout == NULL)
+        return;
+    QLayoutItem *item;
+    while((item = layout->takeAt(0))) {
+        if (item->layout()) {
+            clearFamiliesLayout(item->layout());
+            delete item->layout();
+        }
+        if (item->widget()) {
+           delete item->widget();
+        }
+        delete item;
+    }
+}
+
 void Homepage::displayFamilies() {
     // display Families
-    //QLayoutItem* item;
-    while (auto item = ui->ownFamiliesGrid->layout()->takeAt(0)) {
-        delete item;
-     }
+    clearFamiliesLayout(ui->ownFamiliesGrid->layout());
 
     QVector<FamilyTree*>* familyTrees = m_pLogic->getFamilyTreesByUserID(m_currentUser->getId());
     if(familyTrees) {

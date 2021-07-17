@@ -13,6 +13,23 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">QPushButton { 
+	font: 11pt;
+	border-radius: 3px;
+	color: rgb(46, 52, 54); 
+	background-color: rgb(238, 238, 236);
+	height: 60px; 
+	width: 60px;  
+	margin: 5px;
+}
+QPushButton:hover {
+	border: 2px  solid rgb(245, 121, 0);
+}  
+QPushButton:pressed {
+	border: 2px  solid rgb(245, 121, 0);
+}  </string>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <item>
     <layout class="QVBoxLayout" name="verticalLayout">

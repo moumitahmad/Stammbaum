@@ -37,7 +37,6 @@ EditPanel::~EditPanel()
     delete ui;
     delete m_pLogic;
     delete m_displayedFamily;
-    delete m_membersFromFam;
     delete m_editedMember;
 }
 
@@ -60,10 +59,10 @@ int getIndex(QString value) {
 
 void EditPanel::showPotentionRelationships() {
     // show all potential partners and parents
-    m_membersFromFam = m_pLogic->getMembersByFamily(m_displayedFamily->getId());
+    QVector<Member*>* membersFromFam = m_pLogic->getMembersByFamily(m_displayedFamily->getId());
     m_possibleRelationships.push_back(new Member()); // for first default value: no relationship
-    if(m_membersFromFam != nullptr) {
-        for(Member* p : *m_membersFromFam) {
+    if(membersFromFam != nullptr) {
+        for(Member* p : *membersFromFam) {
             if(p->getID() != m_editedMember->getID()) {
                 ui->ChoosePartner->addItem(p->getName());
                 ui->In_FirstParent->addItem(p->getName());
@@ -72,14 +71,6 @@ void EditPanel::showPotentionRelationships() {
             }
         }
     }
-}
-
-Member* EditPanel::findMember(int id) {
-    for(Member* member : *m_membersFromFam) {
-        if(member->getID() == id)
-            return member;
-    }
-    return nullptr;
 }
 
 int EditPanel::getIndexForRelationship(const int memberID) const {
@@ -174,7 +165,7 @@ void EditPanel::uploadPicture() {
         qDebug() << "chosen file: " << constImagePath.c_str();
         qDebug() << "target directory: " << IMAGES_DIR.c_str();
         std::filesystem::copy(constImagePath, IMAGES_DIR);
-    } catch (std::filesystem::__cxx11::filesystem_error e) {
+    } catch (std::filesystem::__cxx11::filesystem_error& e) {
         //show error dialog
         QMessageBox messageBox;
         messageBox.critical(0,"Error","File already exists!");
@@ -287,15 +278,13 @@ void EditPanel::saveMember() {
 
         // save relationships
         if(partnerID != 0) {
-            m_editedMember = m_pLogic->savePartnerFromMember(m_editedMember, findMember(partnerID));
+            m_editedMember = m_pLogic->savePartnerFromMember(m_editedMember, m_possibleRelationships.at(partnerID));
         }
         if(parent1ID != 0) {
-            Member* parent1 = findMember(parent1ID);
-            m_editedMember = m_pLogic->saveParentChildRelationship(parent1, m_editedMember);
+            m_editedMember = m_pLogic->saveParentChildRelationship(m_possibleRelationships.at(parent1ID), m_editedMember);
         }
         if(parent2ID != 0) {
-            Member* parent2 = findMember(parent2ID);
-            m_editedMember = m_pLogic->saveParentChildRelationship(parent2, m_editedMember);
+            m_editedMember = m_pLogic->saveParentChildRelationship(m_possibleRelationships.at(parent2ID), m_editedMember);
         }
     }
     emit closePanel();
@@ -325,7 +314,6 @@ void EditPanel::resetUI(){
     ui->In_SecondParent->setCurrentIndex(0);
 
     m_editedMember = nullptr;
-    m_membersFromFam = nullptr;
     m_possibleRelationships.clear();
 }
 

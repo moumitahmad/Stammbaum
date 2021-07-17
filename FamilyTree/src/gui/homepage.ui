@@ -18,6 +18,23 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">QPushButton { 
+	font: 11pt;
+	border-radius: 3px;
+	background-color: rgb(238, 238, 236);
+	color: rgb(46, 52, 54);  
+	height: 80px; 
+	width: 80px;  
+	margin: 5px;
+}
+QPushButton:hover {
+	border: 2px  solid rgb(245, 121, 0);
+}  
+QPushButton:pressed {
+	border: 2px  solid rgb(245, 121, 0);
+} </string>
+  </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">
     <layout class="QVBoxLayout" name="verticalLayout">
@@ -110,6 +127,9 @@
      </item>
      <item>
       <widget class="QPushButton" name="newFamilyButton">
+       <property name="styleSheet">
+        <string notr="true"/>
+       </property>
        <property name="text">
         <string>+ add Family</string>
        </property>
