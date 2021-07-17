@@ -27,7 +27,7 @@ void MemberPanel::setupMemberPanel()
         for(int i=0; i<m_allMembers->length(); i++) {
             member = new QPushButton(m_allMembers->at(i)->getName());
             QObject::connect(member, &QPushButton::clicked, std::bind(&MemberPanel::memberChoosen, this, m_allMembers->at(i)->getID()));
-            QObject::connect(member, &QPushButton::clicked, std::bind(&QPushButton::setStyleSheet, member, "border: 2px  solid rgb(245, 121, 0)"));
+            QObject::connect(member, &QPushButton::clicked, std::bind(&QPushButton::setStyleSheet, member, "border: 3px  solid rgb(245, 121, 0)"));
             ui->membersGrid->addWidget(member, 0, i);
         }
     }

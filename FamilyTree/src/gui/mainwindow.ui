@@ -14,9 +14,9 @@
    <string>MainWindow</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">font: 'Sawasdee'; 
-background-color: rgb(211, 215, 207);
-</string>
+   <string notr="true">/*font: 'Sawasdee'; 
+background-color: rgb(153, 172, 186);
+/*color: rgb(211, 215, 207);</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout_2">

@@ -161,6 +161,11 @@ void DisplayFam::changeView() {
 
 }
 
+void DisplayFam::updateDisplay(int memberID) {
+    qDebug() << ">> IN DISPLAY: " << memberID;
+
+}
+
 void DisplayFam::paintEvent(QPaintEvent *event) {
 
 
