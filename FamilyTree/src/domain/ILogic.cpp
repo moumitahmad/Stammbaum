@@ -248,6 +248,13 @@ Member *domain::ILogic::updateMemberData(Member* member, QString& name, QString&
 }
 
 Member *domain::ILogic::savePartnerFromMember(Member *member, Member *partner) {
+    // delete exsisting partner
+    if(member->getPartner()) {
+        deletePartnerFromMember(member, member->getPartner());
+    }
+    if(partner->getPartner()) {
+        deletePartnerFromMember(partner, partner->getPartner());
+    }
     member->setPartner(partner);
     partner->setPartner(member);
     m_pDB->updatePartnerFromMember(partner, member);
