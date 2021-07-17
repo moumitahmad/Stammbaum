@@ -7,6 +7,7 @@
 #include <fstream>
 #include <filesystem>
 #include <qmessagebox.h>
+#include <string>
 
 
 const std::filesystem::path IMAGES_DIR = "../src/images";
@@ -20,7 +21,8 @@ EditPanel::EditPanel(domain::ILogic* pLogic, QWidget *parent) :
 
     ui->ErrorMessage->hide();
 
-    QObject::connect(ui->ButtonAddPicture, &QPushButton::clicked, this, &EditPanel::uploadPicture);
+    QObject::connect(ui->ButtonAddPicture, &QPushButton::clicked, this, &EditPanel::selectPicture);
+    QObject::connect(ui->ButtonRemovePicture, &QPushButton::clicked, this, &EditPanel::removePicture);
     QObject::connect(ui->ButtonSave, &QPushButton::clicked, this, &EditPanel::saveMember);
     QObject::connect(ui->ButtonCancel, &QPushButton::clicked, this, &EditPanel::resetUI);
     QObject::connect(ui->ButtonDelete, &QPushButton::clicked, this, &EditPanel::deleteMember);
@@ -145,8 +147,9 @@ void EditPanel::setupEditPanel(int memberID) {
     }
 }
 
-void EditPanel::uploadPicture() {
+void EditPanel::selectPicture() {
     std::filesystem::path imagePath;
+    std::string imageAddressString;
     QFileDialog *dialog = new QFileDialog();
     dialog->setAcceptMode(QFileDialog::AcceptOpen);
     dialog->setFileMode(QFileDialog::ExistingFile);
@@ -156,19 +159,56 @@ void EditPanel::uploadPicture() {
     if(result == QDialog::Accepted) {
         // save image address
         QString testMe = dialog->selectedFiles()[0];
-        imagePath = testMe.toStdString();
+        imageAddressString = testMe.toStdString();
+        imagePath = imageAddressString;
     } else if(result == QDialog::Rejected) {
         dialog->close();
     }
     try {
         const std::filesystem::path constImagePath = imagePath;
+        const std::string imageName = imageAddressString.substr(imageAddressString.find_last_of("/") + 1, 100);
+        qDebug() << "image name" << imageName.c_str();
         qDebug() << "chosen file: " << constImagePath.c_str();
         qDebug() << "target directory: " << IMAGES_DIR.c_str();
         std::filesystem::copy(constImagePath, IMAGES_DIR);
+<<<<<<< Updated upstream
     } catch (std::filesystem::__cxx11::filesystem_error& e) {
+=======
+        EditPanel::currentImageSymlink = "../src/images/symlink" + imageName;
+        std::filesystem::path copiedImagePath = "../src/images/" + imageName;
+        create_symlink(copiedImagePath, EditPanel::currentImageSymlink);
+        QMessageBox messageBox;
+        messageBox.setText("Image successfully added!");
+        messageBox.setFixedSize(500,200);
+        messageBox.exec();
+
+    } catch (std::filesystem::filesystem_error e) {
         //show error dialog
         QMessageBox messageBox;
-        messageBox.critical(0,"Error","File already exists!");
+        messageBox.critical(0,"Error","Image has already been added!");
+        messageBox.setFixedSize(500,200);
+    }
+}
+
+void EditPanel::removePicture() {
+    try {
+        const std::filesystem::path constSymlink = EditPanel::currentImageSymlink;
+        const std::filesystem::path constImagePath = std::filesystem::read_symlink(constSymlink);
+        qDebug() << "file to delete: " << constImagePath.c_str();
+        qDebug() << "target directory: " << IMAGES_DIR.c_str();
+        qDebug() << "file deleted: " << std::filesystem::remove(constImagePath);
+        qDebug() << "symlink deleted: " << std::filesystem::remove(EditPanel::currentImageSymlink);
+        QMessageBox messageBox;
+        messageBox.setText("Image successfully removed!");
+        messageBox.setFixedSize(500,200);
+        messageBox.exec();
+
+    } catch (std::filesystem::filesystem_error e) {
+        qDebug() << e.code().message().c_str();
+>>>>>>> Stashed changes
+        //show error dialog
+        QMessageBox messageBox;
+        messageBox.critical(0,"Error","No image has been added yet!");
         messageBox.setFixedSize(500,200);
     }
 }
