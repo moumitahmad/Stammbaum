@@ -161,6 +161,11 @@ void DisplayFam::changeView() {
 
 }
 
+void DisplayFam::updateDisplay(int memberID) {
+    qDebug() << ">> IN DISPLAY: " << memberID;
+
+}
+
 void DisplayFam::paintEvent(QPaintEvent *event) {
 
 
@@ -231,7 +236,7 @@ void DisplayFam::paintEvent(QPaintEvent *event) {
                scene->addItem(item);
            }
         } else if (!(childrenSize % 2)) { // gerade
-            qDebug() << childrenSize;
+            //qDebug() << childrenSize;
             int lineStart = middlex-100;
             int lineEnd = middlex+100;
 

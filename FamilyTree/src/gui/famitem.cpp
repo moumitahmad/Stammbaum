@@ -9,7 +9,7 @@ famItem::famItem(int xPos, int yPos, int width, int height, Member* member) :
     m_member(member)
 {
     Pressed = false;
-    qDebug() << m_xPos<<"xpos";
+    //qDebug() << m_xPos<<"xpos"; // TODO: wird die ganze zeit aufgerufen
 
 }
 

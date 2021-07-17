@@ -42,20 +42,47 @@
     </widget>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout">
+    <layout class="QHBoxLayout" name="horizontalLayout" stretch="3,0">
+     <property name="sizeConstraint">
+      <enum>QLayout::SetMaximumSize</enum>
+     </property>
      <item>
-      <layout class="QGridLayout" name="adminPanel"/>
+      <layout class="QGridLayout" name="adminPanel">
+       <property name="sizeConstraint">
+        <enum>QLayout::SetMaximumSize</enum>
+       </property>
+      </layout>
      </item>
      <item>
-      <layout class="QVBoxLayout" name="displayFamilyPanel">
-       <item>
-        <widget class="QCommandLinkButton" name="ButtonEditFamily">
-         <property name="text">
-          <string>Edit Family</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
+      <widget class="QWidget" name="displayFamilyPanel_2" native="true">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="MinimumExpanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>600</height>
+        </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true"/>
+       </property>
+       <layout class="QVBoxLayout" name="displayFamilyPanel">
+        <property name="sizeConstraint">
+         <enum>QLayout::SetDefaultConstraint</enum>
+        </property>
+        <item>
+         <widget class="QCommandLinkButton" name="ButtonEditFamily">
+          <property name="text">
+           <string>Edit Family</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
      </item>
     </layout>
    </item>

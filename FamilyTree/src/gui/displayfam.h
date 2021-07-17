@@ -23,6 +23,7 @@ public:
     void setupForView();
     void setupForEdit();
     void changeView();
+    void updateDisplay(int memberID);
 
 signals:
     void memberChoosen(int id); // id=-1 -> new Member

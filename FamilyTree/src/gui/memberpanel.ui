@@ -18,17 +18,17 @@
 	font: 11pt;
 	border-radius: 3px;
 	color: rgb(46, 52, 54); 
-	background-color: rgb(238, 238, 236);
+	background-color: rgb(203, 213, 221);
 	height: 60px; 
 	width: 60px;  
 	margin: 5px;
 }
 QPushButton:hover {
-	border: 2px  solid rgb(245, 121, 0);
+	border: 3px  solid rgb(245, 121, 0);
 }  
 QPushButton:pressed {
-	border: 2px  solid rgb(245, 121, 0);
-}  </string>
+	border: 3px  solid rgb(245, 121, 0);
+} </string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <item>
