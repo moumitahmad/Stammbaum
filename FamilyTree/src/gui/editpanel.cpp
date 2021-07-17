@@ -150,6 +150,7 @@ void EditPanel::setupEditPanel(int memberID) {
 void EditPanel::selectPicture() {
     std::filesystem::path imagePath;
     std::string imageAddressString;
+    std::string imageName;
     QFileDialog *dialog = new QFileDialog();
     dialog->setAcceptMode(QFileDialog::AcceptOpen);
     dialog->setFileMode(QFileDialog::ExistingFile);
@@ -166,14 +167,12 @@ void EditPanel::selectPicture() {
     }
     try {
         const std::filesystem::path constImagePath = imagePath;
-        const std::string imageName = imageAddressString.substr(imageAddressString.find_last_of("/") + 1, 100);
+        imageName = imageAddressString.substr(imageAddressString.find_last_of("/") + 1, 100);
         qDebug() << "image name" << imageName.c_str();
         qDebug() << "chosen file: " << constImagePath.c_str();
         qDebug() << "target directory: " << IMAGES_DIR.c_str();
         std::filesystem::copy(constImagePath, IMAGES_DIR);
-<<<<<<< Updated upstream
     } catch (std::filesystem::__cxx11::filesystem_error& e) {
-=======
         EditPanel::currentImageSymlink = "../src/images/symlink" + imageName;
         std::filesystem::path copiedImagePath = "../src/images/" + imageName;
         create_symlink(copiedImagePath, EditPanel::currentImageSymlink);
@@ -205,7 +204,6 @@ void EditPanel::removePicture() {
 
     } catch (std::filesystem::filesystem_error e) {
         qDebug() << e.code().message().c_str();
->>>>>>> Stashed changes
         //show error dialog
         QMessageBox messageBox;
         messageBox.critical(0,"Error","No image has been added yet!");
