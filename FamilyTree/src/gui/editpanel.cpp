@@ -56,12 +56,14 @@ int getIndex(QString value) {
 void EditPanel::showPotentionRelationships() {
     // show all potential partners and parents
     m_membersFromFam = m_pLogic->getMembersByFamily(m_displayedFamily->getId());
+    m_possibleRelationships.push_back(new Member()); // for first default value: no relationship
     if(m_membersFromFam != nullptr) {
         for(Member* p : *m_membersFromFam) {
             if(p->getID() != m_editedMember->getID()) {
-                ui->ChoosePartner->insertItem(p->getID(), p->getName());
-                ui->In_FirstParent->insertItem(p->getID(), p->getName());
-                ui->In_SecondParent->insertItem(p->getID(), p->getName());
+                ui->ChoosePartner->addItem(p->getName());
+                ui->In_FirstParent->addItem(p->getName());
+                ui->In_SecondParent->addItem(p->getName());
+                m_possibleRelationships.push_back(p);
             }
         }
     }
@@ -73,6 +75,15 @@ Member* EditPanel::findMember(int id) {
             return member;
     }
     return nullptr;
+}
+
+int EditPanel::getIndexForRelationship(const int memberID) const {
+    for(int i=0; i<m_possibleRelationships.length(); i++) {
+        if(memberID == m_possibleRelationships.at(i)->getID()) {
+            return i;
+        }
+    }
+    return -1;
 }
 
 void EditPanel::setupEditPanel(int memberID) {
@@ -119,21 +130,16 @@ void EditPanel::setupEditPanel(int memberID) {
         }
         ui->ChoosenDeath->setDate(date);
 
+        if(m_editedMember->getPartner()) {
+            ui->ChoosePartner->setCurrentIndex(getIndexForRelationship(m_editedMember->getPartner()->getID()));
+        }
         QVector<Member*> parents = m_editedMember->getParents();
-        for(int i=0; i<m_membersFromFam->length(); i++) {
-            if(m_editedMember->getPartner() && m_editedMember->getPartner()->getID() == m_membersFromFam->at(i)->getID()) {
-                ui->ChoosePartner->setCurrentIndex(i);
-                qDebug() << "partner: " << i;
-            }
-            if(parents.length() > 0) {
-                ui->In_FirstParent->setCurrentIndex(i);
-                ui->In_SecondParent->setEnabled(true);
-                qDebug() << "parent1: " << i;
-            }
-            if(parents.length() > 1) {
-                ui->In_SecondParent->setCurrentIndex(i);
-                qDebug() << "parent2: " << i;
-            }
+        if(parents.length() > 0) {
+            ui->In_FirstParent->setCurrentIndex(parents.at(0)->getID());
+            ui->In_SecondParent->setEnabled(true);
+        }
+        if(parents.length() > 1) {
+            ui->In_SecondParent->setCurrentIndex(parents.at(1)->getID());
         }
     } else {
         ui->ButtonSave->setText("Save");
@@ -206,12 +212,6 @@ void EditPanel::saveMember() {
     int partnerID = ui->ChoosePartner->currentIndex();
     int parent1ID = ui->In_FirstParent->currentIndex();
     int parent2ID = ui->In_SecondParent->currentIndex();
-    if(m_editedMember->getID() <= partnerID)
-        partnerID++;
-    if(m_editedMember->getID() <= parent1ID)
-        parent1ID++;
-    if(m_editedMember->getID() <= parent2ID)
-        parent2ID++;
 
     qDebug() << name << " | " << birth << " | " << death << " | " << gender << " | " << biografie << " | " << partnerID << " | " << parent1ID << " | " << parent2ID;
 
@@ -238,16 +238,16 @@ void EditPanel::saveMember() {
         qDebug() << "Update member: " << m_editedMember->getName();
         m_editedMember = m_pLogic->updateMemberData(m_editedMember, name, birth, death, gender, biografie);
         // relationships
-        Member* partner = findMember(partnerID);
         if(partnerID != 0) {
+            Member* partner = m_possibleRelationships.at(partnerID);
+            qDebug() << "UPDATE partner: "<< partner->getName();
             if(!m_editedMember->getPartner() || partnerID != m_editedMember->getPartner()->getID())
                 m_editedMember = m_pLogic->savePartnerFromMember(m_editedMember, partner);
-        } else if(m_editedMember->getPartner()) {
-            m_pLogic->deletePartnerFromMember(m_editedMember, m_editedMember->getPartner());
         }
         QVector<Member*> parents = m_editedMember->getParents();
-        Member* parent1 = findMember(parent1ID);
         if(parent1ID != 0) {
+            Member* parent1 = m_possibleRelationships.at(parent1ID);
+            qDebug() << "UPDATE PARENT1: "<< parent1->getName();
             if(parents.length() == 0 || parent1ID != parents.at(0)->getID()) {
                 if(parents.length() == 1)
                     m_pLogic->deleteParentChildRelationship(parents.at(0), m_editedMember);
@@ -256,8 +256,9 @@ void EditPanel::saveMember() {
         } else if(parents.length() > 0) {
             m_editedMember = m_pLogic->deleteParentChildRelationship(parents.at(0), m_editedMember);
         }
-        Member* parent2 = findMember(parent2ID);
         if(parent2ID != 0) {
+            Member* parent2 = m_possibleRelationships.at(parent2ID);
+            qDebug() << "UPDATE PARENT2: "<< parent2->getName();
             if(parents.length() == 1 || parent2ID != parents.at(1)->getID()) {
                 if(parents.length() == 2)
                     m_pLogic->deleteParentChildRelationship(parents.at(1), m_editedMember);
@@ -312,33 +313,27 @@ void EditPanel::resetUI(){
 
     m_editedMember = nullptr;
     m_membersFromFam = nullptr;
+    m_possibleRelationships.clear();
 }
 
 void EditPanel::deleteMember() {
-    qDebug() << "delete " << m_editedMember->getName() << ":";
     m_pLogic->deleteMember(m_editedMember);
     emit closePanel();
 }
 
 void EditPanel::toggleBirthDate() {
-    qDebug() << "toggle Birth:";
     if(ui->BirthCheckBox->isChecked()) {
-        qDebug() << "true";
         ui->ChoosenBirth->setEnabled(true);
         return;
     }
-    qDebug() << "false";
     ui->ChoosenBirth->setEnabled(false);
 }
 
 void EditPanel::toggleDeathDate() {
-    qDebug() << "toggle Death:";
     if(ui->DeathCheckBox->isChecked()) {
-        qDebug() << "true";
         ui->ChoosenDeath->setEnabled(true);
         return;
     }
-    qDebug() << "false";
     ui->ChoosenDeath->setEnabled(false);
 }
 
