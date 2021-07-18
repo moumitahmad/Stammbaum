@@ -38,6 +38,7 @@ void DisplayFam::memberSelected(int id) {
 }
 
 void DisplayFam::paintEvent(QPaintEvent *event) {
+    this->scene->clear();
     int currentFamily = m_pLogic->getCurrentFamilyID();
     QVector<Member*>* familyMembers = m_pLogic->getMembersByFamily(currentFamily);
 
