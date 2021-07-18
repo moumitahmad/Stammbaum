@@ -195,15 +195,17 @@ void DisplayFam::paintEvent(QPaintEvent *event) {
 
         int startx = -200;
         int starty = -200;
-        int widthRect = 150;
-        int heightRect = 200;
+        int widthRect = 180;
+        int heightRect = 180;
         int distanceX = widthRect;
         int distanceY = heightRect-50;
         QPen redpen(Qt::red);
 
 
-
+        QImage defaultImg("/home/moumita/C++/AA_Project/Stammbaum/FamilyTree/src/images/defaultMember.png");
         item = new famItem(startx,starty,widthRect,heightRect, treeStart);
+
+        //QObject::connect(item, &QGraphicsItem::isSelected, this, &DisplayFam::memberChoosen);
         scene->addItem(item);
 
 
