@@ -46,7 +46,11 @@ void DisplayFam::paintEvent(QPaintEvent *event) {
 }
 
 void DisplayFam::paint() {
+    //reset
     this->scene->clear();
+    items.clear();
+    //delete item;
+
     int currentFamily = m_pLogic->getCurrentFamilyID();
     QVector<Member*>* familyMembers = m_pLogic->getMembersByFamily(currentFamily);
 
