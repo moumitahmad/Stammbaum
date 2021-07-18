@@ -98,7 +98,6 @@ void EditPanel::setupEditPanel(int memberID) {
 
         showPotentionRelationships();
 
-
         // fill-in exsisting data
         ui->In_Name->setText(m_editedMember->getName());
         ui->TextBiography->setText(m_editedMember->getBiografie());
@@ -135,11 +134,11 @@ void EditPanel::setupEditPanel(int memberID) {
         }
         QVector<Member*> parents = m_editedMember->getParents();
         if(parents.length() > 0) {
-            ui->In_FirstParent->setCurrentIndex(parents.at(0)->getID());
+            ui->In_FirstParent->setCurrentIndex(getIndexForRelationship(parents.at(0)->getID()));
             ui->In_SecondParent->setEnabled(true);
         }
         if(parents.length() > 1) {
-            ui->In_SecondParent->setCurrentIndex(parents.at(1)->getID());
+            ui->In_SecondParent->setCurrentIndex(getIndexForRelationship(parents.at(1)->getID()));
         }
     } else {
         ui->ButtonSave->setText("Save");

@@ -4,7 +4,7 @@
 #include <QGraphicsItem>
 #include <QPainter>
 #include "./value-objects/member.h"
-
+#include "displayfam.h"
 
 // ----------------- ITEM ------------------
 class itemPart : public QGraphicsItem {
@@ -37,15 +37,17 @@ protected:
 class famItem : public QGraphicsItemGroup {
 
 public:
-    famItem(int xPos, int yPos, int width, int height, Member* member);
+    famItem(int xPos, int yPos, int width, int height, Member* member, DisplayFam* parent);
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+    void setPressed(const bool& pressed);
+    Member* m_member;
 private:
+    DisplayFam* m_parent;
     bool Pressed;
     int m_xPos;
     int m_yPos;
     int m_heigth;
     int m_width;
-    Member* m_member;
     QImage m_image;
     itemPart* m_imageItem;
     itemPart* m_item;
