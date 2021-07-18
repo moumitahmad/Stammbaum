@@ -30,12 +30,13 @@ signals:
 
 private:
     Ui::DisplayFam *ui;
-
+    int startpos;
     QGraphicsScene *scene;
     QGraphicsRectItem *rect;
     QGraphicsRectItem *rect2;
     QGraphicsLineItem *line;
 
+    void paint();
 protected:
     void paintEvent(QPaintEvent *event);
 };

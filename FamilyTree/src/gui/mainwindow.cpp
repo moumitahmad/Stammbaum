@@ -27,6 +27,7 @@ MainWindow::MainWindow(domain::ILogic* pLogic, QWidget *parent):
     QObject::connect(m_vp, &ViewPage::switchToHome, this, &MainWindow::openHomePage);
 
     QObject::connect(m_hp, &Homepage::drawFamily, m_ep, &EditPage::drawFamily);
+    QObject::connect(m_hp, &Homepage::drawFamily, m_vp, &ViewPage::drawFamily);
 
     QObject::connect(ui->actionHome, &QAction::triggered, this, &MainWindow::openHomePage);
     QObject::connect(ui->actionLogout, &QAction::triggered, this, &MainWindow::logout);

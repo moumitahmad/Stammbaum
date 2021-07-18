@@ -57,5 +57,30 @@ protected:
 
 };
 
+/* BUtton */
+
+//class famItemBtn : public QGraphicsItem {
+
+//public:
+//    famItemBtn(int xPos, int yPos, Member* member);
+//    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+//    void setPressed(const bool& pressed);
+//    Member* m_member;
+//private:
+//    DisplayFam* m_parent;
+//    bool Pressed;
+//    int m_xPos;
+//    int m_yPos;
+//    int m_heigth;
+//    int m_width;
+//    QImage m_image;
+//    itemPart* m_imageItem;
+//    itemPart* m_item;
+
+//protected:
+//    void mousePressEvent(QGraphicsSceneMouseEvent *event);
+
+//};
+
 
 #endif // FAMITEM_H

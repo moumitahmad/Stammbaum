@@ -19,6 +19,7 @@ public:
     ~ViewPage();
 
    void setupViewPage();
+   void drawFamily();
 
 signals:
     void switchToEdit();
