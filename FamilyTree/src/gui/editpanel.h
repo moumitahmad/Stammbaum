@@ -21,6 +21,7 @@ public:
 
 signals:
     void closePanel();
+    void updateDisplay(int id);
 
 private slots:
     void selectPicture();

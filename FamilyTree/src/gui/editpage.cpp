@@ -23,6 +23,7 @@ EditPage::EditPage(domain::ILogic* pLogic, QWidget *parent) :
     ui->horizontalLayout->setStretchFactor(ui->editPanel, 1);
     ui->horizontalLayout->setStretchFactor(ui->mainPanel, 3);
     QObject::connect(m_ep, &EditPanel::closePanel, this, &EditPage::closeEditPanel);
+    QObject::connect(m_ep, &EditPanel::updateDisplay, m_df, &DisplayFam::updateDisplay);
     ui->editPanel->hide();
 
     // signal

@@ -332,6 +332,7 @@ void EditPanel::saveMember() {
         }
     }
     emit closePanel();
+    emit updateDisplay(m_editedMember->getID());
 }
 
 void EditPanel::resetUI(){
