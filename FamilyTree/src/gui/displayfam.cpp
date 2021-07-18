@@ -26,6 +26,9 @@ void DisplayFam::changeView() {
 void DisplayFam::updateDisplay(int memberID) {
     qDebug() << ">> IN DISPLAY: " << memberID;
     startpos = memberID;
+    if (memberID==-1)
+        return;
+
     paint();
 }
 
