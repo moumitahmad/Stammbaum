@@ -56,6 +56,10 @@ void ViewPage::setupViewPage() {
 
 }
 
+void ViewPage::drawFamily() {
+    m_df->changeView();
+}
+
 void ViewPage::openEditPage() {
     emit switchToEdit();
 }

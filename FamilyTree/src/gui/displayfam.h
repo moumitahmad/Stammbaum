@@ -30,13 +30,13 @@ signals:
 
 private:
     Ui::DisplayFam *ui;
-    Member* treeStart;
-    QVector<Member*>* familyMembers;
+    int startpos;
     QGraphicsScene *scene;
     QGraphicsRectItem *rect;
     QGraphicsRectItem *rect2;
     QGraphicsLineItem *line;
 
+    void paint();
 protected:
     void paintEvent(QPaintEvent *event);
 };

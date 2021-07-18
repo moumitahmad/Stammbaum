@@ -1,7 +1,6 @@
 #include "ILogic.h"
 #include "./persistence/databaseservice.h"
 #include <QDebug>
-//#include <QSqlError>
 
 
 User *domain::ILogic::getCurrentUser() const {
