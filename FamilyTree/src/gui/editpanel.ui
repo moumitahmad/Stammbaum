@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>343</width>
+    <width>347</width>
     <height>800</height>
    </rect>
   </property>
@@ -18,6 +18,13 @@
     <layout class="QGridLayout" name="gridLayout_3">
      <item row="3" column="2">
       <widget class="QDateEdit" name="ChoosenBirth">
+       <property name="font">
+        <font>
+         <family>Sawasdee</family>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
        <property name="dateTime">
         <datetime>
          <hour>0</hour>
@@ -66,10 +73,24 @@
          <height>16777215</height>
         </size>
        </property>
+       <property name="font">
+        <font>
+         <family>Sawasdee</family>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
       </widget>
      </item>
      <item row="3" column="0">
       <widget class="QLabel" name="LabelBirth">
+       <property name="font">
+        <font>
+         <family>Sawasdee</family>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
        <property name="text">
         <string>Birth</string>
        </property>
@@ -77,6 +98,13 @@
      </item>
      <item row="11" column="2">
       <widget class="QPushButton" name="ButtonAddPicture">
+       <property name="font">
+        <font>
+         <family>Sawasdee</family>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
        <property name="text">
         <string>Add Picture</string>
        </property>
@@ -86,6 +114,13 @@
       <layout class="QHBoxLayout" name="horizontalLayout_3">
        <item>
         <widget class="QPushButton" name="ButtonSave">
+         <property name="font">
+          <font>
+           <family>Sawasdee</family>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
          <property name="text">
           <string>Save</string>
          </property>
@@ -93,6 +128,13 @@
        </item>
        <item>
         <widget class="QPushButton" name="ButtonCancel">
+         <property name="font">
+          <font>
+           <family>Sawasdee</family>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
          <property name="text">
           <string>Cancel</string>
          </property>
@@ -102,6 +144,13 @@
      </item>
      <item row="8" column="2">
       <widget class="QComboBox" name="ChoosePartner">
+       <property name="font">
+        <font>
+         <family>Sawasdee</family>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
        <item>
         <property name="text">
          <string>no partner</string>
@@ -111,6 +160,13 @@
      </item>
      <item row="7" column="0">
       <widget class="QLabel" name="LabelBiography">
+       <property name="font">
+        <font>
+         <family>Sawasdee</family>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
        <property name="text">
         <string>Biography</string>
        </property>
@@ -118,13 +174,27 @@
      </item>
      <item row="9" column="0">
       <widget class="QLabel" name="firstParentLabel">
+       <property name="font">
+        <font>
+         <family>Sawasdee</family>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
        <property name="text">
-        <string>first Parent</string>
+        <string>First Parent</string>
        </property>
       </widget>
      </item>
      <item row="10" column="2">
       <widget class="QComboBox" name="In_SecondParent">
+       <property name="font">
+        <font>
+         <family>Sawasdee</family>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
        <item>
         <property name="text">
          <string>no second parent</string>
@@ -151,6 +221,13 @@
          <width>200</width>
          <height>16777215</height>
         </size>
+       </property>
+       <property name="font">
+        <font>
+         <family>Sawasdee</family>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
        </property>
        <property name="currentText">
         <string>Male</string>
@@ -179,6 +256,13 @@
      </item>
      <item row="6" column="0">
       <widget class="QLabel" name="LabelGender">
+       <property name="font">
+        <font>
+         <family>Sawasdee</family>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
        <property name="text">
         <string>Gender</string>
        </property>
@@ -204,6 +288,13 @@
          <height>16777215</height>
         </size>
        </property>
+       <property name="font">
+        <font>
+         <family>Sawasdee</family>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
        <property name="placeholderText">
         <string>name</string>
        </property>
@@ -211,6 +302,13 @@
      </item>
      <item row="9" column="2">
       <widget class="QComboBox" name="In_FirstParent">
+       <property name="font">
+        <font>
+         <family>Sawasdee</family>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
        <item>
         <property name="text">
          <string>no parent</string>
@@ -220,6 +318,13 @@
      </item>
      <item row="8" column="0">
       <widget class="QLabel" name="label">
+       <property name="font">
+        <font>
+         <family>Sawasdee</family>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
        <property name="text">
         <string>Partner</string>
        </property>
@@ -227,6 +332,13 @@
      </item>
      <item row="14" column="2">
       <widget class="QPushButton" name="ButtonDelete">
+       <property name="font">
+        <font>
+         <family>Sawasdee</family>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
        <property name="text">
         <string>Delete</string>
        </property>
@@ -234,8 +346,15 @@
      </item>
      <item row="10" column="0">
       <widget class="QLabel" name="label_2">
+       <property name="font">
+        <font>
+         <family>Sawasdee</family>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
        <property name="text">
-        <string>second Parent</string>
+        <string>Second Parent</string>
        </property>
       </widget>
      </item>
@@ -257,6 +376,13 @@
      </item>
      <item row="1" column="0">
       <widget class="QLabel" name="LabelName">
+       <property name="font">
+        <font>
+         <family>Sawasdee</family>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
        <property name="text">
         <string>Name</string>
        </property>
@@ -266,6 +392,13 @@
       <widget class="QDateEdit" name="ChoosenDeath">
        <property name="enabled">
         <bool>true</bool>
+       </property>
+       <property name="font">
+        <font>
+         <family>Sawasdee</family>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
        </property>
        <property name="dateTime">
         <datetime>
@@ -297,6 +430,13 @@
      </item>
      <item row="5" column="0">
       <widget class="QLabel" name="LabelDeath">
+       <property name="font">
+        <font>
+         <family>Sawasdee</family>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
        <property name="text">
         <string>Death</string>
        </property>
@@ -320,6 +460,13 @@
      </item>
      <item row="12" column="2">
       <widget class="QPushButton" name="ButtonRemovePicture">
+       <property name="font">
+        <font>
+         <family>Sawasdee</family>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
        <property name="text">
         <string>Remove Picture</string>
        </property>
@@ -329,8 +476,16 @@
    </item>
    <item row="0" column="0">
     <widget class="QLabel" name="ErrorMessage">
+     <property name="font">
+      <font>
+       <family>Sawasdee</family>
+       <pointsize>15</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
      <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#ef2929;&quot;&gt;error message&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#ef2929;&quot;&gt;Error message&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
     </widget>
    </item>

@@ -94,8 +94,11 @@ QPushButton:pressed {
       <widget class="QLabel" name="noFamiliesText">
        <property name="font">
         <font>
+         <family>Sawasdee</family>
          <pointsize>15</pointsize>
+         <weight>75</weight>
          <italic>true</italic>
+         <bold>true</bold>
         </font>
        </property>
        <property name="text">
@@ -127,6 +130,15 @@ QPushButton:pressed {
      </item>
      <item>
       <widget class="QPushButton" name="newFamilyButton">
+       <property name="font">
+        <font>
+         <family>Sawasdee</family>
+         <pointsize>11</pointsize>
+         <weight>50</weight>
+         <italic>false</italic>
+         <bold>false</bold>
+        </font>
+       </property>
        <property name="styleSheet">
         <string notr="true"/>
        </property>

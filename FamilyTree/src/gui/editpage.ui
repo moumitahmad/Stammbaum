@@ -72,7 +72,7 @@
        <property name="font">
         <font>
          <family>Sawasdee</family>
-         <pointsize>16</pointsize>
+         <pointsize>15</pointsize>
          <weight>75</weight>
          <bold>true</bold>
         </font>

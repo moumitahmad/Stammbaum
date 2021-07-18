@@ -356,8 +356,13 @@ void EditPanel::resetUI(){
 }
 
 void EditPanel::deleteMember() {
-    m_pLogic->deleteMember(m_editedMember);
-    emit closePanel();
+    const QString title = "Delete family member";
+    const QString text = "Are you sure that you want to delete " + m_editedMember->getName() + "?";
+    auto buttonPressed = QMessageBox::question(this, "Delete family member", "Are you sure that you want to delete " + m_editedMember->getName() + "?", QMessageBox::Yes|QMessageBox::No, QMessageBox::Yes);
+    if(buttonPressed == QMessageBox::Yes){
+        m_pLogic->deleteMember(m_editedMember);
+        emit closePanel();
+    }
 }
 
 void EditPanel::toggleBirthDate() {

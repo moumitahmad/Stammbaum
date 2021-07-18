@@ -1,3 +1,5 @@
+//Gurleen Kour
+
 #include "userwindow.h"
 #include "ui_userwindow.h"
 
@@ -24,7 +26,6 @@ UserWindow::UserWindow(domain::ILogic* pLogic, QWidget *parent) :
     QObject::connect(ui->backButton, &QPushButton::clicked, this, &UserWindow::switchToLogIn);
     QObject::connect(ui->loginButton, &QPushButton::clicked, this, &UserWindow::logInUser);
     QObject::connect(ui->newUserButton_2, &QPushButton::clicked, this, &UserWindow::createNewUser);
-    //QObject::connect(ui->actionQuit, &QAction::triggered, this, &UserWindow::quit);
 }
 
 UserWindow::~UserWindow()
@@ -52,8 +53,11 @@ void UserWindow::switchToCreateNewUser() {
 }
 
 void UserWindow::switchToLogIn() {
+    if(ui->stackedWidget->currentIndex() == 1)
+        ui->accountCreatedLabel->show();
+    else
+        ui->accountCreatedLabel->hide();
     ui->stackedWidget->setCurrentIndex(0);
-    ui->accountCreatedLabel->show();
 
     // hide error and additional messages
     ui->errorLabelLogin->hide();

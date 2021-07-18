@@ -23,6 +23,13 @@
      <layout class="QGridLayout" name="gridLayout_3">
       <item row="0" column="0">
        <widget class="QStackedWidget" name="stackedWidget">
+        <property name="font">
+         <font>
+          <family>Sawasdee</family>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
         <property name="currentIndex">
          <number>0</number>
         </property>
@@ -33,7 +40,7 @@
             <x>0</x>
             <y>0</y>
             <width>661</width>
-            <height>390</height>
+            <height>411</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -65,7 +72,7 @@
            <item>
             <widget class="QLabel" name="loginLabel">
              <property name="sizePolicy">
-              <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+              <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
@@ -199,6 +206,13 @@
                    <verstretch>0</verstretch>
                   </sizepolicy>
                  </property>
+                 <property name="font">
+                  <font>
+                   <family>Sawasdee</family>
+                   <weight>75</weight>
+                   <bold>true</bold>
+                  </font>
+                 </property>
                  <property name="text">
                   <string>Username</string>
                  </property>
@@ -206,6 +220,13 @@
                </item>
                <item row="4" column="1">
                 <widget class="QPushButton" name="newUserButton">
+                 <property name="font">
+                  <font>
+                   <family>Sawasdee</family>
+                   <weight>75</weight>
+                   <bold>true</bold>
+                  </font>
+                 </property>
                  <property name="text">
                   <string>Sign Up</string>
                  </property>
@@ -229,23 +250,53 @@
                </item>
                <item row="3" column="1">
                 <widget class="QPushButton" name="loginButton">
+                 <property name="font">
+                  <font>
+                   <family>Sawasdee</family>
+                   <weight>75</weight>
+                   <bold>true</bold>
+                  </font>
+                 </property>
                  <property name="text">
                   <string>Login</string>
                  </property>
                 </widget>
                </item>
                <item row="0" column="1">
-                <widget class="QLineEdit" name="in_username"/>
+                <widget class="QLineEdit" name="in_username">
+                 <property name="font">
+                  <font>
+                   <family>Sawasdee</family>
+                   <weight>75</weight>
+                   <bold>true</bold>
+                  </font>
+                 </property>
+                </widget>
                </item>
                <item row="1" column="0">
                 <widget class="QLabel" name="password">
+                 <property name="font">
+                  <font>
+                   <family>Sawasdee</family>
+                   <weight>75</weight>
+                   <bold>true</bold>
+                  </font>
+                 </property>
                  <property name="text">
                   <string>Password</string>
                  </property>
                 </widget>
                </item>
                <item row="1" column="1">
-                <widget class="QLineEdit" name="in_password"/>
+                <widget class="QLineEdit" name="in_password">
+                 <property name="font">
+                  <font>
+                   <family>Sawasdee</family>
+                   <weight>75</weight>
+                   <bold>true</bold>
+                  </font>
+                 </property>
+                </widget>
                </item>
               </layout>
              </item>
@@ -447,6 +498,13 @@
               <layout class="QGridLayout" name="gridLayout_4">
                <item row="1" column="0">
                 <widget class="QLabel" name="password_3">
+                 <property name="font">
+                  <font>
+                   <family>Sawasdee</family>
+                   <weight>75</weight>
+                   <bold>true</bold>
+                  </font>
+                 </property>
                  <property name="text">
                   <string>Password</string>
                  </property>
@@ -460,6 +518,13 @@
                    <verstretch>0</verstretch>
                   </sizepolicy>
                  </property>
+                 <property name="font">
+                  <font>
+                   <family>Sawasdee</family>
+                   <weight>75</weight>
+                   <bold>true</bold>
+                  </font>
+                 </property>
                  <property name="text">
                   <string>Username</string>
                  </property>
@@ -467,13 +532,28 @@
                </item>
                <item row="4" column="1">
                 <widget class="QPushButton" name="backButton">
+                 <property name="font">
+                  <font>
+                   <family>Sawasdee</family>
+                   <weight>75</weight>
+                   <bold>true</bold>
+                  </font>
+                 </property>
                  <property name="text">
                   <string>Login</string>
                  </property>
                 </widget>
                </item>
                <item row="0" column="1">
-                <widget class="QLineEdit" name="in_new_username"/>
+                <widget class="QLineEdit" name="in_new_username">
+                 <property name="font">
+                  <font>
+                   <family>Sawasdee</family>
+                   <weight>75</weight>
+                   <bold>true</bold>
+                  </font>
+                 </property>
+                </widget>
                </item>
                <item row="2" column="1">
                 <spacer name="verticalSpacer_8">
@@ -492,10 +572,25 @@
                 </spacer>
                </item>
                <item row="1" column="1">
-                <widget class="QLineEdit" name="in_new_password"/>
+                <widget class="QLineEdit" name="in_new_password">
+                 <property name="font">
+                  <font>
+                   <family>Sawasdee</family>
+                   <weight>75</weight>
+                   <bold>true</bold>
+                  </font>
+                 </property>
+                </widget>
                </item>
                <item row="3" column="1">
                 <widget class="QPushButton" name="newUserButton_2">
+                 <property name="font">
+                  <font>
+                   <family>Sawasdee</family>
+                   <weight>75</weight>
+                   <bold>true</bold>
+                  </font>
+                 </property>
                  <property name="text">
                   <string>Sign Up</string>
                  </property>
