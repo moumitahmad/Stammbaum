@@ -1,3 +1,5 @@
+//Gurleen Kour
+
 #include "editpanel.h"
 #include "ui_editpanel.h"
 #include <QDebug>
@@ -159,8 +161,8 @@ void EditPanel::selectPicture() {
     int result = dialog->exec();
     if(result == QDialog::Accepted) {
         // save image address
-        QString testMe = dialog->selectedFiles()[0];
-        imageAddressString = testMe.toStdString();
+        QString address = dialog->selectedFiles()[0];
+        imageAddressString = address.toStdString();
         imagePath = imageAddressString;
     } else if(result == QDialog::Rejected) {
         dialog->close();
@@ -171,17 +173,15 @@ void EditPanel::selectPicture() {
         qDebug() << "image name" << imageName.c_str();
         qDebug() << "chosen file: " << constImagePath.c_str();
         qDebug() << "target directory: " << IMAGES_DIR.c_str();
-        std::filesystem::copy(constImagePath, IMAGES_DIR);
-    } catch (std::filesystem::__cxx11::filesystem_error& e) {
-        EditPanel::currentImageSymlink = "../src/images/symlink" + imageName;
+        std::filesystem::copy(constImagePath, IMAGES_DIR);                      //copy image
+        EditPanel::currentImageSymlink = "../src/images/symlink" + imageName;   //set symulink up
         std::filesystem::path copiedImagePath = "../src/images/" + imageName;
-        create_symlink(copiedImagePath, EditPanel::currentImageSymlink);
+        create_symlink(copiedImagePath, EditPanel::currentImageSymlink);        //create symlink to copied image
         QMessageBox messageBox;
         messageBox.setText("Image successfully added!");
         messageBox.setFixedSize(500,200);
         messageBox.exec();
-
-    } catch (std::filesystem::filesystem_error e) {
+    } catch (std::filesystem::filesystem_error& e) {
         //show error dialog
         QMessageBox messageBox;
         messageBox.critical(0,"Error","Image has already been added!");
