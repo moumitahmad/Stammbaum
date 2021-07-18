@@ -30,7 +30,8 @@ signals:
 
 private:
     Ui::DisplayFam *ui;
-
+    Member* treeStart;
+    QVector<Member*>* familyMembers;
     QGraphicsScene *scene;
     QGraphicsRectItem *rect;
     QGraphicsRectItem *rect2;

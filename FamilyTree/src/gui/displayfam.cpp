@@ -20,12 +20,27 @@ DisplayFam::DisplayFam(domain::ILogic* pLogic, QWidget *parent) :
 
 void DisplayFam::changeView() {
     qDebug() << "changeview function";
+    int currentFamily = m_pLogic->getCurrentFamilyID();
+    familyMembers = m_pLogic->getMembersByFamily(currentFamily);
+
+    if (!familyMembers)
+        return;
+
+
+
+    for(Member* m: *familyMembers) {
+        if (m->getParents().length()<1) {
+            treeStart=m;
+            break;
+        }
+    }
     this->update();
 }
 
 void DisplayFam::updateDisplay(int memberID) {
     qDebug() << ">> IN DISPLAY: " << memberID;
-
+    treeStart =  m_pLogic->getMemberByID(memberID);
+    this->update();
 }
 
 void DisplayFam::memberSelected(int id) {
@@ -39,20 +54,11 @@ void DisplayFam::memberSelected(int id) {
 
 void DisplayFam::paintEvent(QPaintEvent *event) {
     this->scene->clear();
-    int currentFamily = m_pLogic->getCurrentFamilyID();
-    QVector<Member*>* familyMembers = m_pLogic->getMembersByFamily(currentFamily);
 
     if (!familyMembers)
         return;
 
-    Member* treeStart;
 
-    for(Member* m: *familyMembers) {
-        if (m->getParents().length()<1) {
-            treeStart=m;
-            break;
-        }
-    }
     QVector<Member*> allChildren = treeStart->getChildren();
     int childrenSize = allChildren.size();
 
