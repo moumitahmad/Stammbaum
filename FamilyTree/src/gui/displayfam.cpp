@@ -76,15 +76,20 @@ void DisplayFam::paintEvent(QPaintEvent *event) {
               item = new famItem(startx+widthRect+distanceX,starty,widthRect,heightRect, treeStart->getPartner(), this);
               scene->addItem(item); //hier eventuell noch einige berechnungen und variablen einfügen
               items.push_back(item);
-      //        startx += 200;
+
               line = scene->addLine(startx+widthRect,starty+heightRect/2, startx+widthRect+distanceX,starty+heightRect/2,redpen);
               if(childrenSize>0) {
                  line = scene->addLine(startx+widthRect+distanceX/2, starty+heightRect/2, startx+widthRect+distanceX/2, starty+heightRect/2+distanceY, redpen);
+
+              } else {
+                  return;
               }
           } else {
               if(childrenSize>0) {
                   line = scene->addLine(startx+widthRect,starty+heightRect/2, startx+widthRect+distanceX/2,starty+heightRect/2,redpen);
                   line = scene->addLine(startx+widthRect+distanceX/2, starty+heightRect/2, startx+widthRect+distanceX/2, starty+heightRect/2+distanceY, redpen);
+              } else {
+                  return;
               }
           }
 
