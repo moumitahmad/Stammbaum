@@ -4,7 +4,6 @@
 #include <QWidget>
 #include <QGraphicsScene>
 #include "./domain/ILogic.h"
-#include "famitem.h"
 
 namespace Ui {
 class DisplayFam;
@@ -24,6 +23,7 @@ public:
     void setupForEdit();
     void changeView();
     void updateDisplay(int memberID);
+    void memberSelected(int id);
 
 signals:
     void memberChoosen(int id); // id=-1 -> new Member
@@ -32,7 +32,6 @@ private:
     Ui::DisplayFam *ui;
 
     QGraphicsScene *scene;
-    famItem *item;
     QGraphicsRectItem *rect;
     QGraphicsRectItem *rect2;
     QGraphicsLineItem *line;
