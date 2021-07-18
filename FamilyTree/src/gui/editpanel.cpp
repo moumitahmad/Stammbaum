@@ -369,6 +369,7 @@ void EditPanel::deleteMember() {
     if(buttonPressed == QMessageBox::Yes){
         m_pLogic->deleteMember(m_editedMember);
         emit closePanel();
+        emit updateDisplay(0);
     }
 }
 
