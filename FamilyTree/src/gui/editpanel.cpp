@@ -92,15 +92,6 @@ void EditPanel::showPotentionRelationships() {
         }
     }
 }
-/*
-int EditPanel::getIndexForRelationship(const int memberID) const {
-    for(int i=0; i<m_possibleRelationships.length(); i++) {
-        if(memberID == m_possibleRelationships.at(i)->getID()) {
-            return i;
-        }
-    }
-    return -1;
-}*/
 
 void EditPanel::setupEditPanel(int memberID) {
     // reset
