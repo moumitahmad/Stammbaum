@@ -26,6 +26,9 @@ private:
     Member* m_member;
     QImage m_image;
 
+protected:
+    void mousePressEvent(QGraphicsSceneMouseEvent *event);
+
 };
 
 
@@ -35,6 +38,7 @@ class famItem : public QGraphicsItemGroup {
 
 public:
     famItem(int xPos, int yPos, int width, int height, Member* member);
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 private:
     bool Pressed;
     int m_xPos;

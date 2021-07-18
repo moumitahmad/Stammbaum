@@ -20,12 +20,19 @@ famItem::famItem(int xPos, int yPos, int width, int height, Member* member) :
 
     this->addToGroup(m_imageItem);
     this->addToGroup(m_item);
+}
 
+void famItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
+    if (Pressed) {
+        QPen pen2(QColor(245, 121, 0), 3);
+        painter->setPen(pen2);
+    }
 }
 
 void famItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     Pressed = true;
+    qDebug() << "IS PRESSED";
     //emit memberChoosen(m_member->getID());
     update();
 }
@@ -51,15 +58,16 @@ QRectF itemPart::boundingRect() const {
 }
 
 void itemPart::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
+
     QRectF rect = boundingRect();
    // QBrush brush(Qt::black);
     QPen pen(Qt::black, 1);
     painter->setPen(pen);
     if(m_image.isNull()) {
         QString age = m_member->getBirth() + " to " + m_member->getDeath();
-        QString text = m_member->getName() + "\n" + age + "\n" + "Gender: " + m_member->getGender();
+        QString text = m_member->getName() + "\n" + age + "\n" + "Gender: " + m_member->getGender() + "\n" + m_member->getBiografie();
         painter->setFont(QFont("Sawasdee", 11));
-        painter->drawText(rect, Qt::AlignCenter, text);
+        painter->drawText(rect, Qt::AlignLeft, text);
     } else {
         painter->drawImage(rect, m_image);
     }
@@ -76,3 +84,10 @@ void itemPart::setPressed(const bool &pressed)
     Pressed = pressed;
 }
 
+void itemPart::mousePressEvent(QGraphicsSceneMouseEvent *event)
+{
+    Pressed = true;
+    qDebug() << "PART IS PRESSED";
+    //emit memberChoosen(m_member->getID());
+    update();
+}
