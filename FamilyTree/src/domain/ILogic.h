@@ -51,7 +51,7 @@ namespace domain {
         // ---------- MEMBER
         // create
         Member* createMember(FamilyTree* family, const QString& name, const QString& birth,
-                const QString& death, const QString& gender, const QString& biografie,
+                const QString& death, const QString& gender, QString& image,
                 Member* partner = nullptr, QVector<Member*>* children = new QVector<Member*>);
 
         // select
@@ -60,8 +60,7 @@ namespace domain {
         QVector<Member*> getSiblingsFromMember(const Member* member);
 
         // update
-        Member* updateMemberData(Member* member, QString& name, QString& birth, QString& death, QString& gender, QString& biografie);
-        // possible positions are: name, bith, death, gender, biografie
+        Member* updateMemberData(Member* member, QString& name, QString& birth, QString& death, QString& gender, QString& image);
         Member* savePartnerFromMember(Member* member, Member* partner);
         Member* deletePartnerFromMember(Member* member, Member* partner);
         Member* saveParentChildRelationship(Member* parent, Member* child);

@@ -79,6 +79,9 @@ QVector<Member*>* sortMembersByID(QVector<Member*>* members) {
 void EditPanel::showPotentionRelationships() {
     // show all potential partners and parents
     QVector<Member*>* membersFromFam = m_pLogic->getMembersByFamily(m_displayedFamily->getId());
+    if(!membersFromFam) {
+        return;
+    }
     membersFromFam = sortMembersByID(membersFromFam);
     m_possibleRelationships.push_front(new Member()); // for first default value: no relationship
     if(membersFromFam != nullptr) {
@@ -107,7 +110,6 @@ void EditPanel::setupEditPanel(int memberID) {
 
         // fill-in exsisting data
         ui->In_Name->setText(m_editedMember->getName());
-        ui->TextBiography->setText(m_editedMember->getBiografie());
         ui->ChooseGender->setCurrentIndex(getIndex(m_editedMember->getGender()));
         QString birth = m_editedMember->getBirth();
         QDate date(QDateTime::currentDateTime().date());
@@ -187,6 +189,7 @@ void EditPanel::selectPicture() {
         messageBox.setText("Image successfully added!");
         messageBox.setFixedSize(500,200);
         messageBox.exec();
+        ui->showImagePath->setText(QString::fromStdString(imageAddressString));
     } catch (std::filesystem::filesystem_error& e) {
         //show error dialog
         QMessageBox messageBox;
@@ -207,7 +210,7 @@ void EditPanel::removePicture() {
         messageBox.setText("Image successfully removed!");
         messageBox.setFixedSize(500,200);
         messageBox.exec();
-
+        ui->showImagePath->setText("");
     } catch (std::filesystem::filesystem_error e) {
         qDebug() << e.code().message().c_str();
         //show error dialog
@@ -243,8 +246,6 @@ bool EditPanel::relationshipValid(int& partnerID, int& parent1ID, int& parent2ID
             return false;
         }
     }
-    qDebug() << ">> GAAAARRR: outside for";
-
     return true;
 }
 
@@ -255,13 +256,13 @@ void EditPanel::saveMember() {
     QString birth = ui->ChoosenBirth->text();
     QString death = ui->ChoosenDeath->text();
     QString gender = ui->ChooseGender->currentText();
-    QString biografie = ui->TextBiography->toPlainText();
+    QString imagePath = ui->showImagePath->text();
 
     int partnerID = ui->ChoosePartner->currentIndex();
     int parent1ID = ui->In_FirstParent->currentIndex();
     int parent2ID = ui->In_SecondParent->currentIndex();
 
-    qDebug() << name << " | " << birth << " | " << death << " | " << gender << " | " << biografie << " | " << partnerID << " | " << parent1ID << " | " << parent2ID;
+    qDebug() << name << " | " << birth << " | " << death << " | " << gender << " | " << partnerID << " | " << parent1ID << " | " << parent2ID;
 
     // verify name
     if(name.length() == 0) { // name is not filled in
@@ -278,13 +279,13 @@ void EditPanel::saveMember() {
     if(!ui->DeathCheckBox->isChecked()) {
         death = "Unknown";
     }
-    if(biografie.length() == 0) {
-        biografie = nullptr;
+    if(imagePath == "") {
+        imagePath = "defaultMember.png";
     }
 
     if(m_editedMember->getName() != "") { // member already exsists
         qDebug() << "Update member: " << m_editedMember->getName();
-        m_editedMember = m_pLogic->updateMemberData(m_editedMember, name, birth, death, gender, biografie);
+        m_editedMember = m_pLogic->updateMemberData(m_editedMember, name, birth, death, gender, imagePath);
         // relationships
         if(partnerID != 0) {
             Member* partner = m_possibleRelationships.at(partnerID);
@@ -317,8 +318,8 @@ void EditPanel::saveMember() {
         }
     } else { // new Member
         qDebug() << "create new member";
-        qDebug() << name << " | " << birth << " | " << death << " | " << gender << " | " << biografie;
-        m_editedMember = m_pLogic->createMember(m_displayedFamily, name, birth, death, gender, biografie);
+        qDebug() << name << " | " << birth << " | " << death << " | " << gender;
+        m_editedMember = m_pLogic->createMember(m_displayedFamily, name, birth, death, gender, imagePath);
 
         // save relationships
         if(partnerID != 0) {
@@ -345,7 +346,6 @@ void EditPanel::resetUI(){
     ui->BirthCheckBox->setChecked(true);
     ui->DeathCheckBox->setChecked(true);
     ui->ChooseGender->setCurrentIndex(0);
-    ui->TextBiography->clear();
 
     ui->ChoosePartner->clear();
     ui->In_FirstParent->clear();

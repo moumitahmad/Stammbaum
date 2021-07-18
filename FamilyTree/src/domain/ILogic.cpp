@@ -154,6 +154,7 @@ void domain::ILogic::deleteFamily(FamilyTree* family) {
     qDebug() << "FamilyTree deleted";
 }
 
+
 QVector<Member*>* domain::ILogic::getMembersByFamily(int familyID) {
     return m_pDB->getMembersByFamID(familyID);
 }
@@ -188,11 +189,10 @@ QVector<Member *> domain::ILogic::getSiblingsFromMember(const Member *member) {
     return siblings;
 }
 
-Member* domain::ILogic::createMember(FamilyTree *family, const QString &name, const QString &birth,
-        const QString &death, const QString &gender, const QString &biografie, Member *partner,
-        QVector<Member*>* children) {
-    int id = m_pDB->saveMember(name, birth, death, gender, biografie, family->getId());
-    Member* member = new Member(id, name, birth, death, gender, biografie);
+Member* domain::ILogic::createMember(FamilyTree *family, const QString &name, const QString &birth, const QString &death,
+        const QString &gender, QString &image, Member *partner, QVector<Member *> *children) {
+    int id = m_pDB->saveMember(name, birth, death, gender, image, family->getId());
+    Member* member = new Member(id, name, birth, death, gender, image);
     if(partner) {
         m_pDB->updatePartnerFromMember(partner, member);
         member->setPartner(partner);
@@ -234,13 +234,13 @@ Member *domain::ILogic::getMemberByID(int memberID) {
     return member;
 }
 
-Member *domain::ILogic::updateMemberData(Member* member, QString& name, QString& birth, QString& death, QString& gender, QString& biografie) {
+Member *domain::ILogic::updateMemberData(Member* member, QString& name, QString& birth, QString& death, QString& gender, QString& image) {
     // update Member object
     member->setName(name);
     member->setBirth(birth);
     member->setDeath(death);
     member->setGender(gender);
-    member->setBiografie(biografie);
+    member->setImage(image);
     // update db
     m_pDB->updateMemberData(member);
     return member;
