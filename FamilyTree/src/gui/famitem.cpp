@@ -9,7 +9,7 @@ famItem::famItem(int xPos, int yPos, int width, int height, Member* member) :
     m_member(member)
 {
     Pressed = false;
-    //qDebug() << m_xPos<<"xpos"; // TODO: wird die ganze zeit aufgerufen
+    qDebug() << m_xPos<<"xpos";
 
 }
 
@@ -29,6 +29,7 @@ void famItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, Q
         painter->setPen(pen2);
         painter->drawText(rect, Qt::AlignCenter, m_member->getName());
     }
+
     painter->drawRect(rect);
 }
 
