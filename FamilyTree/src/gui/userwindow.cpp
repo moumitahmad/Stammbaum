@@ -45,23 +45,13 @@ void UserWindow::hideErrors() {
 
 void UserWindow::switchToCreateNewUser() {
     ui->stackedWidget->setCurrentIndex(1);
-
-    // hide error and additional messages
-    ui->errorLabelNameNotValid->hide();
-    ui->errorLabelPasswordNotValid->hide();
-    ui->errorLabelNameTaken->hide();
+    hideErrors();
 }
 
 void UserWindow::switchToLogIn() {
     if(ui->stackedWidget->currentIndex() == 1)
-        ui->accountCreatedLabel->show();
-    else
-        ui->accountCreatedLabel->hide();
+        hideErrors();
     ui->stackedWidget->setCurrentIndex(0);
-
-    // hide error and additional messages
-    ui->errorLabelLogin->hide();
-    ui->placeholder->hide();
 }
 
 void UserWindow::createNewUser(){
@@ -95,6 +85,7 @@ void UserWindow::createNewUser(){
     } else {
         ui->stackedWidget->setCurrentIndex(0);
         qDebug() << "User created!";
+        hideErrors();
 
         // return to login window
         ui->stackedWidget->setCurrentIndex(0);
@@ -122,9 +113,4 @@ void UserWindow::logInUser(){
         ui->in_password->clear();
         ui->in_username->clear();
     }
-}
-
-void UserWindow::quit(){
-    this->close();
-    exit(EXIT_SUCCESS);
 }

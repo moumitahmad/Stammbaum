@@ -27,7 +27,6 @@ private slots:
     void switchToLogIn();
     void createNewUser();
     void logInUser();
-    void quit();
 
 private:
     Ui::UserWindow *ui;
