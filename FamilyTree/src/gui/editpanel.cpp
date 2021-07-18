@@ -61,10 +61,26 @@ int getIndex(QString value) {
     return -1;
 }
 
+QVector<Member*>* sortMembersByID(QVector<Member*>* members) {
+    int n = members->length();
+    int i, j;
+    for (i = 1; i < n-1; i++)  {
+        for (j = 1; j < n-i-1; j++) {
+            if (members->at(j)->getID() > members->at(j+1)->getID()) {
+                Member* helper = members->at(j);
+                members->replace(j, members->at(j+1));
+                members->replace(j+1, helper);
+            }
+        }
+    }
+    return members;
+}
+
 void EditPanel::showPotentionRelationships() {
     // show all potential partners and parents
     QVector<Member*>* membersFromFam = m_pLogic->getMembersByFamily(m_displayedFamily->getId());
-    m_possibleRelationships.push_back(new Member()); // for first default value: no relationship
+    membersFromFam = sortMembersByID(membersFromFam);
+    m_possibleRelationships.push_front(new Member()); // for first default value: no relationship
     if(membersFromFam != nullptr) {
         for(Member* p : *membersFromFam) {
             if(p->getID() != m_editedMember->getID()) {
@@ -76,7 +92,7 @@ void EditPanel::showPotentionRelationships() {
         }
     }
 }
-
+/*
 int EditPanel::getIndexForRelationship(const int memberID) const {
     for(int i=0; i<m_possibleRelationships.length(); i++) {
         if(memberID == m_possibleRelationships.at(i)->getID()) {
@@ -84,7 +100,7 @@ int EditPanel::getIndexForRelationship(const int memberID) const {
         }
     }
     return -1;
-}
+}*/
 
 void EditPanel::setupEditPanel(int memberID) {
     // reset
@@ -130,15 +146,15 @@ void EditPanel::setupEditPanel(int memberID) {
         ui->ChoosenDeath->setDate(date);
 
         if(m_editedMember->getPartner()) {
-            ui->ChoosePartner->setCurrentIndex(getIndexForRelationship(m_editedMember->getPartner()->getID()));
+            ui->ChoosePartner->setCurrentIndex(m_editedMember->getPartner()->getID());
         }
         QVector<Member*> parents = m_editedMember->getParents();
         if(parents.length() > 0) {
-            ui->In_FirstParent->setCurrentIndex(getIndexForRelationship(parents.at(0)->getID()));
+            ui->In_FirstParent->setCurrentIndex(parents.at(0)->getID());
             ui->In_SecondParent->setEnabled(true);
         }
         if(parents.length() > 1) {
-            ui->In_SecondParent->setCurrentIndex(getIndexForRelationship(parents.at(1)->getID()));
+            ui->In_SecondParent->setCurrentIndex(parents.at(1)->getID());
         }
     } else {
         ui->ButtonSave->setText("Save");
