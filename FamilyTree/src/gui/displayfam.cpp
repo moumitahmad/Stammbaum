@@ -8,9 +8,10 @@ famItem *item;
 famItemBtn *itemBtn;
 QVector<famItem*> items;
 
-DisplayFam::DisplayFam(domain::ILogic* pLogic, QWidget *parent) :
+DisplayFam::DisplayFam(domain::ILogic* pLogic, QWidget *parent, const bool& inEdit) :
     QWidget(parent),
     m_pLogic(pLogic),
+    m_inEdit(inEdit),
     ui(new Ui::DisplayFam)
 {
     ui->setupUi(this);
@@ -85,17 +86,17 @@ void DisplayFam::paint() {
     QPen connectionsPen(QColor(52, 101, 164), 2);
 
 
-    item = new famItem(startx, starty, widthRect, heightRect, treeStart, this);
-
-
+    item = new famItem(startx, starty, widthRect, heightRect, treeStart, this, m_inEdit);
     scene->addItem(item);
+    items.push_back(item);
+
     if (!(treeStart->getParents().empty())) {
         itemBtn = new famItemBtn(startx, starty, treeStart, false, this);
         scene->addItem(itemBtn);
     }
 
     if (treeStart->getPartner()) {
-      item = new famItem(startx+widthRect+distanceX,starty,widthRect,heightRect, treeStart->getPartner(), this);
+      item = new famItem(startx+widthRect+distanceX,starty,widthRect,heightRect, treeStart->getPartner(), this, m_inEdit);
       if (!(treeStart->getPartner()->getParents().empty())) {
         itemBtn = new famItemBtn(startx+widthRect+distanceX,starty, treeStart->getPartner(), false, this);
         scene->addItem(itemBtn);
@@ -134,7 +135,7 @@ void DisplayFam::paint() {
 
        for (int i=0;i<childrenSize;i++) {
            line = scene->addLine(lineStart+(distanceX+widthRect)*i,middley,lineStart+(distanceX+widthRect)*i,middley+distanceY/2,connectionsPen);
-           item = new famItem(lineStart-widthRect/2+(distanceX+widthRect)*i,middley+distanceY/2,widthRect,heightRect, allChildren[i], this);
+           item = new famItem(lineStart-widthRect/2+(distanceX+widthRect)*i,middley+distanceY/2,widthRect,heightRect, allChildren[i], this, m_inEdit);
            if (!(allChildren[i]->getChildren().empty()) || allChildren[i]->getPartner()) {
             itemBtn = new famItemBtn(lineStart-widthRect/2+(distanceX+widthRect)*i,middley+distanceY/2, allChildren[i], true, this);
             scene->addItem(itemBtn);
@@ -155,7 +156,7 @@ void DisplayFam::paint() {
         line = scene->addLine(lineStart,middley,lineEnd,middley,connectionsPen);
         for (int i=0;i<childrenSize;i++) {
             line = scene->addLine(lineStart+distanceX*2*i,middley,lineStart+distanceX*2*i,middley+distanceY/2,connectionsPen);
-            item = new famItem(lineStart-widthRect/2+distanceX*2*i,middley+distanceY/2,widthRect,heightRect, allChildren[i], this);
+            item = new famItem(lineStart-widthRect/2+distanceX*2*i,middley+distanceY/2,widthRect,heightRect, allChildren[i], this, m_inEdit);
             if (!(allChildren[i]->getChildren().empty()) || allChildren[i]->getPartner()) {
                 itemBtn = new famItemBtn(lineStart-widthRect/2+distanceX*2*i,middley+distanceY/2, allChildren[i], true, this);
                 scene->addItem(itemBtn);

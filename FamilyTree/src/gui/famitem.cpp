@@ -8,8 +8,9 @@
 
 
 // ---------------------- GROUP ------------------
-famItem::famItem(int xPos, int yPos, int width, int height, Member* member, DisplayFam* parent) :
+famItem::famItem(int xPos, int yPos, int width, int height, Member* member, DisplayFam* parent, const bool& inEdit) :
     m_parent(parent),
+    m_inEdit(inEdit),
     m_xPos(xPos),
     m_yPos(yPos),
     m_width(width),
@@ -40,18 +41,19 @@ void famItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, Q
 
 void famItem::setPressed(const bool &pressed)
 {
-    m_imageItem->setPressed(false);
-    m_item->setPressed(false);
+    m_imageItem->setPressed(pressed);
+    m_item->setPressed(pressed);
 }
 
 void famItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-    Pressed = true;
-    qDebug() << "IS PRESSED";
-    m_parent->memberSelected(m_member->getID());
-    m_imageItem->setPressed(true);
-    m_item->setPressed(true);
-    update();
+    if(m_inEdit) {
+        Pressed = true;
+        m_parent->memberSelected(m_member->getID());
+        m_imageItem->setPressed(true);
+        m_item->setPressed(true);
+        update();
+    }
 }
 
 

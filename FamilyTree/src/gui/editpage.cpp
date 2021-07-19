@@ -16,7 +16,7 @@ EditPage::EditPage(domain::ILogic* pLogic, QWidget *parent) :
     ui->setupUi(this);
     QObject::connect(ui->ButtonViewFamily, &QPushButton::clicked, this, &EditPage::openViewPage);
 
-    m_df = new DisplayFam(m_pLogic, this);
+    m_df = new DisplayFam(m_pLogic, this, true);
     ui->displayFamilyPanel->layout()->addWidget(m_df);
 
     m_mp = new MemberPanel(m_pLogic, this);
