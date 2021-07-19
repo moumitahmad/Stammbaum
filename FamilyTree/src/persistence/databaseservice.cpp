@@ -439,8 +439,8 @@ QVector<Member*>* database::IDatabase::getMembersByFamID(const int id) {
                     }
                 }
                 if (found == false) {
-                   if(!(q.value(7).toString().isEmpty())) {
-                        Member* partner = getMemberByID(q.value(7).toInt());
+                   if(!(q.value(6).toString().isEmpty())) {
+                        Member* partner = getMemberByID(q.value(6).toInt());
                         Member* member = new Member(q.value(0).toInt(), q.value(1).toString(), q.value(2).toString(), q.value(3).toString(), q.value(4).toString(), q.value(5).toString(), partner);
                         partner->setPartner(member);
                         partnerCreated->push_back(partner);
