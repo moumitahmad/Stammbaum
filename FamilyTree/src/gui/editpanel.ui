@@ -451,6 +451,12 @@
        <property name="text">
         <string/>
        </property>
+       <property name="textFormat">
+        <enum>Qt::PlainText</enum>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+       </property>
       </widget>
      </item>
      <item row="11" column="2">

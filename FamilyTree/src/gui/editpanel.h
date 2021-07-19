@@ -43,7 +43,7 @@ private:
     void showPotentionRelationships();
     void showError(const QString& message) const;
     bool relationshipValid(int& partnerID, int& parent1ID, int& parent2ID);
-    int getIndexForRelationship(const int memberID) const;
+    int getRelationshipIndex(int id) const;
     std::filesystem::path currentImageSymlink; //selectedPicture
 };
 
