@@ -454,8 +454,6 @@ QVector<Member*>* database::IDatabase::getMembersByFamID(const int id) {
                 }
         }
 
-
-
         if(familyMember->empty())
             return nullptr;
         setCPRelations(familyMember);
@@ -600,23 +598,6 @@ QVector<Member*> database::IDatabase::getChildrenFromMemberID(const int id) {
         throw new std::logic_error("Member does not has any children");
     }
 }
-
-//QVector<Member*> database::IDatabase::getParentFromMemberID(const int id) {
-//    QSqlQuery q;
-//    q.prepare("SELECT * from hasParent WHERE childID=:id;");
-//    q.bindValue(":id", id);
-//    if(q.exec()) {
-//        QVector<Member*> parents;
-//        while(q.next()) {
-//            Member* member = getMemberByID(q.value(0).toInt());
-//            parents.push_back(member);
-//        }
-//        return parents;
-//    } else {
-//        qDebug() << q.lastError();
-//        throw new std::logic_error("Parents are not known");
-//    }
-//}
 
 void database::IDatabase::saveParentChildRelationship(Member* child, Member* parent) {
     QSqlQuery q;

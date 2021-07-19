@@ -189,7 +189,7 @@ void EditPanel::selectPicture() {
         messageBox.setText("Image successfully added!");
         messageBox.setFixedSize(500,200);
         messageBox.exec();
-        ui->showImagePath->setText(QString::fromStdString(imageAddressString));
+        ui->showImagePath->setText(QString::fromStdString(imageName));
     } catch (std::filesystem::filesystem_error& e) {
         //show error dialog
         QMessageBox messageBox;
