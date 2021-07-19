@@ -141,15 +141,47 @@ famItemBtn::famItemBtn(int xPos, int yPos, Member* member, bool isChild, Display
 }
 
 QRectF famItemBtn::boundingRect() const {
-    return QRectF(m_xPos-20, m_yPos,20,20);
+//    QPolygonF Triangle;
+//    Triangle.append(QPointF(-10.,0));
+//    Triangle.append(QPointF(0.,-10));
+//    Triangle.append(QPointF(10.,0));
+//    Triangle.append(QPointF(-10.,0));
+
+//    return Triangle;
+    return QRectF(m_xPos-40, m_yPos,40,40);
 }
 
 void famItemBtn::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
 
     QRectF rect = boundingRect();
-    QPen pen(Qt::black, 1);
+    QPointF points[3];
+    if (!m_isChild) {
+        points[0] = QPointF(m_xPos-20, m_yPos);
+        points[1] = QPointF(m_xPos, m_yPos+40);
+        points[2] = QPointF(m_xPos-40, m_yPos+40);
+
+    } else {
+        points[0] = QPointF(m_xPos-40, m_yPos);
+        points[1] = QPointF(m_xPos, m_yPos);
+        points[2] = QPointF(m_xPos-20, m_yPos+40);
+
+    }
+
+
+//    painter.drawConvexPolygon(points, 4);
+
+    QPen pen(Qt::white, 1);
+    QBrush brush(Qt::white);
     painter->setPen(pen);
+    painter->setBrush(brush);
     painter->drawRect(rect);
+    QPen pen2(QColor(52, 101, 164), 1);
+    QBrush brush2(QColor(52, 101, 164));
+    painter->setPen(pen2);
+    painter->setBrush(brush2);
+    painter->drawPolygon(points, 3);
+
+
 }
 
 void famItemBtn::setPressed(const bool& pressed) {
@@ -160,12 +192,12 @@ void famItemBtn::mousePressEvent(QGraphicsSceneMouseEvent *event) {
     if (m_isChild){
         qDebug() << "IS PRESSED child";
         m_parent->updateDisplay(m_member->getID());
-        m_parent->closeEditPanel();
+     //   m_parent->closeEditPanel();
     } else {
         qDebug() << "IS PRESSED parent";
         QVector<Member *> mem = m_member->getParents();
         m_parent->updateDisplay(mem[0]->getID());
-        m_parent->closeEditPanel();
+   //     m_parent->closeEditPanel();
     }
 
 }
