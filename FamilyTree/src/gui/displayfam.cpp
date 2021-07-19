@@ -79,7 +79,7 @@ void DisplayFam::paint() {
     int heightRect = 180;
     int distanceX = widthRect;
     int distanceY = heightRect-50;
-    QPen redpen(Qt::red);
+    QPen connectionsPen(QColor(52, 101, 164), 2);
 
 
     item = new famItem(startx, starty, widthRect, heightRect, treeStart, this);
@@ -91,17 +91,17 @@ void DisplayFam::paint() {
       scene->addItem(item); //hier eventuell noch einige berechnungen und variablen einfügen
       items.push_back(item);
 
-      line = scene->addLine(startx+widthRect,starty+heightRect/2, startx+widthRect+distanceX,starty+heightRect/2,redpen);
+      line = scene->addLine(startx+widthRect,starty+heightRect/2, startx+widthRect+distanceX,starty+heightRect/2,connectionsPen);
       if(childrenSize>0) {
-         line = scene->addLine(startx+widthRect+distanceX/2, starty+heightRect/2, startx+widthRect+distanceX/2, starty+heightRect/2+distanceY, redpen);
+         line = scene->addLine(startx+widthRect+distanceX/2, starty+heightRect/2, startx+widthRect+distanceX/2, starty+heightRect/2+distanceY, connectionsPen);
 
       } else {
           return;
       }
     } else {
       if(childrenSize>0) {
-          line = scene->addLine(startx+widthRect,starty+heightRect/2, startx+widthRect+distanceX/2,starty+heightRect/2,redpen);
-          line = scene->addLine(startx+widthRect+distanceX/2, starty+heightRect/2, startx+widthRect+distanceX/2, starty+heightRect/2+distanceY, redpen);
+          line = scene->addLine(startx+widthRect,starty+heightRect/2, startx+widthRect+distanceX/2,starty+heightRect/2,connectionsPen);
+          line = scene->addLine(startx+widthRect+distanceX/2, starty+heightRect/2, startx+widthRect+distanceX/2, starty+heightRect/2+distanceY, connectionsPen);
       } else {
           return;
       }
@@ -117,11 +117,11 @@ void DisplayFam::paint() {
         if (childrenSize>1) {
             lineStart -= distanceX+widthRect*(childrenSize-1)/2;
             lineEnd += distanceX+widthRect*(childrenSize-1)/2;
-            line = scene->addLine(lineStart,middley,lineEnd,middley,redpen);
+            line = scene->addLine(lineStart,middley,lineEnd,middley,connectionsPen);
         }
 
        for (int i=0;i<childrenSize;i++) {
-           line = scene->addLine(lineStart+(distanceX+widthRect)*i,middley,lineStart+(distanceX+widthRect)*i,middley+distanceY/2,redpen);
+           line = scene->addLine(lineStart+(distanceX+widthRect)*i,middley,lineStart+(distanceX+widthRect)*i,middley+distanceY/2,connectionsPen);
            item = new famItem(lineStart-widthRect/2+(distanceX+widthRect)*i,middley+distanceY/2,widthRect,heightRect, allChildren[i], this);
            scene->addItem(item);
            items.push_back(item);
@@ -135,9 +135,9 @@ void DisplayFam::paint() {
             lineStart -= (childrenSize/2-1)*(distanceX+widthRect);
             lineEnd += (childrenSize/2-1)*(distanceX+widthRect);
         }
-        line = scene->addLine(lineStart,middley,lineEnd,middley,redpen);
+        line = scene->addLine(lineStart,middley,lineEnd,middley,connectionsPen);
         for (int i=0;i<childrenSize;i++) {
-            line = scene->addLine(lineStart+distanceX*2*i,middley,lineStart+distanceX*2*i,middley+distanceY/2,redpen);
+            line = scene->addLine(lineStart+distanceX*2*i,middley,lineStart+distanceX*2*i,middley+distanceY/2,connectionsPen);
             item = new famItem(lineStart-widthRect/2+distanceX*2*i,middley+distanceY/2,widthRect,heightRect, allChildren[i], this);
             scene->addItem(item);
             items.push_back(item);

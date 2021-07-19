@@ -13,6 +13,7 @@
 
 
 const std::filesystem::path IMAGES_DIR = "../src/images";
+const QString DEFAULTIMG = "defaultMember.png";
 
 EditPanel::EditPanel(domain::ILogic* pLogic, QWidget *parent) :
     QWidget(parent),
@@ -96,6 +97,13 @@ void EditPanel::showPotentionRelationships() {
     }
 }
 
+int EditPanel::getRelationshipIndex(int id) const {
+    if(id > m_editedMember->getID()) {
+        return --id;
+    }
+    return id;
+}
+
 void EditPanel::setupEditPanel(int memberID) {
     // reset
     resetUI();
@@ -139,15 +147,20 @@ void EditPanel::setupEditPanel(int memberID) {
         ui->ChoosenDeath->setDate(date);
 
         if(m_editedMember->getPartner()) {
-            ui->ChoosePartner->setCurrentIndex(m_editedMember->getPartner()->getID());
+            ui->ChoosePartner->setCurrentIndex(getRelationshipIndex(m_editedMember->getPartner()->getID()));
         }
         QVector<Member*> parents = m_editedMember->getParents();
         if(parents.length() > 0) {
-            ui->In_FirstParent->setCurrentIndex(parents.at(0)->getID());
+            ui->In_FirstParent->setCurrentIndex(getRelationshipIndex(parents.at(0)->getID()));
             ui->In_SecondParent->setEnabled(true);
         }
         if(parents.length() > 1) {
-            ui->In_SecondParent->setCurrentIndex(parents.at(1)->getID());
+            ui->In_SecondParent->setCurrentIndex(getRelationshipIndex(parents.at(1)->getID()));
+        }
+        if(m_editedMember->getImage() != DEFAULTIMG) {
+            ui->showImagePath->setText(m_editedMember->getImage());
+            ui->ButtonRemovePicture->show();
+            ui->ButtonAddPicture->setText("Update Picture");
         }
     } else {
         ui->ButtonSave->setText("Save");
@@ -190,6 +203,8 @@ void EditPanel::selectPicture() {
         messageBox.setFixedSize(500,200);
         messageBox.exec();
         ui->showImagePath->setText(QString::fromStdString(imageName));
+        ui->ButtonRemovePicture->show();
+        ui->ButtonAddPicture->setText("Update Picture");
     } catch (std::filesystem::filesystem_error& e) {
         //show error dialog
         QMessageBox messageBox;
@@ -211,6 +226,8 @@ void EditPanel::removePicture() {
         messageBox.setFixedSize(500,200);
         messageBox.exec();
         ui->showImagePath->setText("");
+        ui->ButtonRemovePicture->hide();
+        ui->ButtonAddPicture->setText("Add Picture");
     } catch (std::filesystem::filesystem_error e) {
         qDebug() << e.code().message().c_str();
         //show error dialog
@@ -288,6 +305,8 @@ void EditPanel::saveMember() {
         m_editedMember = m_pLogic->updateMemberData(m_editedMember, name, birth, death, gender, imagePath);
         // relationships
         if(partnerID != 0) {
+            if(partnerID >= m_editedMember->getID())
+                partnerID++;
             Member* partner = m_possibleRelationships.at(partnerID);
             qDebug() << "UPDATE partner: "<< partner->getName();
             if(!m_editedMember->getPartner() || partnerID != m_editedMember->getPartner()->getID())
@@ -295,6 +314,8 @@ void EditPanel::saveMember() {
         }
         QVector<Member*> parents = m_editedMember->getParents();
         if(parent1ID != 0) {
+            if(parent1ID >= m_editedMember->getID())
+                parent1ID++;
             Member* parent1 = m_possibleRelationships.at(parent1ID);
             qDebug() << "UPDATE PARENT1: "<< parent1->getName();
             if(parents.length() == 0 || parent1ID != parents.at(0)->getID()) {
@@ -306,6 +327,8 @@ void EditPanel::saveMember() {
             m_editedMember = m_pLogic->deleteParentChildRelationship(parents.at(0), m_editedMember);
         }
         if(parent2ID != 0) {
+            if(parent2ID >= m_editedMember->getID())
+                parent2ID++;
             Member* parent2 = m_possibleRelationships.at(parent2ID);
             qDebug() << "UPDATE PARENT2: "<< parent2->getName();
             if(parents.length() == 1 || parent2ID != parents.at(1)->getID()) {
@@ -323,12 +346,18 @@ void EditPanel::saveMember() {
 
         // save relationships
         if(partnerID != 0) {
+            if(partnerID >= m_editedMember->getID())
+                partnerID++;
             m_editedMember = m_pLogic->savePartnerFromMember(m_editedMember, m_possibleRelationships.at(partnerID));
         }
         if(parent1ID != 0) {
+            if(parent1ID >= m_editedMember->getID())
+                parent1ID++;
             m_editedMember = m_pLogic->saveParentChildRelationship(m_possibleRelationships.at(parent1ID), m_editedMember);
         }
         if(parent2ID != 0) {
+            if(parent2ID >= m_editedMember->getID())
+                parent2ID++;
             m_editedMember = m_pLogic->saveParentChildRelationship(m_possibleRelationships.at(parent2ID), m_editedMember);
         }
     }
@@ -357,6 +386,10 @@ void EditPanel::resetUI(){
     ui->ChoosePartner->setCurrentIndex(0);
     ui->In_FirstParent->setCurrentIndex(0);
     ui->In_SecondParent->setCurrentIndex(0);
+
+    ui->showImagePath->setText("");
+    ui->ButtonRemovePicture->hide();
+    ui->ButtonAddPicture->setText("Add Picture");
 
     m_editedMember = nullptr;
     m_possibleRelationships.clear();
