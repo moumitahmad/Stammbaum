@@ -198,9 +198,7 @@ void EditPanel::selectPicture() {
     try {
         const std::filesystem::path constImagePath = imagePath;
         imageName = imageAddressString.substr(imageAddressString.find_last_of("/") + 1, 100);
-        qDebug() << "image name" << imageName.c_str();
-        qDebug() << "chosen file: " << constImagePath.c_str();
-        qDebug() << "target directory: " << IMAGES_DIR.c_str();
+
         std::filesystem::copy(constImagePath, IMAGES_DIR);                      //copy image
         EditPanel::currentImageSymlink = "../src/images/symlink" + imageName;   //set symulink up
         std::filesystem::path copiedImagePath = "../src/images/" + imageName;
@@ -326,10 +324,10 @@ void EditPanel::saveMember() {
             if(parents.length() == 0 || parent1ID != parents.at(0)->getID()) {
                 if(parents.length() == 1)
                     m_pLogic->deleteParentChildRelationship(parents.at(0), m_editedMember);
-                m_editedMember = m_pLogic->saveParentChildRelationship(parent1, m_editedMember);
+                m_pLogic->saveParentChildRelationship(parent1, m_editedMember);
             }
         } else if(parents.length() > 0) {
-            m_editedMember = m_pLogic->deleteParentChildRelationship(parents.at(0), m_editedMember);
+            m_pLogic->deleteParentChildRelationship(parents.at(0), m_editedMember);
         }
         if(parent2ID != 0) {
             Member* parent2 = m_possibleRelationships.at(parent2ID);
@@ -337,10 +335,10 @@ void EditPanel::saveMember() {
             if(parents.length() < 2 || parent2ID != parents.at(1)->getID()) {
                 if(parents.length() == 2)
                     m_pLogic->deleteParentChildRelationship(parents.at(1), m_editedMember);
-                m_editedMember = m_pLogic->saveParentChildRelationship(parent2, m_editedMember);
+                m_pLogic->saveParentChildRelationship(parent2, m_editedMember);
             }
         } else if(parents.length() > 1) {
-            m_editedMember = m_pLogic->deleteParentChildRelationship(parents.at(1), m_editedMember);
+            m_pLogic->deleteParentChildRelationship(parents.at(1), m_editedMember);
         }
     } else { // new Member
         qDebug() << "create new member";
@@ -365,9 +363,12 @@ void EditPanel::saveMember() {
 void EditPanel::resetUI(){
     ui->ButtonDelete->show();
     ui->In_Name->clear();
+    QDate defaultDate(QDateTime::currentDateTime().date());
     ui->ChoosenBirth->setDateRange(ui->ChoosenBirth->minimumDate(), QDateTime::currentDateTime().date());
+    ui->ChoosenBirth->setDate(defaultDate);
     ui->ChoosenBirth->setEnabled(true);
     ui->ChoosenDeath->setDateRange(ui->ChoosenDeath->minimumDate(), QDateTime::currentDateTime().date());
+    ui->ChoosenDeath->setDate(defaultDate);
     ui->ChoosenDeath->setEnabled(true);
     ui->BirthCheckBox->setChecked(true);
     ui->DeathCheckBox->setChecked(true);

@@ -62,6 +62,7 @@ void ViewPage::setupViewPage() {
         qDebug() << "Current User = Editor";
         m_ap->hide();
     }
+    m_df->updateDisplay(0);
     m_mp->setupMemberPanel();
 }
 

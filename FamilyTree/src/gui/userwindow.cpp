@@ -95,6 +95,8 @@ void UserWindow::createNewUser(){
         ui->stackedWidget->setCurrentIndex(0);
         qDebug() << "User created!";
         hideErrors();
+        ui->in_new_username->clear();
+        ui->in_new_password->clear();
 
         // return to login window
         ui->stackedWidget->setCurrentIndex(0);
