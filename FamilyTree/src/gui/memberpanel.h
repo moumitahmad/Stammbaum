@@ -36,7 +36,7 @@ private:
     domain::ILogic* m_pLogic;
     FamilyTree* m_displayedFamily;
     QVector<Member*>* m_allMembers;
-    const bool m_inEdit;
+    bool m_inEdit;
 
     Ui::MemberPanel *ui;
 };
