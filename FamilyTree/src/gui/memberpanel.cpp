@@ -21,7 +21,7 @@ MemberPanel::~MemberPanel()
     delete ui;
     delete m_pLogic;
     delete m_displayedFamily;
-    for(Member* member : *m_allMembers) {
+    for(Member* member : m_allMembers) {
         delete member;
     }
 }
@@ -32,11 +32,11 @@ void MemberPanel::setupMemberPanel()
     m_displayedFamily = m_pLogic->getFamilyTreeByID(m_pLogic->getCurrentFamilyID());
     m_allMembers = m_pLogic->getMembersByFamily(m_displayedFamily->getId());
 
-    if(m_allMembers) {
+    if(!m_allMembers.isEmpty()) {
         QPushButton* member;
-        for(int i=0; i<m_allMembers->length(); i++) {
-            member = new QPushButton(m_allMembers->at(i)->getName());
-            QObject::connect(member, &QPushButton::clicked, std::bind(&MemberPanel::memberChoosen, this, m_allMembers->at(i)->getID()));
+        for(int i=0; i<m_allMembers.length(); i++) {
+            member = new QPushButton(m_allMembers.at(i)->getName());
+            QObject::connect(member, &QPushButton::clicked, std::bind(&MemberPanel::memberChoosen, this, m_allMembers.at(i)->getID()));
             ui->membersGrid->addWidget(member, 0, i);
         }
     }

@@ -1,5 +1,5 @@
 /**
- * @author Moumita Ahmad
+ * @author Moumita Ahmad, Alisa Schumann
  */
 
 #include "ILogic.h"
@@ -88,15 +88,15 @@ FamilyTree* domain::ILogic::addEditor(FamilyTree* family, QString& username) {
     }
     try {
         User* editor = m_pDB->getUserByName(username);
-        QVector<User*>* editors = m_pDB->getEditorsByFamilyID(family->getId());
-        for(User* user : *editors) { // editor is already saved
+        QVector<User*> editors = m_pDB->getEditorsByFamilyID(family->getId());
+        for(User* user : editors) { // editor is already saved
             if(user->getId() == editor->getId()) {
                 throw new std::logic_error("The User is already a editor. Please choose someone else.");
             }
         }
         family->addEditor(editor);
-        QVector<User*>* viewers = m_pDB->getViewersByFamilyID(family->getId());
-        for(User* user : *viewers) { // editor was a viewer before
+        QVector<User*> viewers = m_pDB->getViewersByFamilyID(family->getId());
+        for(User* user : viewers) { // editor was a viewer before
             if(user->getId() == editor->getId()) {
                 m_pDB->upgradeUserRigths(family->getId(), editor);
                 return family;
@@ -118,8 +118,8 @@ FamilyTree* domain::ILogic::addViewer(FamilyTree* family, QString& username) {
     }
     try {
         User* viewer = m_pDB->getUserByName(username);
-        QVector<User*>* viewers = m_pDB->getViewersByFamilyID(family->getId());
-        for(User* user : *viewers) { // viewer is already saved
+        QVector<User*> viewers = m_pDB->getViewersByFamilyID(family->getId());
+        for(User* user : viewers) { // viewer is already saved
             if(user->getId() == viewer->getId()) {
                 throw new std::logic_error("The user is already a viewer. Please choose someone else.");
             }
@@ -133,7 +133,7 @@ FamilyTree* domain::ILogic::addViewer(FamilyTree* family, QString& username) {
     }
 }
 
-QVector<FamilyTree*>* domain::ILogic::getFamilyTreesByUserID(int adminID) {
+QVector<FamilyTree*> domain::ILogic::getFamilyTreesByUserID(int adminID) {
     return m_pDB->getFamilyTreesByUserID(adminID);
 }
 
@@ -143,7 +143,6 @@ FamilyTree *domain::ILogic::getFamilyTreeByID(int familyId) {
 }
 
 void domain::ILogic::deleteFamily(FamilyTree* family) {
-    qDebug() << "Delete fam in logic";
     qDebug() << QString::number(family->getId());
     m_pDB->deleteFamilyByID(family->getId());
     delete family;
@@ -151,7 +150,7 @@ void domain::ILogic::deleteFamily(FamilyTree* family) {
 }
 
 
-QVector<Member*>* domain::ILogic::getMembersByFamily(int familyID) {
+QVector<Member*> domain::ILogic::getMembersByFamily(int familyID) {
     return m_pDB->getMembersByFamID(familyID);
 }
 
@@ -217,8 +216,8 @@ Member *domain::ILogic::getMemberByID(int memberID) {
         member->addChild(child);
         child->addParent(member);
     }
-    QVector<Member*>* parents = m_pDB->getParentsFromMemberID(member->getID());
-    for(Member* parent : *parents) {
+    QVector<Member*> parents = m_pDB->getParentsFromMemberID(member->getID());
+    for(Member* parent : parents) {
         parent->addChild(member);
         member->addParent(parent);
     }

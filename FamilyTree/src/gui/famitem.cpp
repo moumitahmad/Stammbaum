@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * @author Moumita Ahmad, Alisa Schumman
+=======
+ * @author Moumita Ahmad, Alisa Schumann
+>>>>>>> 38c1036d6ae0488591a64ed5471f946c82c9f520
  */
 
 #include "famitem.h"
