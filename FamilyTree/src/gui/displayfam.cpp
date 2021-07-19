@@ -67,8 +67,6 @@ void DisplayFam::paint() {
     if (!familyMembers)
         return;
 
-    treeStart;
-
     for(Member* m: *familyMembers) {
         if(startpos == 0) {
             if (m->getParents().length()<1) {

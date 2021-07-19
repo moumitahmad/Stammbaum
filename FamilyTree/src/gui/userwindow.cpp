@@ -35,7 +35,6 @@ UserWindow::~UserWindow()
 {
     delete ui;
     delete m_pLogic;
-    delete m_pApp;
 }
 
 void UserWindow::hideErrors() {

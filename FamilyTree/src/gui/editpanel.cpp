@@ -311,17 +311,15 @@ void EditPanel::saveMember() {
         m_editedMember = m_pLogic->updateMemberData(m_editedMember, name, birth, death, gender, imagePath);
         // relationships
         if(partnerID != 0) {
-            if(partnerID >= m_editedMember->getID())
-                partnerID++;
             Member* partner = m_possibleRelationships.at(partnerID);
             qDebug() << "UPDATE partner: "<< partner->getName();
             if(!m_editedMember->getPartner() || partnerID != m_editedMember->getPartner()->getID())
                 m_editedMember = m_pLogic->savePartnerFromMember(m_editedMember, partner);
+        } else if(m_editedMember->getPartner()) {
+            m_pLogic->deletePartnerFromMember(m_editedMember, m_editedMember->getPartner());
         }
         QVector<Member*> parents = m_editedMember->getParents();
         if(parent1ID != 0) {
-            if(parent1ID >= m_editedMember->getID())
-                parent1ID++;
             Member* parent1 = m_possibleRelationships.at(parent1ID);
             qDebug() << "UPDATE PARENT1: "<< parent1->getName();
             if(parents.length() == 0 || parent1ID != parents.at(0)->getID()) {
@@ -333,8 +331,6 @@ void EditPanel::saveMember() {
             m_editedMember = m_pLogic->deleteParentChildRelationship(parents.at(0), m_editedMember);
         }
         if(parent2ID != 0) {
-            if(parent2ID >= m_editedMember->getID())
-                parent2ID++;
             Member* parent2 = m_possibleRelationships.at(parent2ID);
             qDebug() << "UPDATE PARENT2: "<< parent2->getName();
             if(parents.length() == 1 || parent2ID != parents.at(1)->getID()) {
@@ -352,18 +348,18 @@ void EditPanel::saveMember() {
 
         // save relationships
         if(partnerID != 0) {
-            if(partnerID >= m_editedMember->getID())
-                partnerID++;
+            /*if(partnerID >= m_editedMember->getID())
+                partnerID++;*/
             m_editedMember = m_pLogic->savePartnerFromMember(m_editedMember, m_possibleRelationships.at(partnerID));
         }
         if(parent1ID != 0) {
-            if(parent1ID >= m_editedMember->getID())
-                parent1ID++;
+            /*if(parent1ID >= m_editedMember->getID())
+                parent1ID++;*/
             m_editedMember = m_pLogic->saveParentChildRelationship(m_possibleRelationships.at(parent1ID), m_editedMember);
         }
         if(parent2ID != 0) {
-            if(parent2ID >= m_editedMember->getID())
-                parent2ID++;
+            /*if(parent2ID >= m_editedMember->getID())
+                parent2ID++;*/
             m_editedMember = m_pLogic->saveParentChildRelationship(m_possibleRelationships.at(parent2ID), m_editedMember);
         }
     }

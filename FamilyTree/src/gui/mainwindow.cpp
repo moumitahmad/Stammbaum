@@ -40,7 +40,6 @@ MainWindow::MainWindow(domain::ILogic* pLogic, QWidget *parent):
 MainWindow::~MainWindow()
 {
     delete ui;
-    delete m_pLogic;
     delete m_hp;
     delete m_vp;
     delete m_ep;
