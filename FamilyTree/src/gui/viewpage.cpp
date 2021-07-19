@@ -22,9 +22,12 @@ ViewPage::ViewPage(domain::ILogic* pLogic, QWidget *parent) :
     // display page
     m_df = new DisplayFam(m_pLogic, this);
     ui->displayFamilyPanel_2->layout()->addWidget(m_df);
+    // members panel
+    m_mp = new MemberPanel(m_pLogic, this);
+    ui->allMembersPanel->addWidget(m_mp);
+    QObject::connect(m_mp, &MemberPanel::memberChoosen, m_df, &DisplayFam::updateDisplay);
     // admin panel
     m_ap = new AdminPanel(m_pLogic, this);
-    //qDebug() << ">> SIZE:" << ui->horizontalLayout->SetFixedSize;
 }
 
 ViewPage::~ViewPage() {
@@ -34,6 +37,7 @@ ViewPage::~ViewPage() {
     delete m_currentUser;
     delete m_ap;
     delete m_df;
+    delete m_mp;
 }
 
 void ViewPage::setupViewPage() {
@@ -58,7 +62,7 @@ void ViewPage::setupViewPage() {
         qDebug() << "Current User = Editor";
         m_ap->hide();
     }
-
+    m_mp->setupMemberPanel();
 }
 
 void ViewPage::drawFamily() {

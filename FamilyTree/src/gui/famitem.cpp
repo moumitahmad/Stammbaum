@@ -8,8 +8,9 @@
 
 
 // ---------------------- GROUP ------------------
-famItem::famItem(int xPos, int yPos, int width, int height, Member* member, DisplayFam* parent) :
+famItem::famItem(int xPos, int yPos, int width, int height, Member* member, DisplayFam* parent, const bool& inEdit) :
     m_parent(parent),
+    m_inEdit(inEdit),
     m_xPos(xPos),
     m_yPos(yPos),
     m_width(width),
@@ -25,23 +26,6 @@ famItem::famItem(int xPos, int yPos, int width, int height, Member* member, Disp
 
     m_imageItem = new itemPart(m_xPos, m_yPos, m_width, m_heigth/2, m_member, img);
     m_item = new itemPart(m_xPos, m_yPos+m_heigth/2, m_width, m_heigth/2, m_member);
-//    Member *treeStart = parent->getTreeStart();
-//    if (treeStart == m_member || treeStart->getPartner() == m_member) {
-//        //pfeil nach oben
-//        qDebug() << "in if 1";
-//        if (!(m_member->getParents().empty())) {
-//            m_itemBtn = new famItemBtn(m_xPos, m_yPos, m_member, false);
-//            this->addToGroup(m_itemBtn);
-//        }
-
-//    } else {
-//        if (!(m_member->getChildren().empty()) || !(m_member->getPartner())) {
-//            //pfeil nach unten
-//            m_itemBtn = new famItemBtn(m_xPos, m_yPos, m_member, true);
-//            this->addToGroup(m_itemBtn);
-//        }
-//    }
-
 
     this->addToGroup(m_imageItem);
     this->addToGroup(m_item);
@@ -57,18 +41,19 @@ void famItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, Q
 
 void famItem::setPressed(const bool &pressed)
 {
-    m_imageItem->setPressed(false);
-    m_item->setPressed(false);
+    m_imageItem->setPressed(pressed);
+    m_item->setPressed(pressed);
 }
 
 void famItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-    Pressed = true;
-    qDebug() << "IS PRESSED";
-    m_parent->memberSelected(m_member->getID());
-    m_imageItem->setPressed(true);
-    m_item->setPressed(true);
-    update();
+    if(m_inEdit) {
+        Pressed = true;
+        m_parent->memberSelected(m_member->getID());
+        m_imageItem->setPressed(true);
+        m_item->setPressed(true);
+        update();
+    }
 }
 
 
@@ -192,12 +177,10 @@ void famItemBtn::mousePressEvent(QGraphicsSceneMouseEvent *event) {
     if (m_isChild){
         qDebug() << "IS PRESSED child";
         m_parent->updateDisplay(m_member->getID());
-     //   m_parent->closeEditPanel();
     } else {
         qDebug() << "IS PRESSED parent";
         QVector<Member *> mem = m_member->getParents();
         m_parent->updateDisplay(mem[0]->getID());
-   //     m_parent->closeEditPanel();
     }
 
 }

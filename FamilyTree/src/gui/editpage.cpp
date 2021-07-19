@@ -16,7 +16,7 @@ EditPage::EditPage(domain::ILogic* pLogic, QWidget *parent) :
     ui->setupUi(this);
     QObject::connect(ui->ButtonViewFamily, &QPushButton::clicked, this, &EditPage::openViewPage);
 
-    m_df = new DisplayFam(m_pLogic, this);
+    m_df = new DisplayFam(m_pLogic, this, true);
     ui->displayFamilyPanel->layout()->addWidget(m_df);
 
     m_mp = new MemberPanel(m_pLogic, this);
@@ -34,7 +34,6 @@ EditPage::EditPage(domain::ILogic* pLogic, QWidget *parent) :
     QObject::connect(m_mp, &MemberPanel::memberChoosen, this, &EditPage::openEditPanel);
     QObject::connect(m_mp, &MemberPanel::memberChoosen, m_df, &DisplayFam::updateDisplay);
     QObject::connect(m_df, &DisplayFam::memberChoosen, this, &EditPage::openEditPanel);
-    QObject::connect(m_df, &DisplayFam::closeEditPanelSignal, this, &EditPage::closeEditPanel);
 
 }
 

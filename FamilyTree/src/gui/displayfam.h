@@ -16,7 +16,7 @@ class DisplayFam : public QWidget
 public:
     int family;
     domain::ILogic* m_pLogic;
-    explicit DisplayFam(domain::ILogic* pLogic, QWidget *parent = nullptr);
+    explicit DisplayFam(domain::ILogic* pLogic, QWidget *parent = nullptr, const bool& inEdit = false);
     ~DisplayFam();
 
     void setupForView();
@@ -25,14 +25,13 @@ public:
     void updateDisplay(int memberID);
     void memberSelected(int id);
     Member* getTreeStart();
-    void closeEditPanel();
 
 signals:
     Member* memberChoosen(int id); // id=-1 -> new Member
-    void closeEditPanelSignal();
 
 private:
     Ui::DisplayFam *ui;
+    bool m_inEdit;
     int startpos;
     Member* treeStart;
     QGraphicsScene *scene;
