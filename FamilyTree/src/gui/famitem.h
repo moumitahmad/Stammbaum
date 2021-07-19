@@ -65,13 +65,14 @@ protected:
 class famItem : public QGraphicsItemGroup {
 
 public:
-    famItem(int xPos, int yPos, int width, int height, Member* member, DisplayFam* parent);
+    famItem(int xPos, int yPos, int width, int height, Member* member, DisplayFam* parent, const bool& inEdit);
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
     void setPressed(const bool& pressed);
     Member* m_member;
 private:
     DisplayFam* m_parent;
     bool Pressed;
+    const bool m_inEdit;
     int m_xPos;
     int m_yPos;
     int m_heigth;
