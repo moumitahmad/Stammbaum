@@ -104,10 +104,11 @@ void EditPanel::showPotentionRelationships() {
 }
 
 int EditPanel::getRelationshipIndex(int id) const {
-    if(id > m_editedMember->getID()) {
-        return --id;
+    for(int i=0; i<m_possibleRelationships.length(); i++) {
+        if(m_possibleRelationships.at(i)->getID() == id) {
+            return i;
+        }
     }
-    return id;
 }
 
 void EditPanel::setupEditPanel(int memberID) {
@@ -260,11 +261,11 @@ bool EditPanel::relationshipValid(int& partnerID, int& parent1ID, int& parent2ID
     QVector<Member*> siblings = m_pLogic->getSiblingsFromMember(m_editedMember);
     //bool noError = true;
     for(Member* sibling : siblings) {
-        if(sibling->getID() == partnerID) {
+        if(sibling->getID() == m_possibleRelationships.at(partnerID)->getID()) {
             showError("A sibling can not also be a partner.");
             return false;
         }
-        if(sibling->getID() == parent1ID || sibling->getID() == parent2ID) {
+        if(sibling->getID() == m_possibleRelationships.at(parent1ID)->getID() || sibling->getID() == m_possibleRelationships.at(parent2ID)->getID()) {
             showError("A sibling can not also be a parent.");
             return false;
         }
@@ -348,13 +349,13 @@ void EditPanel::saveMember() {
 
         // save relationships
         if(partnerID != 0) {
-            m_editedMember = m_pLogic->savePartnerFromMember(m_editedMember, m_possibleRelationships.at(partnerID));
+            m_pLogic->savePartnerFromMember(m_editedMember, m_possibleRelationships.at(partnerID));
         }
         if(parent1ID != 0) {
-            m_editedMember = m_pLogic->saveParentChildRelationship(m_possibleRelationships.at(parent1ID), m_editedMember);
+            m_pLogic->saveParentChildRelationship(m_possibleRelationships.at(parent1ID), m_editedMember);
         }
         if(parent2ID != 0) {
-            m_editedMember = m_pLogic->saveParentChildRelationship(m_possibleRelationships.at(parent2ID), m_editedMember);
+            m_pLogic->saveParentChildRelationship(m_possibleRelationships.at(parent2ID), m_editedMember);
         }
     }
     emit closePanel();
