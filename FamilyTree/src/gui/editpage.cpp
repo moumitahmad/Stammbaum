@@ -19,7 +19,7 @@ EditPage::EditPage(domain::ILogic* pLogic, QWidget *parent) :
     m_df = new DisplayFam(m_pLogic, this, true);
     ui->displayFamilyPanel->layout()->addWidget(m_df);
 
-    m_mp = new MemberPanel(m_pLogic, this);
+    m_mp = new MemberPanel(m_pLogic, this, true);
     ui->allMembersPanel->addWidget(m_mp);
 
     m_ep = new EditPanel(m_pLogic, this);

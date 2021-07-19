@@ -7,7 +7,8 @@
 #include "famitem.h"
 #include "QPushButton"
 
-MemberPanel::MemberPanel(domain::ILogic* pLogic, QWidget *parent) :
+MemberPanel::MemberPanel(domain::ILogic* pLogic, QWidget *parent, const bool& inEdit) :
+    m_inEdit(inEdit),
     m_pLogic(pLogic),
     QWidget(parent),
     ui(new Ui::MemberPanel)
@@ -39,10 +40,12 @@ void MemberPanel::setupMemberPanel()
             ui->membersGrid->addWidget(member, 0, i);
         }
     }
-    // plus item
-    QPushButton* plus = new QPushButton("+");
-    QObject::connect(plus, &QPushButton::clicked, this, &MemberPanel::addNewMember);
-    ui->membersGrid->addWidget(plus, 1, 0);
+    if(m_inEdit) {
+        // plus item
+        QPushButton* plus = new QPushButton("+");
+        QObject::connect(plus, &QPushButton::clicked, this, &MemberPanel::addNewMember);
+        ui->membersGrid->addWidget(plus, 1, 0);
+    }
 }
 
 void clearMembersLayout(QLayout *layout) {

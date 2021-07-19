@@ -18,7 +18,7 @@ class MemberPanel : public QWidget
     Q_OBJECT
 
 public:
-    explicit MemberPanel(domain::ILogic* pLogic, QWidget *parent = nullptr);
+    explicit MemberPanel(domain::ILogic* pLogic, QWidget *parent = nullptr, const bool& inEdit = false);
     ~MemberPanel();
 
     void setupMemberPanel();
@@ -36,6 +36,7 @@ private:
     domain::ILogic* m_pLogic;
     FamilyTree* m_displayedFamily;
     QVector<Member*>* m_allMembers;
+    const bool m_inEdit;
 
     Ui::MemberPanel *ui;
 };
