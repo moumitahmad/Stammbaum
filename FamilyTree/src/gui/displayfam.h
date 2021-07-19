@@ -24,17 +24,21 @@ public:
     void changeView();
     void updateDisplay(int memberID);
     void memberSelected(int id);
+    Member* getTreeStart();
+    void closeEditPanel();
 
 signals:
-    void memberChoosen(int id); // id=-1 -> new Member
+    Member* memberChoosen(int id); // id=-1 -> new Member
+    void closeEditPanelSignal();
 
 private:
     Ui::DisplayFam *ui;
     int startpos;
+    Member* treeStart;
     QGraphicsScene *scene;
     QGraphicsRectItem *rect;
     QGraphicsRectItem *rect2;
-    QGraphicsLineItem *line;
+    QGraphicsLineItem *line;    
 
     void paint();
 protected:

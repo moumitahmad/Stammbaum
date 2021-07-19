@@ -21,9 +21,27 @@ famItem::famItem(int xPos, int yPos, int width, int height, Member* member, Disp
 
     m_imageItem = new itemPart(m_xPos, m_yPos, m_width, m_heigth/2, m_member, img);
     m_item = new itemPart(m_xPos, m_yPos+m_heigth/2, m_width, m_heigth/2, m_member);
+//    Member *treeStart = parent->getTreeStart();
+//    if (treeStart == m_member || treeStart->getPartner() == m_member) {
+//        //pfeil nach oben
+//        qDebug() << "in if 1";
+//        if (!(m_member->getParents().empty())) {
+//            m_itemBtn = new famItemBtn(m_xPos, m_yPos, m_member, false);
+//            this->addToGroup(m_itemBtn);
+//        }
+
+//    } else {
+//        if (!(m_member->getChildren().empty()) || !(m_member->getPartner())) {
+//            //pfeil nach unten
+//            m_itemBtn = new famItemBtn(m_xPos, m_yPos, m_member, true);
+//            this->addToGroup(m_itemBtn);
+//        }
+//    }
+
 
     this->addToGroup(m_imageItem);
     this->addToGroup(m_item);
+
 }
 
 void famItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
@@ -104,4 +122,46 @@ void itemPart::mousePressEvent(QGraphicsSceneMouseEvent *event)
     qDebug() << "PART IS PRESSED";
     //memberChoosen(m_member->getID());
     update();
+}
+
+// ------------------- Button ----------------------
+
+famItemBtn::famItemBtn(int xPos, int yPos, Member* member, bool isChild, DisplayFam *parent):
+    m_xPos(xPos),
+    m_yPos(yPos),
+    m_member(member),
+    m_isChild(isChild),
+    m_parent(parent)
+{
+    Pressed = false;
+}
+
+QRectF famItemBtn::boundingRect() const {
+    return QRectF(m_xPos-20, m_yPos,20,20);
+}
+
+void famItemBtn::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
+
+    QRectF rect = boundingRect();
+    QPen pen(Qt::black, 1);
+    painter->setPen(pen);
+    painter->drawRect(rect);
+}
+
+void famItemBtn::setPressed(const bool& pressed) {
+
+}
+
+void famItemBtn::mousePressEvent(QGraphicsSceneMouseEvent *event) {
+    if (m_isChild){
+        qDebug() << "IS PRESSED child";
+        m_parent->updateDisplay(m_member->getID());
+        m_parent->closeEditPanel();
+    } else {
+        qDebug() << "IS PRESSED parent";
+        QVector<Member *> mem = m_member->getParents();
+        m_parent->updateDisplay(mem[0]->getID());
+        m_parent->closeEditPanel();
+    }
+
 }
