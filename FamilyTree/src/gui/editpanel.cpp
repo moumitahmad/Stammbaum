@@ -333,7 +333,7 @@ void EditPanel::saveMember() {
         if(parent2ID != 0) {
             Member* parent2 = m_possibleRelationships.at(parent2ID);
             qDebug() << "UPDATE PARENT2: "<< parent2->getName();
-            if(parents.length() == 1 || parent2ID != parents.at(1)->getID()) {
+            if(parents.length() < 2 || parent2ID != parents.at(1)->getID()) {
                 if(parents.length() == 2)
                     m_pLogic->deleteParentChildRelationship(parents.at(1), m_editedMember);
                 m_editedMember = m_pLogic->saveParentChildRelationship(parent2, m_editedMember);
@@ -348,18 +348,12 @@ void EditPanel::saveMember() {
 
         // save relationships
         if(partnerID != 0) {
-            /*if(partnerID >= m_editedMember->getID())
-                partnerID++;*/
             m_editedMember = m_pLogic->savePartnerFromMember(m_editedMember, m_possibleRelationships.at(partnerID));
         }
         if(parent1ID != 0) {
-            /*if(parent1ID >= m_editedMember->getID())
-                parent1ID++;*/
             m_editedMember = m_pLogic->saveParentChildRelationship(m_possibleRelationships.at(parent1ID), m_editedMember);
         }
         if(parent2ID != 0) {
-            /*if(parent2ID >= m_editedMember->getID())
-                parent2ID++;*/
             m_editedMember = m_pLogic->saveParentChildRelationship(m_possibleRelationships.at(parent2ID), m_editedMember);
         }
     }
