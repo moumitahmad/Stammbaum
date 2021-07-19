@@ -25,11 +25,9 @@ public:
     void updateDisplay(int memberID);
     void memberSelected(int id);
     Member* getTreeStart();
-    void closeEditPanel();
 
 signals:
     Member* memberChoosen(int id); // id=-1 -> new Member
-    void closeEditPanelSignal();
 
 private:
     Ui::DisplayFam *ui;

@@ -34,7 +34,6 @@ EditPage::EditPage(domain::ILogic* pLogic, QWidget *parent) :
     QObject::connect(m_mp, &MemberPanel::memberChoosen, this, &EditPage::openEditPanel);
     QObject::connect(m_mp, &MemberPanel::memberChoosen, m_df, &DisplayFam::updateDisplay);
     QObject::connect(m_df, &DisplayFam::memberChoosen, this, &EditPage::openEditPanel);
-    QObject::connect(m_df, &DisplayFam::closeEditPanelSignal, this, &EditPage::closeEditPanel);
 
 }
 

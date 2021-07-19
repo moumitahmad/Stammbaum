@@ -22,11 +22,6 @@ Member* DisplayFam::getTreeStart() {
     return treeStart;
 }
 
-void DisplayFam::closeEditPanel()
-{
-    emit closeEditPanelSignal();
-}
-
 void DisplayFam::changeView() {
     qDebug() << "changeview function";
     startpos = 0;
