@@ -1,5 +1,5 @@
 /**
- * @author Moumita Ahmad, Alisa Schumann
+ * @author Moumita Ahmad, Alisa Schumann, Gurleen Kour
  */
 
 #include "ILogic.h"
@@ -31,7 +31,7 @@ void domain::ILogic::connectToDatabase() {
     m_pDB->connectToDatabase();
 }
 
-// user //GURLEEN BEARBEITEN
+// user
 User* domain::ILogic::createUser(QString& name, QString& password) {
 
     // check if valid username and passwords were entered
