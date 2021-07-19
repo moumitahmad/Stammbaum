@@ -1,3 +1,7 @@
+/**
+ * @author Alisa Schumann
+ */
+
 #ifndef DISPLAYFAM_H
 #define DISPLAYFAM_H
 
@@ -40,8 +44,6 @@ private:
     QGraphicsLineItem *line;    
 
     void paint();
-protected:
-    void paintEvent(QPaintEvent *event);
 };
 
 #endif // DISPLAYFAM_H

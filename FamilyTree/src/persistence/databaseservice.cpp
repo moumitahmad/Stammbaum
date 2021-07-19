@@ -1,5 +1,5 @@
 /**
- * @author Moumita Ahmad
+ * @author Moumita Ahmad, Alisa Schumann
  */
 
 #include "./persistence/databaseservice.h"

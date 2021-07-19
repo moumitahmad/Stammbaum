@@ -1,5 +1,5 @@
 /**
- * @author Moumita Ahmad, Gurleen Kour
+ * @author Moumita Ahmad, Gurleen Kour, Alisa Schumann
  */
 
 
@@ -48,11 +48,15 @@ void UserWindow::hideErrors() {
 }
 
 void UserWindow::switchToCreateNewUser() {
+    ui->in_username->clear();
+    ui->in_password->clear();
     ui->stackedWidget->setCurrentIndex(1);
     hideErrors();
 }
 
 void UserWindow::switchToLogIn() {
+    ui->in_new_username->clear();
+    ui->in_new_password->clear();
     if(ui->stackedWidget->currentIndex() == 1)
         hideErrors();
     ui->stackedWidget->setCurrentIndex(0);
@@ -62,6 +66,7 @@ void UserWindow::createNewUser(){
     hideErrors();
     QString username;
     QString password;
+
 
     // check if username is at least 5 characters long
     if(ui->in_new_username->text().size() < 5) {

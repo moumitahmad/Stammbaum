@@ -1,3 +1,7 @@
+/**
+ * @author Alisa Schumann
+ */
+
 #include "displayfam.h"
 #include "ui_displayfam.h"
 #include <QDebug>
@@ -9,8 +13,8 @@ famItemBtn *itemBtn;
 QVector<famItem*> items;
 
 DisplayFam::DisplayFam(domain::ILogic* pLogic, QWidget *parent, const bool& inEdit) :
-    QWidget(parent),
     m_pLogic(pLogic),
+    QWidget(parent),
     m_inEdit(inEdit),
     ui(new Ui::DisplayFam)
 {
@@ -24,13 +28,11 @@ Member* DisplayFam::getTreeStart() {
 }
 
 void DisplayFam::changeView() {
-    qDebug() << "changeview function";
     startpos = 0;
     paint();
 }
 
 void DisplayFam::updateDisplay(int memberID) {
-    qDebug() << ">> IN DISPLAY: " << memberID;
     startpos = memberID;
     if (memberID==-1)
         return;
@@ -47,15 +49,10 @@ void DisplayFam::memberSelected(int id) {
     emit memberChoosen(id);
 }
 
-void DisplayFam::paintEvent(QPaintEvent *event) {
-    //paint();
-}
 
 void DisplayFam::paint() {
-    //reset
     this->scene->clear();
     items.clear();
-    //delete item;
 
     int currentFamily = m_pLogic->getCurrentFamilyID();
     QVector<Member*>* familyMembers = m_pLogic->getMembersByFamily(currentFamily);
@@ -101,7 +98,7 @@ void DisplayFam::paint() {
         itemBtn = new famItemBtn(startx+widthRect+distanceX,starty, treeStart->getPartner(), false, this);
         scene->addItem(itemBtn);
       }
-      scene->addItem(item); //hier eventuell noch einige berechnungen und variablen einfügen
+      scene->addItem(item);
       items.push_back(item);
 
       line = scene->addLine(startx+widthRect,starty+heightRect/2, startx+widthRect+distanceX,starty+heightRect/2,connectionsPen);
@@ -124,7 +121,7 @@ void DisplayFam::paint() {
     int middley = starty+heightRect/2+distanceY;
 
 
-    if(childrenSize % 2) { //ungerade
+    if(childrenSize % 2) {
         int lineStart = middlex;
         int lineEnd = middlex;
         if (childrenSize>1) {
@@ -144,7 +141,7 @@ void DisplayFam::paint() {
 
            items.push_back(item);
        }
-    } else if (!(childrenSize % 2)) { // gerade
+    } else if (!(childrenSize % 2)) {
         qDebug() << childrenSize;
         int lineStart = middlex-widthRect;
         int lineEnd = middlex+widthRect;

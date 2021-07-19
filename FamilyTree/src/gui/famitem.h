@@ -1,5 +1,5 @@
 /**
- * @author Moumita Ahmad
+ * @author Moumita Ahmad, Alisa Schumann
  */
 
 #ifndef FAMITEM_H

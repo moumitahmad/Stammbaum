@@ -1,5 +1,5 @@
 /**
- * @author Moumita Ahmad
+ * @author Moumita Ahmad, Alisa Schumann
  */
 
 #include "famitem.h"
@@ -126,13 +126,6 @@ famItemBtn::famItemBtn(int xPos, int yPos, Member* member, bool isChild, Display
 }
 
 QRectF famItemBtn::boundingRect() const {
-//    QPolygonF Triangle;
-//    Triangle.append(QPointF(-10.,0));
-//    Triangle.append(QPointF(0.,-10));
-//    Triangle.append(QPointF(10.,0));
-//    Triangle.append(QPointF(-10.,0));
-
-//    return Triangle;
     return QRectF(m_xPos-40, m_yPos,40,40);
 }
 
@@ -153,7 +146,6 @@ void famItemBtn::paint(QPainter *painter, const QStyleOptionGraphicsItem *option
     }
 
 
-//    painter.drawConvexPolygon(points, 4);
 
     QPen pen(Qt::white, 1);
     QBrush brush(Qt::white);
