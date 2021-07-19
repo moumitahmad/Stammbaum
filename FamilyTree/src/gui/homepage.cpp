@@ -54,13 +54,10 @@ void Homepage::displayFamilies() {
     // display Families
     clearFamiliesLayout(ui->ownFamiliesGrid->layout());
 
-    QVector<FamilyTree*>* familyTrees = m_pLogic->getFamilyTreesByUserID(m_currentUser->getId());
-    if(familyTrees) {
+    QVector<FamilyTree*> familyTrees = m_pLogic->getFamilyTreesByUserID(m_currentUser->getId());
+    if(!familyTrees.isEmpty()) {
         ui->noFamiliesText->hide();
-        qDebug() << "families available";
-        qDebug() << familyTrees;
-        for(FamilyTree* family : *familyTrees) {
-            qDebug() << family->getFamilyName();
+        for(FamilyTree* family : familyTrees) {
             QPushButton* famButton = new QPushButton();
             famButton->setText(family->getFamilyName());
             QObject::connect(famButton, &QPushButton::clicked, std::bind(&Homepage::showFamily, this, family->getId()));
@@ -68,7 +65,6 @@ void Homepage::displayFamilies() {
         }
     } else {
         ui->noFamiliesText->show();
-        qDebug() << "NO families available";
     }
 }
 

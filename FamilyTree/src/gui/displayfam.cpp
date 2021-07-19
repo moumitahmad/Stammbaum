@@ -58,12 +58,12 @@ void DisplayFam::paint() {
     //delete item;
 
     int currentFamily = m_pLogic->getCurrentFamilyID();
-    QVector<Member*>* familyMembers = m_pLogic->getMembersByFamily(currentFamily);
+    QVector<Member*> familyMembers = m_pLogic->getMembersByFamily(currentFamily);
 
-    if (!familyMembers)
+    if (familyMembers.isEmpty())
         return;
 
-    for(Member* m: *familyMembers) {
+    for(Member* m: familyMembers) {
         if(startpos == 0) {
             if (m->getParents().length()<1) {
                 treeStart = m;
