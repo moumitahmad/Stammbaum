@@ -33,12 +33,11 @@ private slots:
     void addNewMember();
 
 private:
-    domain::ILogic* m_pLogic;
-    FamilyTree* m_displayedFamily;
-    QVector<Member*>* m_allMembers;
-    bool m_inEdit;
-
     Ui::MemberPanel *ui;
+    FamilyTree* m_displayedFamily;
+    QVector<Member*> m_allMembers;
+    const bool m_inEdit;
+    domain::ILogic* m_pLogic;
 };
 
 #endif // MEMBERPANEL_H

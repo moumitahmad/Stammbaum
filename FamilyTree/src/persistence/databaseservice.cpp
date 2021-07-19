@@ -267,47 +267,45 @@ void database::IDatabase::saveViewer(int familyID, User* viewer) {
     }
 }
 
-QVector<User *> *database::IDatabase::getViewersByFamilyID(int familyID) {
+QVector<User *> database::IDatabase::getViewersByFamilyID(int familyID) {
+    QVector<User*> viewers;
     QSqlQuery q;
     if(q.exec("SELECT * from hasRights WHERE familyID=" + QString::number(familyID) + " AND authorization='viewer';")) {
-        QVector<User*>* viewers = new QVector<User*>;
         while(q.next()) {
             User* viewer = getUserByID(q.value(1).toInt());
-            viewers->push_back(viewer);
+            viewers.push_back(viewer);
         }
-        return viewers;
     } else {
         qDebug() << q.lastError();
-        return nullptr;
     }
+    return viewers;
 }
 
-QVector<User *> *database::IDatabase::getEditorsByFamilyID(int familyID) {
+QVector<User *> database::IDatabase::getEditorsByFamilyID(int familyID) {
+    QVector<User*> editors;
     QSqlQuery q;
     if(q.exec("SELECT * from hasRights WHERE familyID=" + QString::number(familyID) + " AND authorization='editor';")) {
-        QVector<User*>* viewers = new QVector<User*>;
         while(q.next()) {
             User* editor = getUserByID(q.value(1).toInt());
-            viewers->push_back(editor);
+            editors.push_back(editor);
         }
-        return viewers;
     } else {
         qDebug() << q.lastError();
-        return nullptr;
     }
+    return editors;
 }
 
-QVector<FamilyTree*>* database::IDatabase::getFamilyTreesByUserID(int userID) {
+QVector<FamilyTree*> database::IDatabase::getFamilyTreesByUserID(int userID) {
+    QVector<FamilyTree*> trees;
     QSqlQuery q;
     // Families with admin rights
     if(q.exec("SELECT * from familytree WHERE adminID=" + QString::number(userID) + ";")) {
-        QVector<FamilyTree*>* trees = new QVector<FamilyTree*>;
         while(q.next()) {
             int id = q.value(0).toInt();
             QString name = q.value(1).toString();
             User* admin = getUserByID(q.value(2).toInt());
             FamilyTree* family = new FamilyTree(id, name, admin);
-            trees->push_back(family);
+            trees.push_back(family);
             qDebug() << family->getFamilyName();
         }
 
@@ -315,21 +313,21 @@ QVector<FamilyTree*>* database::IDatabase::getFamilyTreesByUserID(int userID) {
         if(q.exec("SELECT * from hasRights WHERE userID=" + QString::number(userID) + ";")) {
             while(q.next()) {
                 FamilyTree* family = getFamilyTreeByID(q.value(0).toInt());
-                trees->push_back(family);
+                trees.push_back(family);
                 qDebug() << family->getFamilyName();
             }
         } else {
             qDebug() << q.lastError();
-            return nullptr;
+            //return nullptr;
         }
 
-        if(trees->empty())
-            return nullptr;
-        return trees;
+        //if(trees->empty())
+          //  return nullptr;
     } else {
         qDebug() << q.lastError();
-        return nullptr;
+        //return nullptr;
     }
+    return trees;
 }
 
 FamilyTree *database::IDatabase::getFamilyTreeByID(int familyID) {
@@ -362,15 +360,15 @@ Member* database::IDatabase::getMemberByID(const int id) {
     }
 }
 
-QVector<Member*>* database::IDatabase::getMembersByFamID(const int id) {
+QVector<Member*> database::IDatabase::getMembersByFamID(const int id) {
+    QVector<Member*> familyMember;
     QSqlQuery q;
     QString query = "SELECT * from member WHERE familyID=" + QString::number(id) + ";";
     if(q.exec(query)) {
-        QVector<Member*>* familyMember = new QVector<Member*>;
-        QVector<Member*>* partnerCreated = new QVector<Member*>;
+        QVector<Member*> partnerCreated;
         while(q.next()) {
                 bool found = false;
-                for(Member* m: *partnerCreated) {
+                for(Member* m: partnerCreated) {
                     if (m->getID() == q.value(0).toInt()) {
                         found= true;
                         break;
@@ -381,19 +379,19 @@ QVector<Member*>* database::IDatabase::getMembersByFamID(const int id) {
                         Member* partner = getMemberByID(q.value(6).toInt());
                         Member* member = new Member(q.value(0).toInt(), q.value(1).toString(), q.value(2).toString(), q.value(3).toString(), q.value(4).toString(), q.value(5).toString(), partner);
                         partner->setPartner(member);
-                        partnerCreated->push_back(partner);
-                        familyMember->push_back(member);
-                        familyMember->push_back(partner);
+                        partnerCreated.push_back(partner);
+                        familyMember.push_back(member);
+                        familyMember.push_back(partner);
                    } else {
                         Member* member = new Member(q.value(0).toInt(), q.value(1).toString(), q.value(2).toString(), q.value(3).toString(), q.value(4).toString(), q.value(5).toString());
-                        familyMember->push_back(member);
+                        familyMember.push_back(member);
                    }
 
                 }
         }
 
-        if(familyMember->empty())
-            return nullptr;
+        if(familyMember.isEmpty())
+            return familyMember;
         setCPRelations(familyMember);
         return familyMember;
     } else {
@@ -415,35 +413,34 @@ Member *database::IDatabase::getPartnerFromMember(const int memberID) {
     return nullptr;
 }
 
-QVector<Member*>* database::IDatabase::getParentsFromMemberID(const int memberID) {
+QVector<Member*> database::IDatabase::getParentsFromMemberID(const int memberID) {
+    QVector<Member*> parents;
     QSqlQuery q;
     if(q.exec("SELECT hp.parentID from hasParent hp WHERE childID=" + QString::number(memberID) + ";")) {
-        QVector<Member*>* parents = new QVector<Member*>;
         while(q.next()) {
-            parents->push_back(getMemberByID(q.value(0).toInt()));
+            parents.push_back(getMemberByID(q.value(0).toInt()));
         }
-        return parents;
     } else {
         qDebug() << q.lastError();
-        return nullptr;
     }
+    return parents;
 }
 
-QVector<Member*>* database::IDatabase::setCPRelations(QVector<Member*>* family) {
-        for(Member* m : *family){
+QVector<Member*> database::IDatabase::setCPRelations(QVector<Member*> family) {
+        for(Member* m : family){
             QVector<Member*> children = getChildrenFromMemberID(m->getID());
-            QVector<Member*>* childrenFromArray = new QVector<Member*>;
-            for (Member* c:children) {
+            QVector<Member*> childrenFromArray;
+            for (Member* c : children) {
                 int id = c->getID();
-                for (Member* fm: *family) {
+                for (Member* fm: family) {
                     if (id == fm->getID()) {
-                        childrenFromArray->push_back(fm);
+                        childrenFromArray.push_back(fm);
                         break;
                     }
                 }
             }
 
-            for (Member* c: *childrenFromArray) {
+            for (Member* c: childrenFromArray) {
                 m->addChild(c);
                 c->addParent(m);
             }

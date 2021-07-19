@@ -36,7 +36,6 @@ private slots:
 
 private:
     Ui::ViewPage *ui;
-
     domain::ILogic* m_pLogic;
     FamilyTree* m_displayedFamily;
     User* m_currentUser;

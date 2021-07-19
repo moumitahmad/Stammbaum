@@ -1,5 +1,5 @@
 /**
- * @author Moumita Ahmad
+ * @author Gurleen Kour, Moumita Ahmad
  */
 
 #ifndef USERWINDOW_H

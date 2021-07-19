@@ -68,15 +68,15 @@ int getIndex(QString value) {
     return -1;
 }
 
-QVector<Member*>* sortMembersByID(QVector<Member*>* members) {
-    int n = members->length();
+QVector<Member*> sortMembersByID(QVector<Member*> members) {
+    int n = members.length();
     int i, j;
     for (i = 1; i < n-1; i++)  {
         for (j = 1; j < n-i-1; j++) {
-            if (members->at(j)->getID() > members->at(j+1)->getID()) {
-                Member* helper = members->at(j);
-                members->replace(j, members->at(j+1));
-                members->replace(j+1, helper);
+            if (members.at(j)->getID() > members.at(j+1)->getID()) {
+                Member* helper = members.at(j);
+                members.replace(j, members.at(j+1));
+                members.replace(j+1, helper);
             }
         }
     }
@@ -85,14 +85,14 @@ QVector<Member*>* sortMembersByID(QVector<Member*>* members) {
 
 void EditPanel::showPotentionRelationships() {
     // show all potential partners and parents
-    QVector<Member*>* membersFromFam = m_pLogic->getMembersByFamily(m_displayedFamily->getId());
-    if(!membersFromFam) {
+    QVector<Member*> membersFromFam = m_pLogic->getMembersByFamily(m_displayedFamily->getId());
+    if(membersFromFam.isEmpty()) {
         return;
     }
     membersFromFam = sortMembersByID(membersFromFam);
     m_possibleRelationships.push_front(new Member()); // for first default value: no relationship
-    if(membersFromFam != nullptr) {
-        for(Member* p : *membersFromFam) {
+    if(!membersFromFam.isEmpty()) {
+        for(Member* p : membersFromFam) {
             if(p->getID() != m_editedMember->getID()) {
                 ui->ChoosePartner->addItem(p->getName());
                 ui->In_FirstParent->addItem(p->getName());

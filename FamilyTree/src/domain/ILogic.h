@@ -47,7 +47,7 @@ namespace domain {
         FamilyTree* addEditor(FamilyTree* family, QString& username);
         FamilyTree* addViewer(FamilyTree* family, QString& username);
 
-        QVector<FamilyTree*>* getFamilyTreesByUserID(int adminID);
+        QVector<FamilyTree*> getFamilyTreesByUserID(int adminID);
         FamilyTree* getFamilyTreeByID(int familyId);
         void deleteFamily(FamilyTree* family);
 
@@ -60,7 +60,7 @@ namespace domain {
 
         // select
         Member* getMemberByID(int memberID);
-        QVector<Member*>* getMembersByFamily(int familyID);
+        QVector<Member*> getMembersByFamily(int familyID);
         QVector<Member*> getSiblingsFromMember(const Member* member);
 
         // update
