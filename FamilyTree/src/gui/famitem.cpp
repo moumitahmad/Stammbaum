@@ -1,3 +1,7 @@
+/**
+ * @author Moumita Ahmad
+ */
+
 #include "famitem.h"
 #include <QDebug>
 #include <QImage>

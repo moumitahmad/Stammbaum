@@ -1,3 +1,7 @@
+/**
+ * @author Moumita Ahmad
+ */
+
 #ifndef DATABASESERVICE_H
 #define DATABASESERVICE_H
 
@@ -11,10 +15,6 @@ namespace database {
     public:
         // general
         void connectToDatabase();
-        // print
-        void printTableUser();
-        void printFamilyTable();
-        void printHasRightsTable();
 
         // user
         int saveUser(QString& name, QString& password);

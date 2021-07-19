@@ -1,3 +1,7 @@
+/**
+ * @author Moumita Ahmad
+ */
+
 #include "editpage.h"
 #include "ui_editpage.h"
 
@@ -36,6 +40,8 @@ EditPage::EditPage(domain::ILogic* pLogic, QWidget *parent) :
 EditPage::~EditPage()
 {
     delete ui;
+    delete m_pLogic;
+    delete m_displayedFamily;
     delete m_ep;
     delete m_mp;
     delete m_df;

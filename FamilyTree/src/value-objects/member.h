@@ -1,15 +1,12 @@
+/**
+ * @author Moumita Ahmad
+ */
+
 #ifndef MEMBER_H
 #define MEMBER_H
 
 #include <QString>
 #include <QVector>
-
-enum VALID_GENDER {
-    MALE,
-    FEMALE,
-    DIVERSE,
-    UNKNOWN
-};
 
 class Member {
 public:

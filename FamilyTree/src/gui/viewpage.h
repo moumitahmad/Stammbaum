@@ -1,3 +1,7 @@
+/**
+ * @author Moumita Ahmad
+ */
+
 #ifndef VIEWPAGE_H
 #define VIEWPAGE_H
 
@@ -7,7 +11,7 @@
 #include "displayfam.h"
 
 namespace Ui {
-class ViewPage;
+    class ViewPage;
 }
 
 class ViewPage : public QWidget

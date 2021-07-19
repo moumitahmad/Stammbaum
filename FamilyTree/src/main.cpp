@@ -1,10 +1,10 @@
-
+/**
+ * @author Moumita Ahmad
+ */
 
 #include <QApplication>
 #include "domain/ILogic.h"
 #include "./gui/userwindow.h"
-
-
 
 
 int main(int argc, char *argv[])

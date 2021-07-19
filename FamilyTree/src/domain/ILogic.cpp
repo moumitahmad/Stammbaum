@@ -1,3 +1,7 @@
+/**
+ * @author Moumita Ahmad
+ */
+
 #include "ILogic.h"
 #include "./persistence/databaseservice.h"
 #include <QDebug>
@@ -23,16 +27,8 @@ void domain::ILogic::setCurrentFamilyID(const int familyID) {
     m_currentFamilyID = familyID;
 }
 
-// databse
-
 void domain::ILogic::connectToDatabase() {
     m_pDB->connectToDatabase();
-}
-
-void domain::ILogic::printDatabase() {
-    m_pDB->printTableUser();
-    m_pDB->printFamilyTable();
-    m_pDB->printHasRightsTable();
 }
 
 // user //GURLEEN BEARBEITEN

@@ -1,3 +1,7 @@
+/**
+ * @author Moumita Ahmad
+ */
+
 #include "./persistence/databaseservice.h"
 #include "./value-objects/user.h"
 #include "./value-objects/familytree.h"
@@ -9,100 +13,6 @@
 #include "QSqlError"
 
 // --------------- local methodes ---------------
-// user
-User* database::IDatabase::getUserByName(QString& userName) {
-    QSqlQuery q;
-    q.exec("SELECT * FROM user WHERE name='"+userName+"';");
-    if (q.first()) {
-        int id = q.value(0).toInt();
-        QString name = q.value(1).toString();
-        QString userPassword = q.value(2).toString();
-        qDebug() << name << userPassword;
-        User* user = new User(id, name, userPassword);
-        return user;
-    } else {
-        qDebug() << q.lastError();
-        qDebug() << "database: user name wrong";
-        throw new std::logic_error("This username does not exsist. Please choose a different one.");
-    }
-}
-
-User *database::IDatabase::getUserByID(int id) {
-    QSqlQuery q;
-    q.exec("SELECT * FROM user WHERE id=" + QString::number(id) + ";");
-    if (q.first()) {
-        int id = q.value(0).toInt();
-        QString name = q.value(1).toString();
-        QString userPassword = q.value(2).toString();
-        User* user = new User(id, name, userPassword);
-        return user;
-    } else {
-        qDebug() << q.lastError();
-        throw new std::logic_error("user id does not exsits.");
-    }
-}
-
-bool database::IDatabase::userIsViewer(int userID, int familyID) {
-    QSqlQuery q;
-    if(q.exec("SELECT * FROM hasRights WHERE userID=" + QString::number(userID) + " AND familyID=" + QString::number(familyID) + " AND authorization='viewer';")) {
-        if(q.first()) {
-            return true;
-        } else {
-            return false;
-        }
-    } else {
-        qDebug() << q.lastError();
-        return false;
-    }
-}
-
-void database::IDatabase::printTableUser() {
-    // print table user
-    QSqlQuery q;
-    q.exec("SELECT * FROM user;");
-    while(q.next()) {
-        int id = q.value(0).toInt();
-        QString name = q.value(1).toString();
-        QString password = q.value(2).toString();
-
-        User* user = new User(id, name, password);
-        qDebug() << user->getId() << ": " << user->getName() << " > " << user->getPassword();
-    }
-}
-
-// FamilyTree
-void database::IDatabase::printFamilyTable() {
-    // print table user
-    qDebug() << ">> FamilyTree table:";
-    QSqlQuery q;
-    if(q.exec("SELECT * FROM familytree;")) {
-        while(q.next()) {
-            int id = q.value(0).toInt();
-            QString name = q.value(1).toString();
-            QString adminID = q.value(2).toString();
-            qDebug() << name << ", " << adminID;
-
-            QSqlQuery q1;
-            if(q1.exec("SELECT * FROM user WHERE id="+adminID+";")) {
-                q1.first();
-                int userID = q1.value(0).toInt();
-                QString userName = q1.value(1).toString();
-                QString password = q1.value(2).toString();
-                qDebug() << userID << ", " << userName << ", " << password;
-                User* admin = new User(userID, userName, password);
-
-                FamilyTree* family = new FamilyTree(id, name, admin);
-                qDebug() << family->getId() << ": " << family->getFamilyName() << ", " << family->getAdmin()->getName();
-            } else {
-                qDebug() << q1.lastError();
-                return;
-            }
-        }
-    } else {
-        qDebug() << q.lastError();
-        return;
-    }
-}
 
 FamilyTree* selectFamilyByID(QString& familyID) {
     QSqlQuery q;
@@ -133,27 +43,6 @@ FamilyTree* selectFamilyByID(QString& familyID) {
     } else {
         qDebug() << q.lastError();
         return nullptr;
-    }
-}
-
-void database::IDatabase::printHasRightsTable() {
-    qDebug() << ">> hasRights table:";
-    QSqlQuery q;
-    q.exec("SELECT * FROM hasRights;");
-    while(q.next()) {
-        QString familyID = q.value(0).toString();
-        int userID = q.value(1).toInt();
-        QString authorization = q.value(2).toString();
-        qDebug() << familyID << " " << userID << " " << authorization;
-
-        FamilyTree* family = selectFamilyByID(familyID);
-        User* user = getUserByID(userID);
-        if(authorization == "editor") {
-            family->addEditor(user);
-        } else { // authorization == viewer
-            family->addViewer(user);
-        }
-        qDebug() << "In family " << family->getFamilyName() << " " << user->getName() << " = " << authorization;
     }
 }
 
@@ -230,6 +119,8 @@ void fillDatabase() {
 }
 
 
+
+
 // --------------- database methodes ---------------
 void database::IDatabase::connectToDatabase() {
     // connect to database
@@ -245,6 +136,38 @@ void database::IDatabase::connectToDatabase() {
 }
 
 // User
+User* database::IDatabase::getUserByName(QString& userName) {
+    QSqlQuery q;
+    q.exec("SELECT * FROM user WHERE name='"+userName+"';");
+    if (q.first()) {
+        int id = q.value(0).toInt();
+        QString name = q.value(1).toString();
+        QString userPassword = q.value(2).toString();
+        qDebug() << name << userPassword;
+        User* user = new User(id, name, userPassword);
+        return user;
+    } else {
+        qDebug() << q.lastError();
+        qDebug() << "database: user name wrong";
+        throw new std::logic_error("This username does not exsist. Please choose a different one.");
+    }
+}
+
+User *database::IDatabase::getUserByID(int id) {
+    QSqlQuery q;
+    q.exec("SELECT * FROM user WHERE id=" + QString::number(id) + ";");
+    if (q.first()) {
+        int id = q.value(0).toInt();
+        QString name = q.value(1).toString();
+        QString userPassword = q.value(2).toString();
+        User* user = new User(id, name, userPassword);
+        return user;
+    } else {
+        qDebug() << q.lastError();
+        throw new std::logic_error("user id does not exsits.");
+    }
+}
+
 int database::IDatabase::saveUser(QString& name, QString& password) {
     // fill table user with new values
     QSqlQuery q;
@@ -260,6 +183,21 @@ int database::IDatabase::saveUser(QString& name, QString& password) {
         return -1;
     }
 }
+
+bool database::IDatabase::userIsViewer(int userID, int familyID) {
+    QSqlQuery q;
+    if(q.exec("SELECT * FROM hasRights WHERE userID=" + QString::number(userID) + " AND familyID=" + QString::number(familyID) + " AND authorization='viewer';")) {
+        if(q.first()) {
+            return true;
+        } else {
+            return false;
+        }
+    } else {
+        qDebug() << q.lastError();
+        return false;
+    }
+}
+
 
 // FamilyTree
 int database::IDatabase::saveFamily(QString& name, User* admin) {

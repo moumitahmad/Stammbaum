@@ -1,7 +1,12 @@
+/**
+ * @author Moumita Ahmad
+ */
+
 #include "familytree.h"
 #include <QDebug>
 
 FamilyTree::~FamilyTree() {
+    delete m_admin;
     for(User* user : m_viewers) {
         delete user;
     }

@@ -1,3 +1,7 @@
+/**
+ * @author Moumita Ahmad
+ */
+
 #include "viewpage.h"
 #include "ui_viewpage.h"
 #include "mainwindow.h"
@@ -29,6 +33,7 @@ ViewPage::~ViewPage() {
     delete m_displayedFamily;
     delete m_currentUser;
     delete m_ap;
+    delete m_df;
 }
 
 void ViewPage::setupViewPage() {

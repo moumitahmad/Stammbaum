@@ -1,3 +1,7 @@
+/**
+ * @author Moumita Ahmad
+ */
+
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
@@ -15,11 +19,6 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    domain::ILogic* m_pLogic;
-    Homepage* m_hp;
-    ViewPage* m_vp;
-    EditPage* m_ep;
-
     MainWindow(domain::ILogic* pLogic, QWidget *parent = nullptr);
     ~MainWindow();
 
@@ -31,6 +30,11 @@ private slots:
     void logout();
 
 private:
+    domain::ILogic* m_pLogic;
+    Homepage* m_hp;
+    ViewPage* m_vp;
+    EditPage* m_ep;
+
     Ui::MainWindow *ui;
 };
 #endif // MAINWINDOW_H

@@ -1,3 +1,7 @@
+/**
+ * @author Moumita Ahmad
+ */
+
 #ifndef ADMINPANEL_H
 #define ADMINPANEL_H
 
@@ -14,9 +18,6 @@ class AdminPanel : public QWidget
     Q_OBJECT
 
 public:
-    domain::ILogic* m_pLogic;
-    FamilyTree* m_displayedFamily;
-
     explicit AdminPanel(domain::ILogic* pLogic, QWidget *parent = nullptr);
     ~AdminPanel();
 
@@ -31,6 +32,8 @@ private slots:
     void deleteFamily();
 
 private:
+    domain::ILogic* m_pLogic;
+    FamilyTree* m_displayedFamily;
     Ui::AdminPanel *ui;
 };
 

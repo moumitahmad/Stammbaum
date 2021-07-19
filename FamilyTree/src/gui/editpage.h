@@ -1,3 +1,7 @@
+/**
+ * @author Moumita Ahmad
+ */
+
 #ifndef EDITPAGE_H
 #define EDITPAGE_H
 
@@ -17,12 +21,6 @@ class EditPage : public QWidget
     Q_OBJECT
 
 public:
-    domain::ILogic* m_pLogic;
-    FamilyTree* m_displayedFamily;
-    EditPanel* m_ep;
-    DisplayFam* m_df;
-    MemberPanel* m_mp;
-
     explicit EditPage(domain::ILogic* pLogic, QWidget *parent = nullptr);
     ~EditPage();
 
@@ -38,6 +36,11 @@ private slots:
     void closeEditPanel();
 
 private:
+    domain::ILogic* m_pLogic;
+    FamilyTree* m_displayedFamily;
+    EditPanel* m_ep;
+    DisplayFam* m_df;
+    MemberPanel* m_mp;
     Ui::EditPage *ui;
 };
 

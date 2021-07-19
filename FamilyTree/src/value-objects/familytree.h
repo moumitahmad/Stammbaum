@@ -1,3 +1,7 @@
+/**
+ * @author Moumita Ahmad
+ */
+
 #ifndef FAMILYTREE_H
 #define FAMILYTREE_H
 
