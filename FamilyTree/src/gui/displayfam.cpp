@@ -5,6 +5,7 @@
 #include "famitem.h"
 
 famItem *item;
+famItemBtn *itemBtn;
 QVector<famItem*> items;
 
 DisplayFam::DisplayFam(domain::ILogic* pLogic, QWidget *parent) :
@@ -15,6 +16,15 @@ DisplayFam::DisplayFam(domain::ILogic* pLogic, QWidget *parent) :
     ui->setupUi(this);
     scene = new QGraphicsScene(this);
     ui->graphicsView->setScene(scene);
+}
+
+Member* DisplayFam::getTreeStart() {
+    return treeStart;
+}
+
+void DisplayFam::closeEditPanel()
+{
+    emit closeEditPanelSignal();
 }
 
 void DisplayFam::changeView() {
@@ -57,7 +67,7 @@ void DisplayFam::paint() {
     if (!familyMembers)
         return;
 
-    Member* treeStart;
+    treeStart;
 
     for(Member* m: *familyMembers) {
         if(startpos == 0) {
@@ -83,11 +93,20 @@ void DisplayFam::paint() {
 
 
     item = new famItem(startx, starty, widthRect, heightRect, treeStart, this);
+
+
     scene->addItem(item);
-    items.push_back(item);
+    if (!(treeStart->getParents().empty())) {
+        itemBtn = new famItemBtn(startx, starty, treeStart, false, this);
+        scene->addItem(itemBtn);
+    }
 
     if (treeStart->getPartner()) {
       item = new famItem(startx+widthRect+distanceX,starty,widthRect,heightRect, treeStart->getPartner(), this);
+      if (!(treeStart->getPartner()->getParents().empty())) {
+        itemBtn = new famItemBtn(startx+widthRect+distanceX,starty, treeStart->getPartner(), false, this);
+        scene->addItem(itemBtn);
+      }
       scene->addItem(item); //hier eventuell noch einige berechnungen und variablen einfügen
       items.push_back(item);
 
@@ -123,7 +142,12 @@ void DisplayFam::paint() {
        for (int i=0;i<childrenSize;i++) {
            line = scene->addLine(lineStart+(distanceX+widthRect)*i,middley,lineStart+(distanceX+widthRect)*i,middley+distanceY/2,connectionsPen);
            item = new famItem(lineStart-widthRect/2+(distanceX+widthRect)*i,middley+distanceY/2,widthRect,heightRect, allChildren[i], this);
+           if (!(allChildren[i]->getChildren().empty()) || allChildren[i]->getPartner()) {
+            itemBtn = new famItemBtn(lineStart-widthRect/2+(distanceX+widthRect)*i,middley+distanceY/2, allChildren[i], true, this);
+            scene->addItem(itemBtn);
+           }
            scene->addItem(item);
+
            items.push_back(item);
        }
     } else if (!(childrenSize % 2)) { // gerade
@@ -139,6 +163,10 @@ void DisplayFam::paint() {
         for (int i=0;i<childrenSize;i++) {
             line = scene->addLine(lineStart+distanceX*2*i,middley,lineStart+distanceX*2*i,middley+distanceY/2,connectionsPen);
             item = new famItem(lineStart-widthRect/2+distanceX*2*i,middley+distanceY/2,widthRect,heightRect, allChildren[i], this);
+            if (!(allChildren[i]->getChildren().empty()) || allChildren[i]->getPartner()) {
+                itemBtn = new famItemBtn(lineStart-widthRect/2+distanceX*2*i,middley+distanceY/2, allChildren[i], true, this);
+                scene->addItem(itemBtn);
+            }
             scene->addItem(item);
             items.push_back(item);
         }
