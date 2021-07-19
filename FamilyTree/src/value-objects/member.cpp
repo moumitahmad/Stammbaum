@@ -32,8 +32,8 @@ const QString& Member::getGender() const {
     return m_gender;
 }
 
-const QString &Member::getBiografie() const {
-    return m_biografie;
+const QString &Member::getImage() const {
+    return m_imagePath;
 }
 
 Member *Member::getPartner() const {
@@ -64,8 +64,8 @@ void Member::setGender(const QString &gender) {
     m_gender = gender;
 }
 
-void Member::setBiografie(const QString &biografie) {
-    m_biografie = biografie;
+void Member::setImage(const QString &imagePath) {
+    m_imagePath = imagePath;
 }
 
 void Member::setPartner(Member *partner) {

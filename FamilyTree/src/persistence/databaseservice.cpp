@@ -193,7 +193,6 @@ void fillDatabase() {
                "birth VARCHAR (50) NOT NULL, "
                "death VARCHAR (50), "
                "gender VARCHAR (50), " // ENUM('female', 'male', 'diverse', 'unknown')
-               "biografie VARCHAR (50), "
                "picturePath VARCHAR (50), "
                "partnerID INTEGER, "
                "familyID INTEGER NOT NULL"
@@ -414,7 +413,7 @@ FamilyTree *database::IDatabase::getFamilyTreeByID(int familyID) {
 // ---------------- MEMBER ------------------------
 Member* database::IDatabase::getMemberByID(const int id) {
     QSqlQuery q;
-    QString query = "SELECT m.id, m.name, m.birth, m.death, m.gender, m.biografie from member m  WHERE id=" + QString::number(id) + ";";
+    QString query = "SELECT m.id, m.name, m.birth, m.death, m.gender, m.picturePath from member m  WHERE id=" + QString::number(id) + ";";
     q.exec(query);
     if(q.first()) {
         Member* member = new Member(q.value(0).toInt(), q.value(1).toString(), q.value(2).toString(), q.value(3).toString(), q.value(4).toString(), q.value(5).toString());
@@ -454,8 +453,6 @@ QVector<Member*>* database::IDatabase::getMembersByFamID(const int id) {
 
                 }
         }
-
-
 
         if(familyMember->empty())
             return nullptr;
@@ -518,14 +515,14 @@ QVector<Member*>* database::IDatabase::setCPRelations(QVector<Member*>* family) 
 
 
 
-int database::IDatabase::saveMember(const QString &name, const QString &birth, const QString &death, const QString &gender, const QString &biografie, int familyID) {
+int database::IDatabase::saveMember(const QString &name, const QString &birth, const QString &death, const QString &gender, const QString &image, int familyID) {
     QSqlQuery q;
-    q.prepare("INSERT INTO member(name, birth, death, gender, biografie, familyID) VALUES(:name, :birth, :death, :gender, :biografie, :familyID);");
+    q.prepare("INSERT INTO member(name, birth, death, gender, picturePath, familyID) VALUES(:name, :birth, :death, :gender, :picturePath, :familyID);");
     q.bindValue(":name", name);
     q.bindValue(":birth", birth);
     q.bindValue(":death", death);
     q.bindValue(":gender", gender);
-    q.bindValue(":biografie", biografie);
+    q.bindValue(":picturePath", image);
     q.bindValue(":familyID", familyID);
 
     if(q.exec()) {
@@ -544,7 +541,7 @@ void database::IDatabase::updateMemberData(Member* member) {
                         "birth='" + member->getBirth() + "', "
                         "death='" + member->getDeath() + "', "
                         "gender='" + member->getGender() + "', "
-                        "biografie='" + member->getBiografie() + "' "
+                        "picturePath='" + member->getImage() + "' "
                         "WHERE id=" + QString::number(member->getID()) + ";";
 
     if(q.exec(query)) {
@@ -601,23 +598,6 @@ QVector<Member*> database::IDatabase::getChildrenFromMemberID(const int id) {
         throw new std::logic_error("Member does not has any children");
     }
 }
-
-//QVector<Member*> database::IDatabase::getParentFromMemberID(const int id) {
-//    QSqlQuery q;
-//    q.prepare("SELECT * from hasParent WHERE childID=:id;");
-//    q.bindValue(":id", id);
-//    if(q.exec()) {
-//        QVector<Member*> parents;
-//        while(q.next()) {
-//            Member* member = getMemberByID(q.value(0).toInt());
-//            parents.push_back(member);
-//        }
-//        return parents;
-//    } else {
-//        qDebug() << q.lastError();
-//        throw new std::logic_error("Parents are not known");
-//    }
-//}
 
 void database::IDatabase::saveParentChildRelationship(Member* child, Member* parent) {
     QSqlQuery q;

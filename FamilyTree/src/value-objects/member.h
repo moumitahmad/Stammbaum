@@ -4,14 +4,6 @@
 #include <QString>
 #include <QVector>
 
-enum DB_COL_NAME {
-    NAME,
-    BIRTH,
-    DEATH,
-    GENDER,
-    BIOGRAFIE
-};
-
 enum VALID_GENDER {
     MALE,
     FEMALE,
@@ -23,9 +15,9 @@ class Member {
 public:
     Member() : m_name("") {}
     Member(int id, QString name, QString birth, QString death, QString gender,
-        QString biografie, Member* partner = nullptr) :
+        QString image, Member* partner = nullptr) :
         m_id(id), m_name(name), m_birth(birth), m_death(death), m_gender(gender),
-        m_biografie(biografie), m_partner(partner) {}
+        m_imagePath(image), m_partner(partner) {}
     ~Member();
 
     // getter
@@ -34,7 +26,7 @@ public:
     const QString& getBirth() const;
     const QString& getDeath() const;
     const QString& getGender() const;
-    const QString& getBiografie() const;
+    const QString& getImage() const;
     Member* getPartner() const;
     QVector<Member*> getChildren() const;
     QVector<Member*> getParents() const;
@@ -44,7 +36,7 @@ public:
     void setBirth(const QString& birth);
     void setDeath(const QString& death);
     void setGender(const QString& gender);
-    void setBiografie(const QString& biografie);
+    void setImage(const QString& image);
     void setPartner(Member* partner);
 
     // Family Connections
@@ -62,7 +54,7 @@ private:
     QString m_birth;
     QString m_death;
     QString m_gender;
-    QString m_biografie;
+    QString m_imagePath;
     Member* m_partner;
     QVector<Member*> m_parents;
     QVector<Member*> m_children;

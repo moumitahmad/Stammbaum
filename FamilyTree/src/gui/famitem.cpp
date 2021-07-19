@@ -13,9 +13,9 @@ famItem::famItem(int xPos, int yPos, int width, int height, Member* member, Disp
     m_member(member)
 {
     Pressed = false;
-    QString path = "../src/images/"; //+ m_member->getImagePath;
-    //if(!m_member->getImagePath)
-    path += "defaultMember.png";
+    QString path = "../src/images/";
+    path.append(m_member->getImage());
+    qDebug() << path;
     QImage img(path);
 
 
