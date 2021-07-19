@@ -34,7 +34,6 @@ EditPage::EditPage(domain::ILogic* pLogic, QWidget *parent) :
     QObject::connect(m_mp, &MemberPanel::memberChoosen, this, &EditPage::openEditPanel);
     QObject::connect(m_mp, &MemberPanel::memberChoosen, m_df, &DisplayFam::updateDisplay);
     QObject::connect(m_df, &DisplayFam::memberChoosen, this, &EditPage::openEditPanel);
-    QObject::connect(m_df, &DisplayFam::closeEditPanelSignal, this, &EditPage::closeEditPanel);
 
 }
 
@@ -57,7 +56,6 @@ void EditPage::setupEditPage() {
     m_displayedFamily = m_pLogic->getFamilyTreeByID(m_pLogic->getCurrentFamilyID());
     ui->LabelViewFamily->setText("<html><head/><body><p><span style='color:#3465a4;'>Edit the family tree: " + m_displayedFamily->getFamilyName() + "</span></p></body></html>");
     m_mp->setupMemberPanel();
-    m_df->updateDisplay(0);
 }
 
 void EditPage::openViewPage(){
