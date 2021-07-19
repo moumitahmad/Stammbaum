@@ -9,6 +9,7 @@
 #include "domain/ILogic.h"
 #include "adminpanel.h"
 #include "displayfam.h"
+#include "memberpanel.h"
 
 namespace Ui {
     class ViewPage;
@@ -41,6 +42,7 @@ private:
     User* m_currentUser;
     AdminPanel* m_ap;
     DisplayFam* m_df;
+    MemberPanel* m_mp;
 };
 
 #endif // VIEWPAGE_H
