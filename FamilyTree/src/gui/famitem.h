@@ -44,7 +44,6 @@ public:
     famItemBtn(int xPos, int yPos, Member* member, bool isChild, DisplayFam* parent);
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
-    void setPressed(const bool& pressed);
     Member* m_member;
 private:
     DisplayFam* m_parent;

@@ -1,3 +1,7 @@
+/**
+ * @author Alisa Schumann
+ */
+
 #ifndef DISPLAYFAM_H
 #define DISPLAYFAM_H
 
@@ -31,17 +35,15 @@ signals:
 
 private:
     Ui::DisplayFam *ui;
-    bool m_inEdit;
     int startpos;
     Member* treeStart;
+    bool m_inEdit;
     QGraphicsScene *scene;
     QGraphicsRectItem *rect;
     QGraphicsRectItem *rect2;
-    QGraphicsLineItem *line;    
+    QGraphicsLineItem *line;
 
     void paint();
-protected:
-    void paintEvent(QPaintEvent *event);
 };
 
 #endif // DISPLAYFAM_H

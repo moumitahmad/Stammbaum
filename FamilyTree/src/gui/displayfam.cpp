@@ -1,3 +1,7 @@
+/**
+ * @author Alisa Schumann
+ */
+
 #include "displayfam.h"
 #include "ui_displayfam.h"
 #include <QDebug>
@@ -45,10 +49,6 @@ void DisplayFam::memberSelected(int id) {
         }
     }
     emit memberChoosen(id);
-}
-
-void DisplayFam::paintEvent(QPaintEvent *event) {
-    //paint();
 }
 
 void DisplayFam::paint() {

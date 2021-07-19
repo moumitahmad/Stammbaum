@@ -1,5 +1,5 @@
 /**
- * @author Moumita Ahmad
+ * @author Moumita Ahmad, Alisa Schumman
  */
 
 #include "famitem.h"
@@ -33,6 +33,7 @@ famItem::famItem(int xPos, int yPos, int width, int height, Member* member, Disp
 }
 
 void famItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
+    if(false) qDebug() << option << widget;
     if (Pressed) {
         QPen pen2(QColor(245, 121, 0), 3);
         painter->setPen(pen2);
@@ -47,6 +48,7 @@ void famItem::setPressed(const bool &pressed)
 
 void famItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
+    if(false) qDebug() << event;
     if(m_inEdit) {
         Pressed = true;
         m_parent->memberSelected(m_member->getID());
@@ -68,7 +70,6 @@ itemPart::itemPart(int xPos, int yPos, int width, int height, Member* member, QI
     m_image(image)
 {
     Pressed = false;
-    //qDebug() << "ITEMPART"; // TODO: wird die ganze zeit aufgerufen
 
 }
 
@@ -77,7 +78,7 @@ QRectF itemPart::boundingRect() const {
 }
 
 void itemPart::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
-
+    if(false) qDebug() << option << widget;
     QRectF rect = boundingRect();
    // QBrush brush(Qt::black);
     QPen pen(Qt::black, 1);
@@ -107,6 +108,7 @@ void itemPart::setPressed(const bool &pressed)
 
 void itemPart::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
+    if(false) qDebug() << event;
     Pressed = true;
     qDebug() << "PART IS PRESSED";
     //memberChoosen(m_member->getID());
@@ -126,18 +128,11 @@ famItemBtn::famItemBtn(int xPos, int yPos, Member* member, bool isChild, Display
 }
 
 QRectF famItemBtn::boundingRect() const {
-//    QPolygonF Triangle;
-//    Triangle.append(QPointF(-10.,0));
-//    Triangle.append(QPointF(0.,-10));
-//    Triangle.append(QPointF(10.,0));
-//    Triangle.append(QPointF(-10.,0));
-
-//    return Triangle;
     return QRectF(m_xPos-40, m_yPos,40,40);
 }
 
 void famItemBtn::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
-
+    if(false) qDebug() << option << widget;
     QRectF rect = boundingRect();
     QPointF points[3];
     if (!m_isChild) {
@@ -151,9 +146,6 @@ void famItemBtn::paint(QPainter *painter, const QStyleOptionGraphicsItem *option
         points[2] = QPointF(m_xPos-20, m_yPos+40);
 
     }
-
-
-//    painter.drawConvexPolygon(points, 4);
 
     QPen pen(Qt::white, 1);
     QBrush brush(Qt::white);
@@ -169,11 +161,8 @@ void famItemBtn::paint(QPainter *painter, const QStyleOptionGraphicsItem *option
 
 }
 
-void famItemBtn::setPressed(const bool& pressed) {
-
-}
-
 void famItemBtn::mousePressEvent(QGraphicsSceneMouseEvent *event) {
+    if(false) qDebug() << event;
     if (m_isChild){
         qDebug() << "IS PRESSED child";
         m_parent->updateDisplay(m_member->getID());
