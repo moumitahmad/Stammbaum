@@ -1,4 +1,7 @@
-//Gurleen Kour
+/**
+ * @author Moumita Ahmad, Gurleen Kour
+ */
+
 
 #include "userwindow.h"
 #include "ui_userwindow.h"
@@ -31,6 +34,8 @@ UserWindow::UserWindow(domain::ILogic* pLogic, QWidget *parent) :
 UserWindow::~UserWindow()
 {
     delete ui;
+    delete m_pLogic;
+    delete m_pApp;
 }
 
 void UserWindow::hideErrors() {

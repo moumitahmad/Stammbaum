@@ -1,3 +1,7 @@
+/**
+ * @author Moumita Ahmad
+ */
+
 #ifndef USERWINDOW_H
 #define USERWINDOW_H
 
@@ -14,9 +18,6 @@ class UserWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    domain::ILogic* m_pLogic;
-    MainWindow* m_pApp;
-
     explicit UserWindow(domain::ILogic* pLogic, QWidget *parent = nullptr);
     ~UserWindow();
 
@@ -29,6 +30,9 @@ private slots:
     void logInUser();
 
 private:
+    domain::ILogic* m_pLogic;
+    MainWindow* m_pApp;
+
     Ui::UserWindow *ui;
 };
 

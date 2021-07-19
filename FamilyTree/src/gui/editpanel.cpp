@@ -1,4 +1,7 @@
-//Gurleen Kour
+/**
+ * @author Moumita Ahmad, Gurleen Kour
+ */
+
 
 #include "editpanel.h"
 #include "ui_editpanel.h"
@@ -43,6 +46,9 @@ EditPanel::~EditPanel()
     delete m_pLogic;
     delete m_displayedFamily;
     delete m_editedMember;
+    for(Member* member : m_possibleRelationships) {
+        delete member;
+    }
 }
 
 int getIndex(QString value) {
@@ -228,7 +234,7 @@ void EditPanel::removePicture() {
         ui->showImagePath->setText("");
         ui->ButtonRemovePicture->hide();
         ui->ButtonAddPicture->setText("Add Picture");
-    } catch (std::filesystem::filesystem_error e) {
+    } catch (std::filesystem::filesystem_error& e) {
         qDebug() << e.code().message().c_str();
         //show error dialog
         QMessageBox messageBox;

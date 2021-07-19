@@ -1,3 +1,8 @@
+/**
+ * @author Moumita Ahmad
+ */
+
+
 #ifndef ILOGIC_H
 #define ILOGIC_H
 
@@ -30,7 +35,6 @@ namespace domain {
 
         // database general
         void connectToDatabase();
-        void printDatabase();
 
 
         // user

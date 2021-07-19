@@ -1,3 +1,7 @@
+/**
+ * @author Moumita Ahmad
+ */
+
 #include "homepage.h"
 #include "ui_homepage.h"
 #include "mainwindow.h"
@@ -26,6 +30,8 @@ Homepage::Homepage(domain::ILogic* pLogic, QWidget *parent) :
 Homepage::~Homepage()
 {
     delete ui;
+    delete m_pLogic;
+    delete m_currentUser;
 }
 
 void clearFamiliesLayout(QLayout *layout) {

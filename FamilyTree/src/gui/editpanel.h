@@ -1,3 +1,7 @@
+/**
+ * @author Moumita Ahmad
+ */
+
 #ifndef EDITPANEL_H
 #define EDITPANEL_H
 

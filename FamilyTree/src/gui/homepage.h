@@ -1,3 +1,7 @@
+/**
+ * @author Moumita Ahmad
+ */
+
 #ifndef HOMEPAGE_H
 #define HOMEPAGE_H
 
@@ -14,9 +18,6 @@ class Homepage : public QWidget
     Q_OBJECT
 
 public:
-    domain::ILogic* m_pLogic;
-    User* m_currentUser;
-
     explicit Homepage(domain::ILogic* pLogic, QWidget *parent = nullptr);
     ~Homepage();
 
@@ -31,6 +32,9 @@ private slots:
     void addFamily();
 
 private:
+    domain::ILogic* m_pLogic;
+    User* m_currentUser;
+
     Ui::Homepage *ui;
 };
 

@@ -1,3 +1,7 @@
+/**
+ * @author Moumita Ahmad
+ */
+
 #include "adminpanel.h"
 #include "ui_adminpanel.h"
 #include <QDebug>
@@ -21,6 +25,8 @@ AdminPanel::AdminPanel(domain::ILogic* pLogic, QWidget *parent) :
 AdminPanel::~AdminPanel()
 {
     delete ui;
+    delete m_pLogic;
+    delete m_displayedFamily;
 }
 
 void AdminPanel::setupAdminPanel() {

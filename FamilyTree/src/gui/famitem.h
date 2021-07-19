@@ -1,3 +1,7 @@
+/**
+ * @author Moumita Ahmad
+ */
+
 #ifndef FAMITEM_H
 #define FAMITEM_H
 

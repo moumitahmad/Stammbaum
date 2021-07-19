@@ -1,3 +1,7 @@
+/**
+ * @author Moumita Ahmad
+ */
+
 #include "memberpanel.h"
 #include "ui_memberpanel.h"
 #include "famitem.h"
@@ -14,6 +18,11 @@ MemberPanel::MemberPanel(domain::ILogic* pLogic, QWidget *parent) :
 MemberPanel::~MemberPanel()
 {
     delete ui;
+    delete m_pLogic;
+    delete m_displayedFamily;
+    for(Member* member : *m_allMembers) {
+        delete member;
+    }
 }
 
 void MemberPanel::setupMemberPanel()
